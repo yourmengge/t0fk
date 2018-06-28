@@ -1,0 +1,13 @@
+<div class="dryk" *ngIf='!historyFooter'>
+    团队名称： <span class="dataSpan">{{name}}</span> 
+    团队编号：<span class="dataSpan">{{code}}</span> 
+    团队当日总盈亏：<span class="dataSpan">{{price}}</span>
+</div>
+<button (click)='history()' class="button-history" *ngIf='!historyFooter'>历史数据列表</button>
+<div class="tdgl-content">
+    <router-outlet></router-outlet>
+</div>
+
+<app-history-footer *ngIf='historyFooter'></app-history-footer>
+
+<app-tdgl-footer *ngIf='!historyFooter'></app-tdgl-footer>

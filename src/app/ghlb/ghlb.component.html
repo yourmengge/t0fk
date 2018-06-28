@@ -1,0 +1,90 @@
+<div class="">
+  <!-- <div class="search-div">
+      <span> 交易员账户</span>
+      <input type="text" [(ngModel)]='userCode'>
+      <button class="button" (click)='search()'>查询</button>
+      <button (click)='searchAll()'>查询全部</button>
+      <button (click)='history()'>历史委托列表</button>
+    </div> -->
+  <div class="search-div">
+    <span> 交易员账户</span>
+    <input type="text" [(ngModel)]='userCode'>
+    <button class="button" (click)='getList()'>查询</button>
+    <button (click)='searchAll()'>查询全部</button>
+  </div>
+  <div class="action-button">
+    <button class="button" (click)='fpjyy()' [disabled]='checkList.length===0?true:false'>归还给团队</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          <input type="checkbox" name="" id="" (click)='clickAll()' [(ngModel)]='checkedAll'>
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          初始分配数量
+        </th>
+        <th>
+          可归还数量
+        </th>
+        <th>
+          本次归还数量
+        </th>
+        <th>
+          所属产品
+        </th>
+        <th>
+          分配交易员账号
+        </th>
+        <th>
+          分配交易员姓名
+        </th>
+      </tr>
+      <tr *ngFor='let a of list;let i = index'>
+        <td>
+          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='checkedAll'>
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.stockCnt}}
+        </td>
+        <td>
+          {{a.ableCnt}}
+        </td>
+        <td>
+          <input type="text" [(ngModel)]='a.bcgh'>
+        </td>
+        <td>
+          {{a.productName}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- <div class="fpjyy-alert" *ngIf='alert'>
+      <div class="alert-title">
+        <span class="submit-btn" (click)='submitJYY()'>确认</span>
+        选择要分配的交易员
+        <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
+      </div>
+      <div class="alert-div my-scroll">
+        <div *ngFor='let a of jyyList' class="{{jyyCode === a.accountCode?'active':''}}" (click)='selectJYY(a)'>{{a.accountName}}</div>
+      </div>
+    </div> -->
+</div>

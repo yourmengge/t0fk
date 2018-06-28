@@ -1,0 +1,293 @@
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
+import { FplbComponent } from './fplb/fplb.component';
+
+@Injectable()
+export class DataService {
+
+  isPhone = /^0?1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+  alert = false;
+  loading = false;
+  errMsg = '出错啦';
+  error: Error;
+  show = true;
+  hide = false;
+  username: string; // 用户名
+  token: string;
+
+  userCode: string; // 交易员账户
+
+  searchCode: string; // 团队查询或产品查询的code
+  searchName: string; // 团队查询或产品查询的名字
+  constructor(public router: Router) {
+    this.searchCode = '';
+  }
+  /**
+   * 获取当前url最后的参数
+   */
+  getUrl(num) {
+    return window.location.hash.split('/')[num];
+  }
+
+
+  /**
+   * 页面跳转
+   */
+  goto(url) {
+    return this.router.navigate([url]);
+  }
+
+  getUserName() {
+    if (this.isNull(this.username)) {
+      return this.getSession('username');
+    } else {
+      return this.username;
+    }
+  }
+
+  /**
+   * 请求出错提示
+   */
+  isError() {
+    this.Loading(this.hide);
+    this.alert = true;
+    setTimeout(() => {
+      this.alert = false;
+    }, 2000);
+    this.errMsg = this.error.resultInfo;
+    if (this.error.resultCode === 'token.error') {
+      this.removeSession('token');
+      this.goto('/');
+    }
+  }
+
+  /**
+   * 输入出错提示
+   */
+  ErrorMsg(desc) {
+    this.alert = true;
+    setTimeout(() => {
+      this.alert = false;
+    }, 2000);
+    this.errMsg = desc;
+  }
+
+  /**
+   * 加载中提示
+   */
+  Loading(type) {
+    this.loading = type;
+  }
+
+  /**
+ * 判断是否为空
+ */
+  isNull(string) {
+    // tslint:disable-next-line:max-line-length
+    return (string === 'undefined' || string === '' || string === null || string === 'null' || string === undefined || string === 'NaN') ? true : false;
+  }
+
+  getHeader() {
+    if (this.isNull(this.token)) {
+      if (this.isNull(this.getSession('token'))) {
+        this.ErrorMsg('请重新登录');
+        this.goto('/login');
+        return;
+      } else {
+        this.token = this.getSession('token');
+        return { headers: new HttpHeaders({ 'Authorization': this.getSession('token') }) };
+      }
+
+    } else {
+      return { headers: new HttpHeaders({ 'Authorization': this.token }) };
+    }
+
+  }
+
+  getSession(name): any {
+    return sessionStorage.getItem(name);
+  }
+  setSession(name, data) {
+    return sessionStorage.setItem(name, data);
+  }
+
+  removeSession(name) {
+    return sessionStorage.removeItem(name);
+  }
+
+  getLocalStorage(name) {
+    return localStorage.getItem(name);
+  }
+
+  setLocalStorage(name, data) {
+    return localStorage.setItem(name, data);
+  }
+
+  /**
+   * 获取历史列表
+   */
+  getHistoryFooter() {
+    return [{
+      id: 'lswtlb',
+      name: '历史委托'
+    }, {
+      id: 'lscj',
+      name: '历史成交'
+    }, {
+      id: 'lsyk',
+      name: '历史盈亏'
+    }, {
+      id: 'lslyl',
+      name: '历史利用率'
+    }];
+  }
+
+  /**
+   * 获取左边菜单栏列表
+   */
+  getMenuList() {
+    return [{
+      id: 'cpgl',
+      name: '产品管理'
+    }, {
+      id: 'tdgl',
+      name: '团队管理'
+    },
+    // {
+    //   id: 'jyygl',
+    //   name: '交易员管理'
+    // },
+    {
+      id: 'jyyccgl',
+      name: '交易员持仓管理'
+    }, {
+      id: 'wtgl',
+      name: '委托管理'
+    }, {
+      id: 'cjgl',
+      name: '成交管理'
+    }, {
+      id: 'wpgl',
+      name: '未平管理'
+    }, {
+      id: 'fqgl',
+      name: '分券管理',
+      second: [{
+        id: 'cpfq',
+        name: '产品分券'
+      }, {
+        id: 'tdfq',
+        name: '团队分券'
+      }]
+    }, {
+      id: 'hqgl',
+      name: '还券管理',
+      second: [{
+        id: 'tdhq',
+        name: '团队还券'
+      }, {
+        id: 'jyyhq',
+        name: '交易员还券'
+      }]
+    }];
+  }
+
+  /**
+   * 获取团队管理底部菜单栏
+   */
+  getTdglFooter() {
+    return [{
+      id: 'zhxx',
+      name: '账户信息'
+    }, {
+      id: 'fplb',
+      name: '分配列表'
+    }, {
+      id: 'ghlb',
+      name: '归还列表'
+    }, {
+      id: 'wtlb',
+      name: '委托列表'
+    }, {
+      id: 'cjlb',
+      name: '成交列表'
+    }, {
+      id: 'dplb',
+      name: '待平列表'
+    }, {
+      id: 'lrtj',
+      name: '利润统计'
+    }];
+  }
+
+  /**
+   * 获取产品管理底部菜单栏
+   */
+  getCpglFooter() {
+    return [{
+      id: 'cpcc',
+      name: '产品持仓'
+    }, {
+      id: 'cpwtlb',
+      name: '产品委托列表'
+    }, {
+      id: 'cpcjlb',
+      name: '产品成交列表'
+    }, {
+      id: 'cplrtj',
+      name: '产品利润统计'
+    }];
+  }
+
+  /**
+   * 是否为整百
+   */
+  is100Int(num) {
+    return num % 100 === 0 ? true : false;
+  }
+
+  /**
+ * 获取当前时间：毫秒
+ */
+  getTime(type, time) {
+    time = new Date(time);
+    const year = time.getFullYear();
+    const month = time.getMonth() + 1;
+    const day = time.getDate();
+    const hour = time.getHours();
+    const minutes = time.getMinutes();
+    const seconds = time.getSeconds();
+    const millseconds = time.getMilliseconds();
+    switch (type) {
+      case 'yyyyMMddhhmmss':
+        return year + this.add0(month) + this.add0(day) +
+          this.add0(hour) + this.add0(minutes) + this.add0(seconds) + this.add0(millseconds);
+      case 'yyyy-MM-dd':
+        return year + '-' + this.add0(month) + '-' + this.add0(day);
+      case 'yyyyMMss':
+        return year + this.add0(month) + this.add0(day);
+    }
+  }
+
+  /**
+ * 个位数补充0
+ */
+  add0(num) {
+    return num < 10 ? '0' + num : num;
+  }
+}
+
+
+
+export interface Error {
+  resultCode: string;
+  resultInfo: string;
+  success: boolean;
+}
+
+export interface CodeType {
+  type: string;
+  code: string;
+}
+

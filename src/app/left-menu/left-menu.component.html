@@ -1,0 +1,25 @@
+<!-- <div *ngFor='let a of list'>
+  <div class="first-menu {{url === a.id?'active':''}}" (click)='goto(a.id)'>{{a.name}}</div>
+  <div *ngFor='let b of a.second' class="second-menu {{url === b.id?'active':''}}" (click)='goto(b.id)'>
+    {{b.name}}
+  </div>
+</div> -->
+<div>
+  <div class="first-menu {{url === 'tdgl'?'active':''}}" (click)='goto("tdgl")'>
+    团队管理
+  </div>
+  <div *ngIf='teamShow'>
+    <div class="second-menu {{teamCode === a.teamCode?'red':''}}" *ngFor='let a of teamList' (click)='selectTeam(a.teamCode,a.teamName)'>
+      {{a.teamName}}
+    </div>
+  </div>
+
+  <div class="first-menu {{url === 'cpgl'?'active':''}}" (click)='goto("cpgl")'>
+    产品管理
+  </div>
+  <div *ngIf='proShow'>
+    <div class="second-menu {{productCode === a.productCode?'red':''}}" *ngFor='let a of proList' (click)='selectPro(a.productCode,a.productName)'>
+      {{a.productName}}
+    </div>
+  </div>
+</div>

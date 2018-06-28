@@ -1,0 +1,122 @@
+<div class="">
+  <div class="search-div">
+    <span>交易账户</span>
+    <input type="text" [(ngModel)]='accountCode'>
+    <span>委托编号</span>
+    <input type="text" [(ngModel)]='appointOrderCode'>
+    <span>交易日期</span>
+    <input type="date" [(ngModel)]='beginTime'>
+    <button class="button" (click)='getList()'>查询</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          委托时间
+        </th>
+        <th>
+          产品编号
+        </th>
+        <th>
+          交易账号
+        </th>
+        <th>
+          交易员姓名
+        </th>
+        <th>
+          委托编号
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          委托数量
+        </th>
+        <th>
+          委托价格
+        </th>
+        <th>
+          成交数量
+        </th>
+        <th>
+          成交均价
+        </th>
+        <th>
+          委托状态
+        </th>
+        <th>
+          买卖方向
+        </th>
+        <th>
+          团队编号
+        </th>
+        <th>
+          备注信息
+        </th>
+        <th>
+          委托标志
+        </th>
+        <th>
+          委托PK
+        </th>
+      </tr>
+      <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <td>
+          {{a.appointTime | time}}
+        </td>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
+        </td>
+        <td>
+          {{a.appointOrderCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.appointCnt}}
+        </td>
+        <td>
+          {{a.appointPrice}}
+        </td>
+        <td>
+          {{a.dealCnt}}
+        </td>
+        <td>
+          {{a.dealAvrPrice}}
+        </td>
+        <td>
+          {{a.appointStatusDesc}}
+        </td>
+        <td>
+          {{a.appointTypeDesc}}
+        </td>
+        <td>
+          {{a.teamCode}}
+        </td>
+        <td>
+          {{a.memo}}
+        </td>
+        <td>
+          {{a.isVritualDesc}}
+        </td>
+        <td>
+          {{a.pkOrder}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>

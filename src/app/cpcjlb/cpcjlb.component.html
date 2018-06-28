@@ -1,0 +1,74 @@
+<div class="">
+  <div class="search-div">
+    <button (click)='export()'>导出报表</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          成交编号
+        </th>
+        <th>
+          团队编号
+        </th>
+        <th>
+          交易账号
+        </th>
+        <th>
+          成交时间
+        </th>
+        <th>
+          委托编号
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          买卖方向
+        </th>
+        <th>
+          成交数量
+        </th>
+        <th>
+          成交价
+        </th>
+      </tr>
+      <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <td>
+          {{a.tradeId}}
+        </td>
+        <td>
+          {{a.teamCode}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.dealTime | time}}
+        </td>
+        <td>
+          {{a.appointOrderCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.appointTypeDesc}}
+        </td>
+        <td>
+          {{a.dealCnt}}
+        </td>
+        <td>
+          {{a.dealAvrPrice}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>

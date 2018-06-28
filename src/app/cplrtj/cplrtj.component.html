@@ -1,0 +1,51 @@
+<div class="">
+  <div class="search-div">
+    <button (click)='export()'>导出报表</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          盈亏
+        </th>
+        <th>
+          券利用率
+        </th>
+        <th>
+          委托笔数
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.profit}}
+        </td>
+        <td>
+          {{a.useRate}}
+        </td>
+        <td>
+          {{a.appointCnt}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+</div>

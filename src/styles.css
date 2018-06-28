@@ -1,1 +1,259 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: '微软雅黑';
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.red {
+    color: #c31f20 !important;
+}
+
+.green {
+    color: green !important;
+}
+
+.search-div {
+    padding: 10px 0;
+}
+
+.search-div span {
+    margin-right: 10px;
+}
+
+.search-div input {
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    margin-right: 30px;
+    padding-left: 5px;
+    font-size: 14px;
+    height: 28px;
+}
+
+.search-div button {
+    padding: 0px 20px;
+    background: #c31f20;
+    color: #fff;
+    border: solid 1px #c31f20;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 30px;
+}
+
+.search-div button:hover {
+    background: #aa1227;
+}
+
+.search2 {
+    padding: 5px 0;
+}
+
+.action-button {
+    padding: 10px 0;
+}
+
+.action-button button {
+    margin-right: 10px;
+    background: #cc4545;
+    border: none;
+    height: 35px;
+    padding: 0 20px;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 2px;
+}
+
+.action-button button:hover {
+    background: #990f0f;
+}
+
+.my-table {
+    color: #333;
+}
+
+.my-table th {
+    background: #ececec;
+    word-break: keep-all
+}
+
+.my-table th, .my-table td {
+    padding: 0 30px;
+    text-align: center;
+    font-size: 14px;
+    border: solid 1px #ececec;
+}
+
+.my-table tr {
+    height: 40px;
+    cursor: pointer;
+}
+
+.my-table tr:hover {
+    background: #f5f5f5;
+}
+
+.my-table td span {
+    font-size: 12px;
+    margin: 0 10px;
+    color: #0483b5;
+    word-break: keep-all;
+}
+
+.my-table td span:hover {
+    color: #075574;
+    text-decoration: underline #075574;
+}
+
+.list-content {
+    width: 180px;
+    height: calc(100vh - 40px);
+    float: left;
+    border-right: solid 1px #ececec;
+    padding-left: 20px;
+    background: rgb(247, 247, 247);
+    padding-top: 30px;
+    margin-left: -30px;
+}
+
+.content-table {
+    float: right;
+    height: 100%;
+    width: calc(100% - 190px);
+}
+
+.table-div {
+    overflow-x: auto;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    height: calc(100vh - 300px);
+}
+
+.my-scroll::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 4px;
+}
+
+.my-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+}
+
+.my-scroll::-webkit-scrollbar-corner {
+    border-radius: 4px;
+}
+
+.my-scroll::-webkit-scrollbar-track-piece {
+    background: rgba(214, 214, 214, 0.36);
+    border-radius: 4px;
+}
+
+.dryk {
+    border: dashed 2px #0483b5;
+    height: 40px;
+    line-height: 35px;
+    padding-left: 20px;
+    float: left;
+    margin-top: 40px;
+}
+
+.active {
+    background: rgb(245, 245, 245);
+    color: #c31f20 !important;
+}
+
+.alert {
+    position: fixed;
+    z-index: 0618;
+    width: 50%;
+    left: 25%;
+    top: 30px;
+    height: 52px;
+    border-radius: 7px;
+    line-height: 52px;
+    text-align: center;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    padding: 0;
+}
+
+.loading {
+    position: fixed;
+    z-index: 0618;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    text-align: center;
+}
+
+.tabs-div {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-left: -30px;
+    background: #ececec;
+}
+
+.tabs-div div {
+    float: left;
+    padding: 7px 20px;
+    cursor: pointer;
+}
+
+/* 
+.tabs-div div:hover{
+    background: #fff;
+} */
+
+.tab-div-active {
+    background: #fff;
+}
+
+.tdgl-content {
+    padding-top: 90px;
+}
+
+.my-table input {
+    border: none;
+    text-align: center;
+    background: none;
+}
+
+.button-history {
+    margin-right: 10px;
+    background: #cc4545;
+    border: none;
+    height: 35px;
+    padding: 0 20px;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 2px;
+    margin-top: 40px;
+    margin-left: 20px;
+    float: left;
+}
+
+input:read-only {
+    background: rgb(240, 240, 240);
+    cursor: not-allowed;
+}
+
+.alert-div {
+    width: 400px;
+    max-height: 500px;
+    display: flex;
+    background: #fff;
+    margin-left: 50%;
+    left: -200px;
+    position: relative;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    padding: 5px 0;
+}

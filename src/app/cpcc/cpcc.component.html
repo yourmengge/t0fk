@@ -1,0 +1,59 @@
+<div>
+  <div class="action-button">
+    <button [disabled]='checkList.length===0?true:false' (click)='fptd()'>分配给团队</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          <input type="checkbox" name="" id="" (click)='clickAll()' [(ngModel)]='checkedAll'>
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          股票数量
+        </th>
+        <th>
+          所属产品
+        </th>
+        <th>
+          分配数量
+        </th>
+      </tr>
+      <tr *ngFor='let a of list;let i = index'>
+        <td>
+          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='checkedAll'>
+        </td>
+        <td>
+          {{a.stockNo}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.stockCnt}}
+        </td>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          <input type="text" [(ngModel)]='a.ableCnt'>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="fpjyy-alert" *ngIf='alert'>
+    <div class="alert-title">
+      <span class="submit-btn" (click)='submitJYY()'>确认</span>
+      选择要分配的团队
+      <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
+    </div>
+    <div class="alert-div my-scroll">
+      <div *ngFor='let a of jyyList' class="{{jyyCode === a.teamCode?'active':''}}" (click)='selectJYY(a)'>{{a.teamName}}</div>
+    </div>
+  </div>
+</div>

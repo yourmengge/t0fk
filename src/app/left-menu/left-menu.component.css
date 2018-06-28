@@ -1,0 +1,25 @@
+.first-menu {
+    line-height: 40px;
+    padding-left: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.first-menu:hover{
+    background: rgb(240, 240, 240);
+}
+
+.second-menu {
+    height: 35px;
+    line-height: 35px;
+    font-size: 13px;
+    margin-left: 30px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.second-menu:hover{
+    color: #d32c2c;
+}

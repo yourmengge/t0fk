@@ -1,0 +1,84 @@
+<div class="">
+    <div class="search-div">
+      <span> 交易员账户</span>
+      <input type="text" [(ngModel)]='userCode'>
+      <button class="button" (click)='getList()'>查询</button>
+      <button (click)='searchAll()'>查询全部</button>
+    </div>
+  
+    <div class="table-div my-scroll">
+      <table class="my-table">
+        <tr>
+          <th>
+            交易员账户
+          </th>
+          <th>
+            交易员姓名
+          </th>
+          <th>
+            产品编号
+          </th>
+          <th>
+            股票代码
+          </th>
+          <th>
+            股票名称
+          </th>
+          <th>
+            买卖方向
+          </th>
+          <th>
+            待平数量
+          </th>
+          <th>
+            总盈亏
+          </th>
+          <th>
+            券利用率
+          </th>
+          <th>
+            买入成交金额
+          </th>
+          <th>
+            卖出成交金额
+          </th>
+        </tr>
+        <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+          <td>
+            {{a.accountCode}}
+          </td>
+          <td>
+            {{a.accountName}}
+          </td>
+          <td>
+            {{a.productCode}}
+          </td>
+          <td>
+            {{a.stockCode}}
+          </td>
+          <td>
+            {{a.stockName}}
+          </td>
+          <td>
+            {{a.appointTypeDesc}}
+          </td>
+          <td>
+            {{a.unclose}}
+          </td>
+          <td>
+            {{a.profit}}
+          </td>
+          <td>
+            {{a.useRate}}
+          </td>
+          <td>
+            {{a.buyDealAmount}}
+          </td>
+          <td>
+            {{a.sellDealAmount}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  
+  </div>
