@@ -15,13 +15,27 @@ export class DataService {
   hide = false;
   username: string; // 用户名
   token: string;
-
+  settimeout: any;
+  settimeoutprice: any;
+  timeout = 3000;
   userCode: string; // 交易员账户
 
   searchCode: string; // 团队查询或产品查询的code
   searchName: string; // 团队查询或产品查询的名字
+
+  historyKeyWord = {
+    beginTime: '',
+    endTime: '',
+    teamCode: '',
+    productCode: '',
+    accountCode: '',
+    appointOrderCode: '',
+    selectDate: '',
+    selectMonth: ''
+  };
   constructor(public router: Router) {
     this.searchCode = '';
+    this.userCode = '';
   }
   /**
    * 获取当前url最后的参数
@@ -30,6 +44,19 @@ export class DataService {
     return window.location.hash.split('/')[num];
   }
 
+  /**
+   * 清楚settimeout
+   */
+  clearTimeOut() {
+    window.clearTimeout(this.settimeout);
+  }
+
+  /**
+ * 清楚settimeout
+ */
+  clearPrice() {
+    window.clearTimeout(this.settimeoutprice);
+  }
 
   /**
    * 页面跳转
@@ -63,6 +90,22 @@ export class DataService {
   }
 
   /**
+   * 初始化historyKeyWord
+   */
+  initHistoryWord() {
+    this.historyKeyWord = {
+      beginTime: '',
+      endTime: '',
+      teamCode: '',
+      productCode: '',
+      accountCode: '',
+      appointOrderCode: '',
+      selectDate: this.getTime('yyyy-MM-dd', new Date()),
+      selectMonth: ''
+    };
+  }
+
+  /**
    * 输入出错提示
    */
   ErrorMsg(desc) {
@@ -81,8 +124,15 @@ export class DataService {
   }
 
   /**
- * 判断是否为空
- */
+   * 判断空数组
+   */
+  isNullArray(array) {
+    return array.length === 0 ? true : false;
+  }
+
+  /**
+  * 判断是否为空
+  */
   isNull(string) {
     // tslint:disable-next-line:max-line-length
     return (string === 'undefined' || string === '' || string === null || string === 'null' || string === undefined || string === 'NaN') ? true : false;
@@ -102,7 +152,35 @@ export class DataService {
     } else {
       return { headers: new HttpHeaders({ 'Authorization': this.token }) };
     }
+  }
 
+  getExportHeader() {
+    if (this.isNull(this.token)) {
+      if (this.isNull(this.getSession('token'))) {
+        this.ErrorMsg('请重新登录');
+        this.goto('/login');
+        return;
+      } else {
+        this.token = this.getSession('token');
+        // tslint:disable-next-line:max-line-length
+        return new HttpHeaders({ 'Authorization': this.getSession('token'), 'Content-Type': 'application/x-www-form-urlencoded' });
+      }
+
+    } else {
+      return new HttpHeaders({ 'Authorization': this.token, 'Content-Type': 'application/x-www-form-urlencoded' });
+    }
+  }
+
+  downloadFile(res, text) {
+    const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.setAttribute('href', objectUrl);
+    a.setAttribute('download', text + '.xls');
+    a.click();
+    URL.revokeObjectURL(objectUrl);
   }
 
   getSession(name): any {
@@ -248,8 +326,8 @@ export class DataService {
   }
 
   /**
- * 获取当前时间：毫秒
- */
+  * 获取当前时间：毫秒
+  */
   getTime(type, time) {
     time = new Date(time);
     const year = time.getFullYear();
@@ -267,14 +345,25 @@ export class DataService {
         return year + '-' + this.add0(month) + '-' + this.add0(day);
       case 'yyyyMMss':
         return year + this.add0(month) + this.add0(day);
+      case 'yyyy-MM':
+        return year + '-' + this.add0(month);
     }
   }
 
   /**
- * 个位数补充0
- */
+  * 个位数补充0
+  */
   add0(num) {
     return num < 10 ? '0' + num : num;
+  }
+
+  /**
+   * 获取某月份的最后一天：获取下个月的第一天，减去一天，就是某个月的最后一天
+   */
+  getLastDateOfMonth(date: Date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(new Date(year, month + 1, 1).getTime() - 1000 * 60 * 60 * 24);
   }
 }
 

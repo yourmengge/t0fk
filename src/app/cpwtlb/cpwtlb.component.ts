@@ -20,18 +20,30 @@ export class CpwtlbComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
-      this.getWtList();
+      this.getList();
     }
   }
 
   /**
  * 获取委托列表
  */
-  getWtList() {
-    this.data.Loading(this.data.show);
+  getList() {
+    this.data.clearTimeOut();
     this.http.productAppoint(this.code).subscribe((res) => {
       this.list = res;
-      this.data.Loading(this.data.hide);
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
+
+  export() {
+    this.http.exportAppointProduct(this.code).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, '产品委托列表');
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();

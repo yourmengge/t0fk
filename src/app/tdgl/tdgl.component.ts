@@ -37,11 +37,15 @@ export class TdglComponent implements DoCheck {
    * 获取团队当日盈亏
    */
   getPrice() {
+    this.data.clearPrice();
     this.http.getTeamPrice(this.code).subscribe((res) => {
       this.price = res;
+      this.data.settimeoutprice = setTimeout(() => {
+        this.getPrice();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
-      this.data.isError();
+      // this.data.isError();
     });
   }
 
@@ -49,6 +53,10 @@ export class TdglComponent implements DoCheck {
     this.data.goto('main/tdgl/history');
   }
 
+  back() {
+    this.data.initHistoryWord();
+    this.data.goto('main/tdgl');
+  }
 
 
 }

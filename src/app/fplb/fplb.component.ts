@@ -29,14 +29,16 @@ export class FplbComponent implements DoCheck {
       stockName: '',
       teamCode: '',
       bcfp: '',
-      ghcp: ''
+      ghcp: '',
+      isChecked: false
     };
   }
 
   ngDoCheck() {
     if (this.code !== this.data.searchCode && !this.data.isNull(this.data.searchCode)) {
       this.code = this.data.searchCode;
-      this.getTeamHold();
+      this.list = [];
+      this.getList();
     }
   }
 
@@ -52,37 +54,45 @@ export class FplbComponent implements DoCheck {
     }
   }
 
-  getTeamHold() {
-    this.data.Loading(this.data.show);
+  getList() {
+    this.data.clearTimeOut();
     this.http.getHold(this.code).subscribe((res) => {
-      this.list = res;
-      // tslint:disable-next-line:forin
-      for (const i in this.list) {
-        this.list[i].ghcp = this.list[i].ableCnt;
-        this.list[i].bcfp = this.list[i].ableCnt;
+      // this.list = res;
+      // // tslint:disable-next-line:forin
+      // for (const i in this.list) {
+      //   this.list[i].ghcp = this.list[i].ableCnt;
+      //   this.list[i].bcfp = this.list[i].ableCnt;
+      // }
+      for (const i in res) {
+        if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
+          res[i].ghcp = res[i].ableCnt;
+          res[i].bcfp = res[i].ableCnt;
+        } else if (this.list[i].ghcp !== res[i].ableCnt || this.list[i].bcfp !== res[i].ableCnt) {
+          res[i].bcfp = this.list[i].bcfp;
+          res[i].ghcp = this.list[i].ghcp;
+        } else {
+          res[i].ghcp = res[i].ableCnt;
+          res[i].bcfp = res[i].ableCnt;
+        }
       }
-      this.data.Loading(this.data.hide);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
-  }
-
-  searchAll() {
-    const data = {
-      teamCode: this.code,
-      accountCode: ''
-    };
-    this.http.getHold(data).subscribe((res) => {
       this.list = res;
+      if (this.checkList.length === 0) {
+        // tslint:disable-next-line:forin
+        for (const i in this.list) {
+          this.list[i].isChecked = false;
+        }
+      } else {
+        this.checkList.forEach((element) => {
+          this.list[element].isChecked = true;
+        });
+      }
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
     });
-  }
-
-  history() {
-    this.data.goto('main/lswtlb');
   }
 
   /**
@@ -91,10 +101,13 @@ export class FplbComponent implements DoCheck {
   fpjyy() {
     let i = 0;
     this.checkList.forEach((element) => {
-      if (!this.data.is100Int(this.list[element].bcfp)) {
-        this.data.ErrorMsg('分配数量只能为100的整数倍');
-        return i = 1;
+      if (this.list[element].bcfp % 100 !== this.list[element].ableCnt % 100) {
+        if (!this.data.is100Int(this.list[element].bcfp)) {
+          this.data.ErrorMsg('分配数量只能为100的整数倍');
+          return i = 1;
+        }
       }
+
     });
     if (i === 0) {
       this.alert = this.data.show;
@@ -106,14 +119,14 @@ export class FplbComponent implements DoCheck {
   /**
    * 判断所分配的数量是否是100的整数倍
    */
-  pdfpsl() {
-    this.checkList.forEach((element) => {
-      if (!this.data.is100Int(this.list[element].bcfp)) {
-        this.data.ErrorMsg('分配数量只能为100的整数倍');
-        return false;
-      }
-    });
-  }
+  // pdfpsl() {
+  //   this.checkList.forEach((element) => {
+  //     if (!this.data.is100Int(this.list[element].bcfp)) {
+  //       this.data.ErrorMsg('分配数量只能为100的整数倍');
+  //       return false;
+  //     }
+  //   });
+  // }
 
   /**
    * 选中复选框
@@ -121,7 +134,13 @@ export class FplbComponent implements DoCheck {
   checkbox(index) {
     // tslint:disable-next-line:no-unused-expression
     // 判断是否是选中状态的复选框，如果是，从数组中剔除，否，添加到数组中
-    this.checkList.indexOf(index) >= 0 ? this.checkList.splice(this.checkList.indexOf(index), 1) : this.checkList.push(index);
+    if (this.checkList.indexOf(index) >= 0) {
+      this.checkList.splice(this.checkList.indexOf(index), 1);
+      this.list[index].isChecked = false;
+    } else {
+      this.checkList.push(index);
+      this.list[index].isChecked = true;
+    }
   }
 
   /**
@@ -148,25 +167,6 @@ export class FplbComponent implements DoCheck {
    */
   selectJYY(a) {
     this.jyyCode = a.accountCode;
-    // if (confirm('确定分配至交易员' + a.accountName + '?')) {
-    //   const array = [];
-    //   this.checkList.forEach((element) => {
-    //     const data = {
-    //       teamCode: this.code,
-    //       productCode: '',
-    //       stockCode: '',
-    //       stockNum: '',
-    //       execType: 4,
-    //       accountCode: ''
-    //     };
-    //     data.accountCode = a.accountCode;
-    //     data.productCode = this.list[element].productCode;
-    //     data.stockCode = this.list[element].stockCode;
-    //     data.stockNum = this.list[element].bcfp;
-    //     array.push(data);
-    //   });
-    //   this.submit(array);
-    // }
   }
 
   /**
@@ -196,24 +196,34 @@ export class FplbComponent implements DoCheck {
    * 归还给产品
    */
   ghcp() {
+    let temp = 0;
     const array = [];
-    if (confirm('确定归还至产品？')) {
-      this.checkList.forEach((element) => {
-        const data = {
-          teamCode: this.code,
-          productCode: '',
-          stockCode: '',
-          stockNum: '',
-          execType: 4,
-          accountCode: ''
-        };
-        data.accountCode = this.jyyCode;
-        data.productCode = this.list[element].productCode;
-        data.stockCode = this.list[element].stockCode;
+    this.checkList.forEach((element) => {
+      const data = {
+        teamCode: this.code,
+        productCode: '',
+        stockCode: '',
+        stockNum: '',
+        execType: 4,
+        accountCode: ''
+      };
+      data.accountCode = this.jyyCode;
+      data.productCode = this.list[element].productCode;
+      data.stockCode = this.list[element].stockCode;
+      if (this.list[element].ghcp > this.list[element].ableCnt) {
+        this.data.ErrorMsg('归还股票数量不能大于股票数量！');
+        return temp = 1;
+      } else {
         data.stockNum = this.list[element].ghcp;
         array.push(data);
-      });
+      }
+    });
+    if (temp === 0) {
+      if (confirm('确定归还至产品？')) {
+        this.submitBack(array);
+      }
     }
+
   }
 
   /**
@@ -224,7 +234,8 @@ export class FplbComponent implements DoCheck {
     this.http.coupon({ list: data }).subscribe((res) => {
       console.log(res);
       this.data.ErrorMsg('提交成功');
-      this.getTeamHold();
+      this.list = [];
+      this.getList();
       this.checkList = [];
       this.data.Loading(this.data.hide);
     }, (err) => {
@@ -242,7 +253,8 @@ export class FplbComponent implements DoCheck {
       console.log(res);
       this.data.ErrorMsg('提交成功');
       this.close();
-      this.getTeamHold();
+      this.list = [];
+      this.getList();
       this.checkList = [];
       this.data.Loading(this.data.hide);
     }, (err) => {
@@ -251,4 +263,13 @@ export class FplbComponent implements DoCheck {
     });
   }
 
+  export() {
+    this.http.exportHoldTeam(this.code).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, '分配列表');
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
 }

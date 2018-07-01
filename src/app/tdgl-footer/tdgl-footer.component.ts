@@ -19,6 +19,7 @@ export class TdglFooterComponent implements OnInit {
 
   goto(url) {
     this.url = url;
+    this.data.clearTimeOut();
     this.data.goto('main/tdgl/' + url);
   }
 

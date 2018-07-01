@@ -34,6 +34,10 @@ export class LeftMenuComponent implements OnInit {
 
 
   goto(url) {
+    this.data.clearPrice();
+    this.data.clearTimeOut();
+    this.data.initHistoryWord();
+    this.data.userCode = '';
     this.url = url;
     this.data.goto('main/' + url);
     if (url === 'tdgl') {

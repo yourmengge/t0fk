@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { DataService } from '../data.service';
 
@@ -7,20 +7,23 @@ import { DataService } from '../data.service';
   templateUrl: './lscj.component.html',
   styleUrls: ['./lscj.component.css']
 })
-export class LscjComponent implements DoCheck {
+export class LscjComponent implements DoCheck, OnInit {
 
-  beginTime: any;
-  teamCode: string;
-  productCode: string;
-  accountCode: string;
-  appointOrderCode: string;
+  historyKeyWord = {
+    beginTime: '',
+    endTime: '',
+    teamCode: '',
+    productCode: '',
+    accountCode: '',
+    appointOrderCode: '',
+    selectDate: '',
+    selectMonth: ''
+  };
   list: any;
+  url: any;
   code: any;
   constructor(public http: HttpService, public data: DataService) {
-    this.beginTime = new Date();
-    this.productCode = '';
-    this.accountCode = '';
-    this.appointOrderCode = '';
+    this.historyKeyWord.selectDate = this.data.getTime('yyyy-MM-dd', new Date());
   }
 
   ngDoCheck() {
@@ -29,29 +32,35 @@ export class LscjComponent implements DoCheck {
       if (this.code !== '') {
         this.getList();
       }
-
     }
   }
 
+  ngOnInit() {
+    this.historyKeyWord = this.data.historyKeyWord;
+    if (this.historyKeyWord.selectDate === '') {
+      this.historyKeyWord.selectDate = this.data.getTime('yyyy-MM-dd', new Date());
+    }
+    this.getList();
+    this.url = this.data.getUrl(2);
+  }
+
   getList() {
-    const data = {
-      beginTime: this.toTime(this.beginTime),
-      endTime: this.toTime(this.beginTime),
-      teamCode: this.code,
-      productCode: this.productCode,
-      accountCode: this.accountCode,
-      appointOrderCode: this.appointOrderCode
-    };
-    this.http.historyAppoint(data, 'trade').subscribe((res) => {
+    this.data.Loading(this.data.show);
+    if (this.url === 'cpgl') {
+      this.historyKeyWord.productCode = this.code;
+    } else {
+      this.historyKeyWord.teamCode = this.code;
+    }
+    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
+    this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
+    this.data.historyKeyWord = this.historyKeyWord;
+    this.http.historyAppoint(this.historyKeyWord, 'trade').subscribe((res) => {
       this.list = res;
+      this.data.Loading(this.data.hide);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
     });
-  }
-
-  toTime(time) {
-    return this.data.getTime('yyyyMMss', time);
   }
 
 }

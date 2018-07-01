@@ -9,7 +9,7 @@
   <div class="search-div">
     <span> 交易员账户</span>
     <input type="text" [(ngModel)]='userCode'>
-    <button class="button" (click)='getList()'>查询</button>
+    <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
@@ -46,9 +46,9 @@
           分配交易员姓名
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index'>
+      <tr *ngFor='let a of list;let i = index;'>
         <td>
-          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='checkedAll'>
+          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='a.isChecked'>
         </td>
         <td>
           {{a.stockCode}}
@@ -63,7 +63,7 @@
           {{a.ableCnt}}
         </td>
         <td>
-          <input type="text" [(ngModel)]='a.bcgh'>
+          <input type="number" [(ngModel)]='a.bcgh'>
         </td>
         <td>
           {{a.productName}}

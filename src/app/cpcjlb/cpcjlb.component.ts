@@ -27,18 +27,26 @@ export class CpcjlbComponent implements DoCheck {
   }
 
   getList() {
+    this.data.clearTimeOut();
     this.http.productTrade(this.code).subscribe((res) => {
       this.list = res;
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
     });
   }
 
-  // getData() {
-  //   this.listData.getList(this.http.productTrade(this.code)).subscribe((res) => {
-
-  //   });
-  // }
+  export() {
+    this.http.exportTradeProduct(this.code).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, '产品成交列表');
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
 
 }

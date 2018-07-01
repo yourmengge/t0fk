@@ -13,10 +13,6 @@ import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { RightContentComponent } from './right-content/right-content.component';
 import { CpglComponent } from './cpgl/cpgl.component';
 import { TdglComponent } from './tdgl/tdgl.component';
-import { CpfqComponent } from './cpfq/cpfq.component';
-import { TdfqComponent } from './tdfq/tdfq.component';
-import { TdhqComponent } from './tdhq/tdhq.component';
-import { JyyhqComponent } from './jyyhq/jyyhq.component';
 import { AlertComponent } from './alert/alert.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from './loading/loading.component';
@@ -52,6 +48,7 @@ const historyChild: Routes = [
 ];
 
 const cpglChild: Routes = [
+  { path: 'history', component: HistoryComponent, children: historyChild },
   { path: 'cplrtj', component: CplrtjComponent },
   { path: 'cpcjlb', component: CpcjlbComponent },
   { path: 'cpwtlb', component: CpwtlbComponent },
@@ -72,10 +69,6 @@ const tdglChild: Routes = [
 ];
 
 const appChildRoutes: Routes = [
-  { path: 'jyyhq', component: JyyhqComponent },
-  { path: 'tdhq', component: TdhqComponent },
-  { path: 'tdfq', component: TdfqComponent },
-  { path: 'lswtlb', component: LswtlbComponent },
   { path: 'tdgl', component: TdglComponent, children: tdglChild },
   { path: 'cpgl', component: CpglComponent, children: cpglChild },
   { path: '', redirectTo: 'tdgl', pathMatch: 'full' }
@@ -98,10 +91,6 @@ const appRoutes: Routes = [
     CpccComponent,
     CpglComponent,
     TdglComponent,
-    CpfqComponent,
-    TdfqComponent,
-    TdhqComponent,
-    JyyhqComponent,
     AlertComponent,
     LoadingComponent,
     ZhxxComponent,

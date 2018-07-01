@@ -12,6 +12,7 @@ export class DplbComponent implements DoCheck {
   list: any;
   proName: any;
   userCode: any;
+  searchCode: any;
   constructor(public data: DataService, public http: HttpService) {
     this.code = '';
     this.userCode = this.data.userCode;
@@ -20,18 +21,27 @@ export class DplbComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
-      this.getList();
+      this.search();
     }
   }
 
+  search() {
+    this.searchCode = this.userCode;
+    this.data.userCode = this.searchCode;
+    this.getList();
+  }
+
   getList() {
-    this.data.userCode = this.userCode;
+    this.data.clearTimeOut();
     const data = {
       teamCode: this.code,
-      accountCode: this.userCode
+      accountCode: this.searchCode
     };
     this.http.getClosed(data).subscribe((res) => {
       this.list = res;
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -39,18 +49,47 @@ export class DplbComponent implements DoCheck {
   }
 
   searchAll() {
-    const data = {
-      teamCode: this.code,
-      accountCode: ''
-    };
-    this.data.Loading(this.data.show);
-    this.http.getClosed(data).subscribe((res) => {
-      this.list = res;
-      this.data.Loading(this.data.hide);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
+    this.searchCode = '';
+    this.getList();
+  }
+
+  sell(a) {
+    if (confirm('确认平仓？')) {
+      const data = {
+        productCode: a.productCode,
+        teamCode: this.code,
+        accountCode: a.accountCode,
+        stockCode: a.stockCode,
+        appointPrice: a.appointPrice,
+        appointCnt: a.appointCnt
+      };
+      this.http.appointSELL(data).subscribe((res) => {
+        this.getList();
+        this.data.ErrorMsg('提交成功');
+      }, (err) => {
+        this.data.error = err.error;
+        this.data.isError();
+      });
+    }
+  }
+
+  cancle(a) {
+    if (confirm('确认撤单？')) {
+      const data = {
+        productCode: a.productCode,
+        teamCode: this.code,
+        accountCode: a.accountCode,
+        stockCode: a.stockCode,
+        appointOrderCode: a.appointOrderCode
+      };
+      this.http.appointCancel(data).subscribe((res) => {
+        this.getList();
+        this.data.ErrorMsg('提交成功');
+      }, (err) => {
+        this.data.error = err.error;
+        this.data.isError();
+      });
+    }
   }
 
 }

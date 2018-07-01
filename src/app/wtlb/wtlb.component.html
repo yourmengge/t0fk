@@ -18,8 +18,9 @@
   <div class="search-div">
     <span> 交易员账户</span>
     <input type="text" [(ngModel)]='userCode'>
-    <button class="button" (click)='getWtList()'>查询</button>
+    <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
+    <button (click)='export()'>导出列表</button>
   </div>
 
   <div class="table-div my-scroll">
@@ -90,7 +91,7 @@
         <td>
           {{a.accountName}}
         </td>
-        <td>
+        <td class="wtbh">
           {{a.appointOrderCode}}
         </td>
         <td>

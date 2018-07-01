@@ -2,7 +2,7 @@
   <div class="search-div">
     <span> 交易员账户</span>
     <input type="text" [(ngModel)]='userCode'>
-    <button class="button" (click)='getList()'>查询</button>
+    <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="table-div my-scroll">
@@ -74,9 +74,9 @@
           {{a.accountName}}
         </td>
         <td>
-          {{a.appointTime | time}}
+          {{a.appointTime}}
         </td>
-        <td>
+        <td class="wtbh">
           {{a.appointOrderCode}}
         </td>
         <td>
@@ -104,20 +104,20 @@
           {{a.dealAvrPrice}}
         </td>
         <td>
-          {{a.appointCnt}}
+          {{a.uncloseCnt}}
         </td>
         <td>
-          {{a.appointCnt}}
+          {{a.profit}}
         </td>
         <td>
           {{a.teamCode}}
         </td>
         <td>
-          {{a.appointCnt}}
+          {{a.lastPrice}}
         </td>
         <td>
-          <span>撤单</span>
-          <span>平仓</span>
+          <span *ngIf='a.appointStatusIng' (click)='cancle(a)'>撤单</span>
+          <span *ngIf='a.uncloseCnt > 0' (click)='sell(a)'>平仓</span>
         </td>
       </tr>
     </table>

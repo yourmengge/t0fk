@@ -12,6 +12,14 @@ button:disabled {
     cursor: not-allowed;
 }
 
+input[type=number] {
+    appearance: none;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 .red {
     color: #c31f20 !important;
 }
@@ -256,4 +264,17 @@ input:read-only {
     flex-wrap: wrap;
     overflow-y: auto;
     padding: 5px 0;
+}
+
+.back-btn {
+    float: right;
+    margin-top: 30px;
+    margin-right: 10px;
+    border: none;
+    padding: 5px 20px;
+    font-size: 14px;
+}
+
+.wtbh {
+    white-space: nowrap;
 }

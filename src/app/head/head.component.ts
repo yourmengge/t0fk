@@ -14,4 +14,10 @@ export class HeadComponent implements OnInit {
     this.username = this.data.getSession('username');
   }
 
+  logout() {
+    this.data.ErrorMsg('注销成功');
+    this.data.removeSession('token');
+    this.data.goto('/');
+  }
+
 }

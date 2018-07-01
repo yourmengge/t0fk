@@ -1,14 +1,14 @@
 <div class="">
   <div class="search-div">
     <span>交易账户</span>
-    <input type="text" [(ngModel)]='accountCode'>
+    <input type="text" [(ngModel)]='historyKeyWord.accountCode'>
     <span>委托编号</span>
-    <input type="text" [(ngModel)]='appointOrderCode'>
+    <input type="text" [(ngModel)]='historyKeyWord.appointOrderCode'>
     <span>交易日期</span>
-    <input type="date" [(ngModel)]='beginTime'>
+    <input type="date" [(ngModel)]='historyKeyWord.selectDate'>
     <button class="button" (click)='getList()'>查询</button>
   </div>
-  <div class="table-div my-scroll">
+  <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
     <table class="my-table">
       <tr>
         <th>
@@ -65,7 +65,7 @@
       </tr>
       <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
-          {{a.appointTime | time}}
+          {{a.appointTime}}
         </td>
         <td>
           {{a.productCode}}
@@ -76,7 +76,7 @@
         <td>
           {{a.accountName}}
         </td>
-        <td>
+        <td class="wtbh">
           {{a.appointOrderCode}}
         </td>
         <td>
@@ -114,6 +114,129 @@
         </td>
         <td>
           {{a.pkOrder}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          交易账号
+        </th>
+        <th>
+          交易员姓名
+        </th>
+        <th>
+          团队编号
+        </th>
+        <th>
+          委托编号
+        </th>
+        <th>
+          委托数量
+        </th>
+        <th>
+          委托价格
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          成交数量
+        </th>
+        <th>
+          成交均价
+        </th>
+        <th>
+          委托日期
+        </th>
+        <th>
+          委托时间
+        </th>
+        <th>
+          委托状态
+        </th>
+        <th>
+          买卖方向
+        </th>
+        <th>
+          备注信息
+        </th>
+        <th>
+          委托标志
+        </th>
+        <th>
+          委托PK
+        </th>
+        <th>
+          持仓来源
+        </th>
+      </tr>
+      <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
+        </td>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td class="wtbh">
+          {{a.appointOrderCode}}
+        </td>
+        <td>
+          {{a.appointCnt}}
+        </td>
+        <td>
+          {{a.appointPrice}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.dealCnt}}
+        </td>
+        <td>
+          {{a.dealAvrPrice}}
+        </td>
+        <td>
+          {{a.orderDate | date}}
+        </td>
+        <td>
+          {{a.appointTime}}
+        </td>
+        <td>
+          {{a.appointStatusDesc}}
+        </td>
+        <td>
+          {{a.appointTypeDesc}}
+        </td>
+        <td>
+          {{a.memo}}
+        </td>
+        <td>
+          {{a.isVritualDesc}}
+        </td>
+        <td>
+          {{a.pkOrder}}
+        </td>
+        <td>
+          {{a.stockFromDesc}}
         </td>
       </tr>
     </table>

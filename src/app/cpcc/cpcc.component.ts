@@ -24,19 +24,49 @@ export class CpccComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode && !this.data.isNull(this.data.searchCode)) {
       this.code = this.data.searchCode;
-      this.getHold();
+      this.list = [];
+      this.getList();
     }
   }
 
-  getHold() {
-    this.data.Loading(this.data.show);
-    this.http.productHold(this.code).subscribe((res) => {
-      this.list = res;
+  clickAll() {
+    this.checkedAll = !this.checkedAll;
+    if (this.checkedAll) {
       // tslint:disable-next-line:forin
       for (const i in this.list) {
-        this.list[i].ghcp = this.list[i].ableCnt;
+        this.checkList.push(i);
       }
-      this.data.Loading(this.data.hide);
+    } else {
+      this.checkList = [];
+    }
+  }
+
+  getList() {
+    this.data.clearTimeOut();
+    this.http.productHold(this.code).subscribe((res) => {
+      // tslint:disable-next-line:forin
+      for (const i in res) {
+        if (!this.data.isNullArray(this.list)) {
+          if (res[i].ableCnt !== this.list[i].ableCnt) {
+            res[i].ableCnt = this.list[i].ableCnt;
+          }
+        }
+      }
+      this.list = res;
+      if (this.checkList.length === 0) {
+        // tslint:disable-next-line:forin
+        for (const i in this.list) {
+          this.list[i].isChecked = false;
+        }
+      } else {
+        this.checkList.forEach((element) => {
+          this.list[element].isChecked = true;
+        });
+      }
+
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -55,10 +85,13 @@ export class CpccComponent implements DoCheck {
   fptd() {
     let i = 0;
     this.checkList.forEach((element) => {
-      if (!this.data.is100Int(this.list[element].ableCnt)) {
-        this.data.ErrorMsg('分配数量只能为100的整数倍');
-        return i = 1;
+      if (this.list[element].ableCnt % 100 !== this.list[element].ghcp % 100) {
+        if (!this.data.is100Int(this.list[element].ableCnt)) {
+          this.data.ErrorMsg('分配数量只能为100的整数倍');
+          return i = 1;
+        }
       }
+
     });
     if (i === 0) {
       this.alert = this.data.show;
@@ -122,7 +155,8 @@ export class CpccComponent implements DoCheck {
       console.log(res);
       this.data.ErrorMsg('提交成功');
       this.close();
-      this.getHold();
+      this.list = [];
+      this.getList();
       this.checkList = [];
       this.data.Loading(this.data.hide);
     }, (err) => {

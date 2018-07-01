@@ -62,7 +62,7 @@
       </tr>
       <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
-          {{a.appointTime | time}}
+          {{a.appointTime}}
         </td>
         <td>
           {{a.teamCode}}
@@ -70,7 +70,7 @@
         <td>
           {{a.stockCode}}
         </td>
-        <td>
+        <td class="wtbh">
           {{a.appointOrderCode}}
         </td>
         <td>
@@ -98,13 +98,13 @@
           {{a.dealAvrPrice}}
         </td>
         <td>
-          {{a.teamCode}}
+          {{a.productCommission}}
         </td>
         <td>
-          {{a.memo}}
+          {{a.productHappyAmount}}
         </td>
         <td>
-          {{a.isVritualDesc}}
+          {{a.dealHappyAmount}}
         </td>
         <td>
           {{a.memo}}

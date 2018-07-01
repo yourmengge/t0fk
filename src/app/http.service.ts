@@ -17,6 +17,11 @@ export class HttpService {
     return this.http.post(this.host + url, data, this.data.getHeader());
   }
 
+  export(url, data) {
+    this.data.getExportHeader();
+    return this.http.post(this.host + url, data, { headers: this.data.getExportHeader(), responseType: 'arraybuffer' });
+  }
+
   /**
    * 登录接口
    */
@@ -169,5 +174,68 @@ export class HttpService {
    */
   historyAppoint(data, type) {
     return this.POST('history/' + type, data);
+  }
+
+  /**
+   * 平仓
+   */
+  appointSELL(data) {
+    return this.POST('appoint/SELL', data);
+  }
+
+  /**
+   * 撤单
+   */
+  appointCancel(data) {
+    return this.POST('cancel', data);
+  }
+
+  /**
+   * 导出团队分配列表
+   */
+  exportHoldTeam(code) {
+    return this.export('team/' + code + '/hold/export', {});
+  }
+
+  /**
+   * 导出团队委托列表
+   */
+  exportAppointTeam(data) {
+    return this.export('today/appoint/export', data);
+  }
+
+  /**
+   * 导出团队成交列表
+   */
+  exportTradeTeam(data) {
+    return this.export('today/trade/export', data);
+  }
+
+  /**
+  * 导出团队利润统计列表
+  */
+  exportProfitTeam(data) {
+    return this.export('today/profit/export', data);
+  }
+
+  /**
+  * 导出产品委托列表
+  */
+  exportAppointProduct(code) {
+    return this.export('product/' + code + '/appoint/export', {});
+  }
+
+  /**
+   * 导出产品成交列表
+   */
+  exportTradeProduct(code) {
+    return this.export('product/' + code + '/trade/export', {});
+  }
+
+  /**
+   * 导出产品利润统计列表
+   */
+  exportProfitProduct(code) {
+    return this.export('product/' + code + '/profitDetail/export', {});
   }
 }

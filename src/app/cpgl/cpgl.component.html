@@ -1,4 +1,4 @@
-<div class="dryk">
+<div class="dryk" *ngIf='!historyFooter'>
     产品名称：
     <span class="dataSpan">{{name}}</span>
     产品编号：
@@ -6,7 +6,11 @@
     产品总发生金额：
     <span class="dataSpan">{{price}}</span>
 </div>
+<button (click)='history()' class="button-history" *ngIf='!historyFooter'>历史数据列表</button>
+<button *ngIf='historyFooter' class="back-btn button-history" (click)='back()'>返回</button>
 <div class="tdgl-content">
     <router-outlet></router-outlet>
 </div>
-<app-cpgl-footer></app-cpgl-footer>
+
+<app-history-footer *ngIf='historyFooter'></app-history-footer>
+<app-cpgl-footer  *ngIf='!historyFooter'></app-cpgl-footer>

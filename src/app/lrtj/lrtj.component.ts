@@ -8,7 +8,7 @@ import { HttpService } from '../http.service';
   styleUrls: ['./lrtj.component.css']
 })
 export class LrtjComponent implements DoCheck {
-
+  searchCode: any;
   code: string;
   list: any;
   proName: any;
@@ -21,23 +21,32 @@ export class LrtjComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
-      this.getList();
+      this.search();
     }
+  }
+
+  search() {
+    this.searchCode = this.userCode;
+    this.data.userCode = this.searchCode;
+    this.getList();
   }
 
   /**
    * 获取委托列表
    */
   getList() {
-    this.data.userCode = this.userCode;
+    this.data.clearTimeOut();
     this.data.Loading(this.data.show);
     const data = {
       teamCode: this.code,
-      accountCode: this.userCode
+      accountCode: this.searchCode
     };
     this.http.teamProfit(data).subscribe((res) => {
       this.list = res;
       this.data.Loading(this.data.hide);
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -45,14 +54,15 @@ export class LrtjComponent implements DoCheck {
   }
 
   searchAll() {
-    const data = {
-      teamCode: this.code,
-      accountCode: ''
-    };
-    this.data.Loading(this.data.show);
-    this.http.teamProfit(data).subscribe((res) => {
-      this.list = res;
-      this.data.Loading(this.data.hide);
+    this.searchCode = '';
+    this.getList();
+  }
+
+  export() {
+    const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
+    this.http.exportProfitTeam(data).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, '利润统计列表');
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();

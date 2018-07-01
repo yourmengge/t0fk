@@ -20,7 +20,7 @@ export class HistoryFooterComponent implements OnInit {
 
   goto(url) {
     this.url = url;
-    this.data.goto('main/tdgl/history/' + url);
+    this.data.goto('main/' + this.data.getUrl(2) + '/history/' + url);
   }
 
   getList() {

@@ -1,14 +1,12 @@
 <div class="">
   <div class="search-div">
-    <span>交易账户</span>
-    <input type="text" [(ngModel)]='accountCode'>
-    <span>委托编号</span>
-    <input type="text" [(ngModel)]='appointOrderCode'>
+    <span *ngIf='url === "tdgl"'>交易账户</span>
+    <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
     <span>交易日期</span>
-    <input type="date" [(ngModel)]='beginTime'>
+    <input type="date" [(ngModel)]='historyKeyWord.selectDate'>
     <button class="button" (click)='getList()'>查询</button>
   </div>
-  <div class="table-div my-scroll">
+  <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
     <table class="my-table">
       <tr>
         <th>
@@ -76,5 +74,54 @@
       </tr>
     </table>
   </div>
-
+  <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          盈亏日期
+        </th>
+        <th>
+          盈亏值
+        </th>
+        <th>
+          手续费
+        </th>
+        <th>
+          利用率
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.profitDate | date}}
+        </td>
+        <td>
+          {{a.profitLoss}}
+        </td>
+        <td>
+          {{a.commissPrice}}
+        </td>
+        <td>
+          {{a.coefficient}}
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

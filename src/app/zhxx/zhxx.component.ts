@@ -10,6 +10,7 @@ import { Md5 } from 'ts-md5';
 })
 export class ZhxxComponent implements DoCheck {
   temp: any;
+  searchCode: any;
   accountStatus: any;
   isAutoShutdown: any;
   code: string;
@@ -49,18 +50,27 @@ export class ZhxxComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
-      this.getTeamMember();
+      this.search();
     }
   }
 
-  getTeamMember() {
-    this.data.userCode = this.userCode;
+  search() {
+    this.searchCode = this.userCode;
+    this.data.userCode = this.searchCode;
+    this.getList();
+  }
+
+  getList() {
+    this.data.clearTimeOut();
     const data = {
       teamCode: this.code,
-      accountCode: this.userCode
+      accountCode: this.searchCode
     };
     this.http.getTeamMember(data).subscribe((res) => {
       this.list = res;
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -72,16 +82,8 @@ export class ZhxxComponent implements DoCheck {
   }
 
   searchAll() {
-    const data = {
-      teamCode: this.code,
-      accountCode: ''
-    };
-    this.http.getTeamMember(data).subscribe((res) => {
-      this.list = res;
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
+    this.searchCode = '';
+    this.getList();
   }
 
   close() {
@@ -156,6 +158,7 @@ export class ZhxxComponent implements DoCheck {
   submit(data, type) {
     this.http.addJyy(data, type).subscribe((res) => {
       this.data.ErrorMsg('添加成功');
+      this.getList();
       this.close();
     }, (err) => {
       this.data.error = err.error;
@@ -194,6 +197,7 @@ export class ZhxxComponent implements DoCheck {
     if (confirm('确定删除交易员？')) {
       this.http.delJyy(data).subscribe((res) => {
         this.data.ErrorMsg('删除成功');
+        this.getList();
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();
@@ -213,6 +217,7 @@ export class ZhxxComponent implements DoCheck {
     if (this.newPass !== '') {
       this.http.reset(data).subscribe((res) => {
         this.data.ErrorMsg('重置密码成功');
+        this.getList();
         this.close();
       }, (err) => {
         this.data.error = err.error;

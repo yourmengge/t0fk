@@ -28,10 +28,22 @@ export class CplrtjComponent implements DoCheck {
    * 获取委托列表
    */
   getList() {
-    this.data.Loading(this.data.show);
+    this.data.clearTimeOut();
     this.http.productProfitDetail(this.code).subscribe((res) => {
       this.list = res;
-      this.data.Loading(this.data.hide);
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
+
+  export() {
+    this.http.exportProfitProduct(this.code).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, '产品利润统计列表');
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();

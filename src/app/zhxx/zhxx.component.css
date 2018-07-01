@@ -48,6 +48,7 @@
     line-height: 40px;
     margin-top: 10px;
     font-size: 14px;
+    width: 480px;
 }
 
 .flex-name {
@@ -69,6 +70,7 @@
 .button-div {
     display: flex;
     margin-top: 24px;
+    width: 100%;
 }
 
 .button-div button {

@@ -9,6 +9,7 @@
   <div class="action-button">
     <button class="button" (click)='fpjyy()' [disabled]='checkList.length===0?true:false'>分配给交易员</button>
     <button class="button" (click)='ghcp()' [disabled]='checkList.length===0?true:false'>归还给产品</button>
+    <button class="button" (click)='export()'>导出列表</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
@@ -43,7 +44,7 @@
       </tr>
       <tr *ngFor='let a of list;let i = index'>
         <td>
-          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='checkedAll'>
+          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='a.isChecked'>
         </td>
         <td>
           {{a.stockCode}}
@@ -58,10 +59,10 @@
           {{a.ableCnt}}
         </td>
         <td>
-          <input type="text" [(ngModel)]='a.bcfp'>
+          <input type="number" [(ngModel)]='a.bcfp'>
         </td>
         <td>
-          <input type="text" [(ngModel)]='a.ghcp'>
+          <input type="number" [(ngModel)]='a.ghcp'>
         </td>
         <td>
           {{a.teamCode}}
