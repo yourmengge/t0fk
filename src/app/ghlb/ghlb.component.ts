@@ -12,9 +12,11 @@ export class GhlbComponent implements DoCheck {
   checkedAll: boolean;
   list: any;
   userCode: any;
+  autofocusId: any;
   searchCode: any;
   constructor(public data: DataService, public http: HttpService) {
     this.checkedAll = false;
+    this.autofocusId = '';
     this.userCode = this.data.userCode;
   }
 
@@ -141,5 +143,9 @@ export class GhlbComponent implements DoCheck {
   searchAll() {
     this.searchCode = '';
     this.getList();
+  }
+
+  trackBy(a) {
+    return a.bcgh;
   }
 }

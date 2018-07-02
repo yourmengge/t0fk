@@ -21,6 +21,7 @@
     padding-top: 10px;
     float: left;
     background: #fff;
+    overflow-y: auto;
 }
 
 .right-content{

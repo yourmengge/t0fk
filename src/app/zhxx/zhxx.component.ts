@@ -54,6 +54,10 @@ export class ZhxxComponent implements DoCheck {
     }
   }
 
+  history() {
+    this.data.goto('main/tdgl/history');
+  }
+
   search() {
     this.searchCode = this.userCode;
     this.data.userCode = this.searchCode;

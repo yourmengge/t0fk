@@ -30,10 +30,13 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .search-div {
     padding: 10px 0;
+    padding-top: 20px;
+    padding-left: 20px;
 }
 
 .search-div span {
     margin-right: 10px;
+    margin-left: 20px;
 }
 
 .search-div input {
@@ -65,6 +68,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .action-button {
     padding: 10px 0;
+}
+
+.margin-top{
+    margin-top: 60px;
 }
 
 .action-button button {
@@ -168,7 +175,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     line-height: 35px;
     padding-left: 20px;
     float: left;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .active {
@@ -225,7 +232,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .tdgl-content {
-    padding-top: 90px;
+    padding-top: 5px;
 }
 
 .my-table input {
@@ -243,7 +250,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     color: #fff;
     font-size: 13px;
     border-radius: 2px;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 20px;
     float: left;
 }
@@ -268,7 +275,7 @@ input:read-only {
 
 .back-btn {
     float: right;
-    margin-top: 30px;
+    margin-top: 15px;
     margin-right: 10px;
     border: none;
     padding: 5px 20px;
@@ -277,4 +284,9 @@ input:read-only {
 
 .wtbh {
     white-space: nowrap;
+}
+
+.history-search{
+    padding-left: 0;
+    margin-left: -20px;
 }

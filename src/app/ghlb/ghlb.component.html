@@ -46,7 +46,7 @@
           分配交易员姓名
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index;'>
+      <tr *ngFor='let a of list;let i = index;trackBy:trackBy'>
         <td>
           <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='a.isChecked'>
         </td>
@@ -63,7 +63,7 @@
           {{a.ableCnt}}
         </td>
         <td>
-          <input type="number" [(ngModel)]='a.bcgh'>
+          <input  type="number" [(ngModel)]='a.bcgh'>
         </td>
         <td>
           {{a.productName}}

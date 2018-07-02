@@ -86,8 +86,13 @@ export class CpccComponent implements DoCheck {
     let i = 0;
     this.checkList.forEach((element) => {
       if (this.list[element].ableCnt % 100 !== this.list[element].ghcp % 100) {
-        if (!this.data.is100Int(this.list[element].ableCnt)) {
-          this.data.ErrorMsg('分配数量只能为100的整数倍');
+        // if (!this.data.is100Int(this.list[element].ableCnt)) {
+        //   this.data.ErrorMsg('分配数量只能为100的整数倍');
+        //   return i = 1;
+        // }
+
+        if (this.list[element].bcfp < 0) {
+          this.data.ErrorMsg('分配数量必须大于0');
           return i = 1;
         }
       }
@@ -163,6 +168,14 @@ export class CpccComponent implements DoCheck {
       this.data.error = err.error;
       this.data.isError();
     });
+  }
+
+  history() {
+    this.data.goto('main/cpgl/history');
+  }
+
+  trackBy(a) {
+    return a.ableCnt;
   }
 
 }

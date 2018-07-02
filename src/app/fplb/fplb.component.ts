@@ -101,11 +101,16 @@ export class FplbComponent implements DoCheck {
   fpjyy() {
     let i = 0;
     this.checkList.forEach((element) => {
-      if (this.list[element].bcfp % 100 !== this.list[element].ableCnt % 100) {
-        if (!this.data.is100Int(this.list[element].bcfp)) {
-          this.data.ErrorMsg('分配数量只能为100的整数倍');
-          return i = 1;
-        }
+      // if (this.list[element].bcfp % 100 !== this.list[element].ableCnt % 100) {
+      //   if (!this.data.is100Int(this.list[element].bcfp)) {
+      //     this.data.ErrorMsg('分配数量只能为100的整数倍');
+      //     return i = 1;
+      //   }
+      // }
+
+      if (this.list[element].bcfp < 0) {
+        this.data.ErrorMsg('分配数量必须大于0');
+        return i = 1;
       }
 
     });
@@ -271,5 +276,9 @@ export class FplbComponent implements DoCheck {
       this.data.error = err.error;
       this.data.isError();
     });
+  }
+
+  trackBy(a) {
+    return a.bcfp;
   }
 }

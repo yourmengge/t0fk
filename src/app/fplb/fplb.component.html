@@ -6,7 +6,7 @@
     <button (click)='searchAll()'>查询全部</button>
     <button (click)='history()'>历史委托列表</button>
   </div> -->
-  <div class="action-button">
+  <div class="action-button margin-top">
     <button class="button" (click)='fpjyy()' [disabled]='checkList.length===0?true:false'>分配给交易员</button>
     <button class="button" (click)='ghcp()' [disabled]='checkList.length===0?true:false'>归还给产品</button>
     <button class="button" (click)='export()'>导出列表</button>
@@ -42,7 +42,7 @@
           所属产品
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index'>
+      <tr *ngFor='let a of list;let i = index;trackBy:trackBy'>
         <td>
           <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='a.isChecked'>
         </td>

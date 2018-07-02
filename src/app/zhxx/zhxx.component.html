@@ -10,6 +10,7 @@
     <button [disabled]='temp===""?true:false' (click)='update()'>修改</button>
     <button [disabled]='temp===""?true:false' (click)='del()'>删除</button>
     <button [disabled]='temp===""?true:false' (click)='reset()'>重置密码</button>
+    <button (click)='history()'>历史数据列表</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
@@ -79,7 +80,7 @@
         <td>
           {{a.profitRate}}
         </td>
-        <td>
+        <td class="{{a.onlineStatus === '在线'?'red':''}}">
           {{a.onlineStatus}}
         </td>
       </tr>
@@ -122,7 +123,7 @@
           BP值
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.bpLine'>
+          <input type="number" [(ngModel)]='accountDetail.bpLine'>
         </div>
       </div>
       <div class="flex-alert">
@@ -130,13 +131,13 @@
           停机位
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.closingDownLine'>
+          <input type="number" [(ngModel)]='accountDetail.closingDownLine'>
         </div>
         <div class="flex-name">
           交易佣金
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.accountCommission'>
+          <input type="number" [(ngModel)]='accountDetail.accountCommission'>
         </div>
       </div>
       <div class="flex-alert">

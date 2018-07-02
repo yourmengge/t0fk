@@ -46,15 +46,15 @@ export class LslylComponent implements DoCheck, OnInit {
 
   getList() {
     this.data.Loading(this.data.show);
+    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
+    this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
+    this.data.historyKeyWord = this.historyKeyWord;
     if (this.url === 'cpgl') {
       this.historyKeyWord.productCode = this.code;
       this.historyKeyWord.accountCode = '';
     } else {
       this.historyKeyWord.teamCode = this.code;
     }
-    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
-    this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
-    this.data.historyKeyWord = this.historyKeyWord;
     this.http.historyAppoint(this.historyKeyWord, 'coeff').subscribe((res) => {
       this.list = res;
       this.data.Loading(this.data.hide);

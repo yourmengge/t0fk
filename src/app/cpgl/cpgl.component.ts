@@ -48,9 +48,7 @@ export class CpglComponent implements DoCheck {
     });
   }
 
-  history() {
-    this.data.goto('main/cpgl/history');
-  }
+
 
   back() {
     this.data.initHistoryWord();
