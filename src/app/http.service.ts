@@ -4,9 +4,10 @@ import { DataService } from './data.service';
 
 @Injectable()
 export class HttpService {
-
-  public host = 'http://218.85.23.217:8082/t0proxy/t0/';
-  public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
+  public host = 'http://192.168.1.104:8082/t0proxy/t0/';
+  public ws = 'http://192.168.1.104:8082/t0proxy/webSocket';
+  // public host = 'http://218.85.23.217:8082/t0proxy/t0/';
+  // public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
   // public host = 'http://106.15.92.93:10008/tnproxy/t0/';
   // public ws = 'http://106.15.92.93:10008/tnproxy/webSocket';
   public stockHQ: any;
