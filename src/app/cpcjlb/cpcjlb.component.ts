@@ -20,9 +20,11 @@ export class CpcjlbComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode) {
-      this.code = this.data.searchCode;
-      this.getList();
+    if (this.code !== this.data.productCode) {
+      this.code = this.data.productCode;
+      if (!this.data.isNull(this.code)) {
+        this.getList();
+      }
     }
   }
 

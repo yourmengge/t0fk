@@ -81,7 +81,7 @@ export class LeftMenuComponent implements OnInit {
         this.proList = res;
         this.teamCode = '';
         this.productCode = res[0].productCode;
-        this.data.searchCode = this.productCode;
+        this.data.productCode = this.productCode;
         this.data.searchName = res[0].productName;
       }, (err) => {
         this.data.error = err.error;
@@ -114,7 +114,7 @@ export class LeftMenuComponent implements OnInit {
     }
     this.productCode = code;
     this.data.searchName = name;
-    this.data.searchCode = this.productCode;
+    this.data.productCode = this.productCode;
   }
 
 }

@@ -21,7 +21,6 @@ export class LsykComponent implements DoCheck, OnInit {
   code: any;
   url: any;
   constructor(public http: HttpService, public data: DataService) {
-    this.historyKeyWord.selectMonth = this.data.getTime('yyyy-MM', new Date());
   }
 
   ngDoCheck() {
@@ -29,6 +28,7 @@ export class LsykComponent implements DoCheck, OnInit {
       this.code = this.data.searchCode;
       if (this.code !== '') {
         this.getList();
+        this.data.clearPrice();
       }
 
     }
@@ -37,28 +37,39 @@ export class LsykComponent implements DoCheck, OnInit {
   ngOnInit() {
     this.url = this.data.getUrl(2);
     this.historyKeyWord = this.data.historyKeyWord;
-    this.historyKeyWord.selectMonth = this.data.getTime('yyyy-MM', this.historyKeyWord.selectDate);
+    if (this.historyKeyWord.selectDate === '') {
+      this.historyKeyWord.selectMonth = this.data.getTime('yyyy-MM', new Date());
+    } else {
+      this.historyKeyWord.selectMonth = this.data.getTime('yyyy-MM', this.historyKeyWord.selectDate);
+    }
+
     this.getList();
   }
 
   getList() {
-    this.data.Loading(this.data.show);
-    if (this.url === 'cpgl') {
-      this.historyKeyWord.accountCode = '';
-      this.historyKeyWord.productCode = this.code;
+    if (this.data.isNull(this.historyKeyWord.selectMonth)) {
+      this.data.ErrorMsg('请选择交易月份');
     } else {
-      this.historyKeyWord.teamCode = this.code;
+      this.data.Loading(this.data.show);
+      if (this.url === 'cpgl') {
+        this.historyKeyWord.accountCode = '';
+        this.historyKeyWord.productCode = this.code;
+      } else {
+        this.historyKeyWord.teamCode = this.code;
+      }
+      this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectMonth);
+      // tslint:disable-next-line:max-line-length
+      this.historyKeyWord.endTime = this.data.getTime('yyyyMMss', this.data.getLastDateOfMonth(new Date(this.historyKeyWord.selectMonth)));
+      this.data.historyKeyWord = this.historyKeyWord;
+      if (!this.data.isNull(this.code)) {
+        this.http.historyAppoint(this.historyKeyWord, 'profit').subscribe((res) => {
+          this.list = res;
+          this.data.Loading(this.data.hide);
+        }, (err) => {
+          this.data.error = err.error;
+          this.data.isError();
+        });
+      }
     }
-    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectMonth);
-    // tslint:disable-next-line:max-line-length
-    this.historyKeyWord.endTime = this.data.getTime('yyyyMMss', this.data.getLastDateOfMonth(new Date(this.historyKeyWord.selectMonth)));
-    this.data.historyKeyWord = this.historyKeyWord;
-    this.http.historyAppoint(this.historyKeyWord, 'profit').subscribe((res) => {
-      this.list = res;
-      this.data.Loading(this.data.hide);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
   }
 }

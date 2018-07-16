@@ -25,6 +25,10 @@ export class LrtjComponent implements DoCheck {
     }
   }
 
+  fontColor(text) {
+    return text === '买入' ? 'red' : text === '卖出' ? 'green' : '';
+  }
+
   search() {
     this.searchCode = this.userCode;
     this.data.userCode = this.searchCode;

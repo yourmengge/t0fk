@@ -20,12 +20,17 @@
     <input type="text" [(ngModel)]='userCode'>
     <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
+  </div>
+  <div class="action-button">
     <button (click)='export()'>导出列表</button>
   </div>
 
   <div class="table-div my-scroll">
     <table class="my-table">
       <tr>
+        <th>
+          序号
+        </th>
         <th>
           委托时间
         </th>
@@ -78,7 +83,10 @@
           委托PK
         </th>
       </tr>
-      <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+      <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <td>
+          {{i + 1}}
+        </td>
         <td>
           {{a.appointTime}}
         </td>

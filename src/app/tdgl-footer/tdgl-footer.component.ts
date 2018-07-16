@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { DataService } from '../data.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DataService } from '../data.service';
   templateUrl: './tdgl-footer.component.html',
   styleUrls: ['./tdgl-footer.component.css']
 })
-export class TdglFooterComponent implements OnInit {
+export class TdglFooterComponent implements OnInit, DoCheck {
   list: any;
   url: string;
   constructor(public data: DataService) {
@@ -15,6 +15,10 @@ export class TdglFooterComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
+  }
+
+  ngDoCheck() {
+    this.url = this.data.getUrl(3);
   }
 
   goto(url) {

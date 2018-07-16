@@ -20,8 +20,14 @@ export class DataService {
   timeout = 3000;
   userCode: string; // 交易员账户
 
+  roleCode: string; // 0	查询权限  1	操作权限
+
   searchCode: string; // 团队查询或产品查询的code
   searchName: string; // 团队查询或产品查询的名字
+
+  productCode: string;
+
+  accountValid = /^[0-9A-Za-z_]+$/;
 
   historyKeyWord = {
     beginTime: '',
@@ -36,6 +42,9 @@ export class DataService {
   constructor(public router: Router) {
     this.searchCode = '';
     this.userCode = '';
+    this.productCode = '';
+    this.roleCode = this.getSession('roleCode') === undefined ? 0 : this.getSession('roleCode');
+    // this.roleCode = 2;
   }
   /**
    * 获取当前url最后的参数

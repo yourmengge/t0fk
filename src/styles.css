@@ -10,6 +10,7 @@ button {
 
 button:disabled {
     cursor: not-allowed;
+    /* background: rgb(209, 209, 209) !important; */
 }
 
 input[type=number] {
@@ -70,7 +71,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     padding: 10px 0;
 }
 
-.margin-top{
+.margin-top {
     margin-top: 60px;
 }
 
@@ -115,9 +116,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .my-table td span {
-    font-size: 12px;
-    margin: 0 10px;
+    font-size: 14px;
+    margin: 0 5px;
     color: #0483b5;
+    font-weight:bold;
     word-break: keep-all;
 }
 
@@ -146,7 +148,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .table-div {
     overflow-x: auto;
     padding-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     height: calc(100vh - 300px);
 }
 
@@ -181,6 +183,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .active {
     background: rgb(245, 245, 245);
     color: #c31f20 !important;
+}
+
+.select-acitve {
+    background: rgb(202, 54, 54) !important;
+    color: #fff !important;
 }
 
 .alert {
@@ -241,6 +248,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background: none;
 }
 
+.table-input {
+    box-shadow: inset 0 0 1px 1px #d8d8d8;
+    height: 30px;
+}
+
 .button-history {
     margin-right: 10px;
     background: #cc4545;
@@ -286,7 +298,81 @@ input:read-only {
     white-space: nowrap;
 }
 
-.history-search{
+.history-search {
     padding-left: 0;
     margin-left: -20px;
+}
+
+.fpjyy-alert {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 0617;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.36);
+}
+
+.my-confirm {
+    width: 360px;
+    background: #fff;
+    text-align: center;
+    top: 154px;
+    position: fixed;
+    left: 50vw;
+    margin-left: -180px;
+}
+
+.my-confirm .title-div {
+    height: 40px;
+    line-height: 40px;
+    background: #ad3333;
+    color: #fff;
+}
+
+.confirm-content {
+    padding: 40px;
+}
+
+.button-div {
+    display: flex;
+    width: 100%;
+}
+
+.button-div button {
+    flex: 1;
+    height: 40px;
+    border: none;
+    background: #f1f1f1;
+}
+
+.button-div button:nth-child(1) {
+    background: #ad3333;
+    color: #fff;
+}
+
+.alert-button-div {
+    width: 400px;
+    margin-left: calc(50% - 200px);
+}
+
+.alert-button-div button {
+    width: 100%;
+    height: 45px;
+    border: none;
+    background: #1560b1;
+    color: #fff;
+}
+
+.alert-button-div button:hover {
+    background: #0f447c;
+}
+
+@media screen and (max-width: 1440px) {
+    .search-div {
+        padding-top: 75px;
+    }
+    .search-div span {
+        margin-left: -20px;
+    }
 }

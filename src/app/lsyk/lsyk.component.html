@@ -1,79 +1,85 @@
 <div class="">
-    <div class="search-div history-search">
-      <span *ngIf='url === "tdgl"'>交易账户</span>
-      <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
-      <span>交易月份</span>
-      <input type="month" [(ngModel)]='historyKeyWord.selectMonth'>
-      <button class="button" (click)='getList()'>查询</button>
-    </div>
-    <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
-      <table class="my-table">
-        <tr>
-          <th>
-            交易员账号
-          </th>
-          <th>
-            交易员姓名
-          </th>
-          <th>
-            日期
-          </th>
-          <th>
-            盈亏值
-          </th>
-          <th>
-            手续费
-          </th>
-        </tr>
-        <tr *ngFor='let a of list'>
-          <td>
-            {{a.accountCode}}
-          </td>
-          <td>
-            {{a.accountName}}
-          </td>
-          <td>
-            {{a.profitDate | date}}
-          </td>
-          <td>
-            {{a.totalPrice | round}}
-          </td>
-          <td>
-            {{a.commissPrice | round}}
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
-        <table class="my-table">
-          <tr>
-            <th>
-              产品编号
-            </th>
-            <th>
-              日期
-            </th>
-            <th>
-              盈亏值
-            </th>
-            <th>
-              手续费
-            </th>
-          </tr>
-          <tr *ngFor='let a of list'>
-            <td>
-              {{code}}
-            </td>
-            <td>
-              {{a.profitDate | date}}
-            </td>
-            <td>
-              {{a.totalPrice | round}}
-            </td>
-            <td>
-              {{a.commissPrice | round}}
-            </td>
-          </tr>
-        </table>
-      </div>
+  <div class="search-div history-search">
+    <span *ngIf='url === "tdgl"'>交易账户</span>
+    <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
+    <span>交易月份</span>
+    <input type="month" [(ngModel)]='historyKeyWord.selectMonth'>
+    <button class="button" (click)='getList()'>查询</button>
   </div>
+  <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          类型
+        </th>
+        <th>
+          编号
+        </th>
+        <th>
+          名称
+        </th>
+        <th>
+          日期
+        </th>
+        <th>
+          盈亏值
+        </th>
+        <th>
+          手续费
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{a.accountType === 4?'团队':'交易员'}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
+        </td>
+        <td>
+          {{a.profitDate | date}}
+        </td>
+        <td>
+          {{a.totalPrice | round}}
+        </td>
+        <td>
+          {{a.commissPrice | round}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          日期
+        </th>
+        <th>
+          盈亏值
+        </th>
+        <th>
+          手续费
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{code}}
+        </td>
+        <td>
+          {{a.profitDate | date}}
+        </td>
+        <td>
+          {{a.totalPrice | round}}
+        </td>
+        <td>
+          {{a.commissPrice | round}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

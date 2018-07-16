@@ -4,6 +4,8 @@
       <input type="text" [(ngModel)]='userCode'>
       <button class="button" (click)='search()'>查询</button>
       <button (click)='searchAll()'>查询全部</button>
+    </div>
+    <div class="action-button">
       <button (click)='export()'>导出列表</button>
     </div>
   
@@ -44,7 +46,7 @@
             卖出成交金额
           </th>
         </tr>
-        <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <tr *ngFor='let a of list' [class]='fontColor(a.appointTypeDesc)'>
           <td>
             {{a.accountCode}}
           </td>

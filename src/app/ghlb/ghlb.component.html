@@ -13,7 +13,7 @@
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
-    <button class="button" (click)='fpjyy()' [disabled]='checkList.length===0?true:false'>归还给团队</button>
+    <button class="button" (click)='fpjyy()' [disabled]='disabled(checkList.length)'>归还给团队</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
@@ -46,32 +46,32 @@
           分配交易员姓名
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index;trackBy:trackBy'>
-        <td>
-          <input type="checkbox" name="" id="" (click)='checkbox(i)' [(checked)]='a.isChecked'>
+      <tr *ngFor='let a of list;let i = index;trackBy:trackBy' >
+        <td (click)='checkbox(i)'>
+          <input type="checkbox" name="" id="" [(checked)]='a.isChecked'>
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.stockCode}}
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.stockName}}
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.stockCnt}}
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.ableCnt}}
         </td>
         <td>
-          <input  type="number" [(ngModel)]='a.bcgh'>
+          <input type="number" class="table-input" [(ngModel)]='a.bcgh'>
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.productName}}
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.accountCode}}
         </td>
-        <td>
+        <td (click)='checkbox(i)'>
           {{a.accountName}}
         </td>
       </tr>
@@ -87,4 +87,8 @@
         <div *ngFor='let a of jyyList' class="{{jyyCode === a.accountCode?'active':''}}" (click)='selectJYY(a)'>{{a.accountName}}</div>
       </div>
     </div> -->
+  <div class="fpjyy-alert" *ngIf='confirm'>
+    <app-confirm [text]='confirmText' (active)='submit($event)'></app-confirm>
+  </div>
+
 </div>

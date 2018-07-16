@@ -31,6 +31,7 @@ export class LscjComponent implements DoCheck, OnInit {
       this.code = this.data.searchCode;
       if (this.code !== '') {
         this.getList();
+        this.data.clearPrice();
       }
     }
   }
@@ -45,22 +46,28 @@ export class LscjComponent implements DoCheck, OnInit {
   }
 
   getList() {
-    this.data.Loading(this.data.show);
-    if (this.url === 'cpgl') {
-      this.historyKeyWord.productCode = this.code;
+    if (this.data.isNull(this.historyKeyWord.selectDate)) {
+      this.data.ErrorMsg('请选择交易日期');
     } else {
-      this.historyKeyWord.teamCode = this.code;
+      this.data.Loading(this.data.show);
+      if (this.url === 'cpgl') {
+        this.historyKeyWord.productCode = this.code;
+      } else {
+        this.historyKeyWord.teamCode = this.code;
+      }
+      this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
+      this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
+      this.data.historyKeyWord = this.historyKeyWord;
+      if (!this.data.isNull(this.code)) {
+        this.http.historyAppoint(this.historyKeyWord, 'trade').subscribe((res) => {
+          this.list = res;
+          this.data.Loading(this.data.hide);
+        }, (err) => {
+          this.data.error = err.error;
+          this.data.isError();
+        });
+      }
     }
-    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
-    this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
-    this.data.historyKeyWord = this.historyKeyWord;
-    this.http.historyAppoint(this.historyKeyWord, 'trade').subscribe((res) => {
-      this.list = res;
-      this.data.Loading(this.data.hide);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
   }
 
 }

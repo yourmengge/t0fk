@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.data.clearPrice();
+    this.data.clearTimeOut();
   }
 
   login() {
@@ -33,8 +35,11 @@ export class LoginComponent implements OnInit {
       this.http.login(data).subscribe((res) => {
         this.data.setSession('username', this.phone);
         this.data.username = this.phone;
-        this.data.token = res['resultInfo'];
+        this.data.token = res['resultInfo']['token'];
+        // this.data.token = res['resultInfo'];
+        this.data.roleCode = res['resultInfo']['roleCode'] + '';
         this.data.setSession('token', this.data.token);
+        this.data.setSession('roleCode', this.data.roleCode);
         this.data.Loading(this.data.hide);
         this.data.ErrorMsg('登录成功');
         this.data.goto('main');

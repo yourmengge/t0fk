@@ -6,11 +6,12 @@
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
-    <button (click)='add()'>新增</button>
-    <button [disabled]='temp===""?true:false' (click)='update()'>修改</button>
-    <button [disabled]='temp===""?true:false' (click)='del()'>删除</button>
-    <button [disabled]='temp===""?true:false' (click)='reset()'>重置密码</button>
+    <button (click)='add()'[disabled]='disabled("1")'>新增</button>
+    <button [disabled]='disabled(temp)' (click)='update()'>修改</button>
+    <button [disabled]='disabled(temp)' (click)='del()'>删除</button>
+    <button [disabled]='disabled(temp)' (click)='reset()'>重置密码</button>
     <button (click)='history()'>历史数据列表</button>
+    <button [disabled]='disabled(temp)' (click)='dplb()'>交易员待平列表</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
@@ -20,6 +21,9 @@
         </th>
         <th>
           交易员账号
+        </th>
+        <th>
+          交易员姓名
         </th>
         <th>
           最大开仓量
@@ -32,6 +36,9 @@
         </th>
         <th>
           是否自动停机
+        </th>
+        <th>
+          是否允许停机平仓
         </th>
         <th>
           交易佣金
@@ -49,16 +56,22 @@
           在线状态
         </th>
       </tr>
-      <tr *ngFor='let a of list'>
+      <tr *ngFor='let a of list;let i = index' (click)='select(a,i)'>
         <td>
-          <input type="radio" name="name" id="" (click)='select(a)'>
+          <input type="radio" [checked]='checkId === i' name="name" id="" (click)='select(a,i)'>
         </td>
         <td>
           {{a.accountCode}}
         </td>
         <td>
-          {{a.bpLine}}
+          {{a.accountName}}
         </td>
+        <td>
+          {{a.bpLineNow}}
+        </td>
+        <!-- <td>
+          {{a.bpLine}}
+        </td> -->
         <td>
           {{a.closingDownLine}}
         </td>
@@ -67,6 +80,9 @@
         </td>
         <td>
           {{a.isAutoShutdown === 1?'是':'否'}}
+        </td>
+        <td>
+          {{a.isEveningUp === 1?'是':'否'}}
         </td>
         <td>
           {{a.accountCommission}}
@@ -83,6 +99,7 @@
         <td class="{{a.onlineStatus === '在线'?'red':''}}">
           {{a.onlineStatus}}
         </td>
+
       </tr>
     </table>
   </div>
@@ -111,7 +128,7 @@
           交易员密码
         </div>
         <div class="flex-content" *ngIf='textType !== "修改"'>
-          <input type="text" [(ngModel)]='accountDetail.accountPwd'>
+          <input type="password" [(ngModel)]='accountDetail.accountPwd'>
         </div>
         <div class="flex-name" *ngIf='textType === "修改"'>
           团队编码
@@ -123,7 +140,7 @@
           BP值
         </div>
         <div class="flex-content">
-          <input type="number" [(ngModel)]='accountDetail.bpLine'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.bpLine'>
         </div>
       </div>
       <div class="flex-alert">
@@ -131,13 +148,13 @@
           停机位
         </div>
         <div class="flex-content">
-          <input type="number" [(ngModel)]='accountDetail.closingDownLine'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.closingDownLine'>
         </div>
         <div class="flex-name">
           交易佣金
         </div>
         <div class="flex-content">
-          <input type="number" [(ngModel)]='accountDetail.accountCommission'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.accountCommission'>
         </div>
       </div>
       <div class="flex-alert">
@@ -158,6 +175,21 @@
             <option value="1">是</option>
             <option value="0">否</option>
           </select>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          允许停机平仓
+        </div>
+        <div class="flex-content">
+          <select name="" id="" [(ngModel)]='accountDetail.isEveningUp'>
+            <option value="1">是</option>
+            <option value="0">否</option>
+          </select>
+        </div>
+        <div class="flex-name">
+        </div>
+        <div class="flex-content">
         </div>
       </div>
       <div class="button-div">
@@ -185,7 +217,7 @@
           新密码
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='newPass'>
+          <input type="password" [(ngModel)]='newPass'>
         </div>
       </div>
       <div class="button-div">
@@ -194,5 +226,7 @@
       </div>
     </div>
   </div>
-
+  <div class="fpjyy-alert" *ngIf='confirm'>
+    <app-confirm [text]='confirmText' (active)='submitDelete($event)'></app-confirm>
+  </div>
 </div>

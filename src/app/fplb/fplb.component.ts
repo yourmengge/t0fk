@@ -17,9 +17,15 @@ export class FplbComponent implements DoCheck {
   alert: any;
   checkedAll: boolean;
   checkList = [];
+  ghArray: any;
+  confirm: boolean;
+  confirmText: string;
   constructor(public data: DataService, public http: HttpService) {
     this.alert = this.data.hide;
     this.checkedAll = false;
+    this.confirmText = '确定归还至产品？';
+    this.confirm = this.data.hide;
+    this.ghArray = [];
     this.listData = {
       ableCnt: '',
       productCode: '',
@@ -38,6 +44,7 @@ export class FplbComponent implements DoCheck {
     if (this.code !== this.data.searchCode && !this.data.isNull(this.data.searchCode)) {
       this.code = this.data.searchCode;
       this.list = [];
+      this.checkList = [];
       this.getList();
     }
   }
@@ -48,26 +55,25 @@ export class FplbComponent implements DoCheck {
       // tslint:disable-next-line:forin
       for (const i in this.list) {
         this.checkList.push(i);
+        this.list[i].isChecked = true;
       }
     } else {
       this.checkList = [];
+      // tslint:disable-next-line:forin
+      for (const i in this.list) {
+        this.list[i].isChecked = false;
+      }
     }
   }
 
   getList() {
     this.data.clearTimeOut();
     this.http.getHold(this.code).subscribe((res) => {
-      // this.list = res;
-      // // tslint:disable-next-line:forin
-      // for (const i in this.list) {
-      //   this.list[i].ghcp = this.list[i].ableCnt;
-      //   this.list[i].bcfp = this.list[i].ableCnt;
-      // }
       for (const i in res) {
         if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
           res[i].ghcp = res[i].ableCnt;
           res[i].bcfp = res[i].ableCnt;
-        } else if (this.list[i].ghcp !== res[i].ableCnt || this.list[i].bcfp !== res[i].ableCnt) {
+        } else if (this.checkList.includes(i)) {
           res[i].bcfp = this.list[i].bcfp;
           res[i].ghcp = this.list[i].ghcp;
         } else {
@@ -108,8 +114,11 @@ export class FplbComponent implements DoCheck {
       //   }
       // }
 
-      if (this.list[element].bcfp < 0) {
+      if (this.list[element].bcfp <= 0) {
         this.data.ErrorMsg('分配数量必须大于0');
+        return i = 1;
+      } else if (this.list[element].bcfp > this.list[element].ableCnt) {
+        this.data.ErrorMsg('分配数量不能大于可分配数量');
         return i = 1;
       }
 
@@ -137,6 +146,7 @@ export class FplbComponent implements DoCheck {
    * 选中复选框
    */
   checkbox(index) {
+    index = index + '';
     // tslint:disable-next-line:no-unused-expression
     // 判断是否是选中状态的复选框，如果是，从数组中剔除，否，添加到数组中
     if (this.checkList.indexOf(index) >= 0) {
@@ -146,6 +156,14 @@ export class FplbComponent implements DoCheck {
       this.checkList.push(index);
       this.list[index].isChecked = true;
     }
+
+    if (this.checkList.length === this.list.length) {
+      this.checkedAll = true;
+    } else {
+      this.checkedAll = false;
+    }
+
+    console.log(this.checkList);
   }
 
   /**
@@ -153,7 +171,7 @@ export class FplbComponent implements DoCheck {
    */
   getJyyList() {
     this.data.Loading(this.data.show);
-    this.http.getJyyList(this.code).subscribe((res) => {
+    this.http.getJyyList2(this.code).subscribe((res) => {
       this.jyyList = res;
       this.data.Loading(this.data.hide);
     }, (err) => {
@@ -167,11 +185,21 @@ export class FplbComponent implements DoCheck {
     this.jyyCode = '';
   }
 
+  disabled(length) {
+    if (this.data.roleCode === '0') {
+      return true;
+    } else if (this.data.roleCode === '1' && length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   /**
    * 选择交易员
    */
-  selectJYY(a) {
-    this.jyyCode = a.accountCode;
+  selectJYY(code) {
+    this.jyyCode = code;
   }
 
   /**
@@ -194,15 +222,19 @@ export class FplbComponent implements DoCheck {
       data.stockNum = this.list[element].bcfp;
       array.push(data);
     });
-    this.submit(array);
+    if (!this.data.isNull(this.jyyCode)) {
+      this.submit(array);
+    }
+
   }
 
   /**
    * 归还给产品
    */
   ghcp() {
+    this.ghArray = [];
     let temp = 0;
-    const array = [];
+
     this.checkList.forEach((element) => {
       const data = {
         teamCode: this.code,
@@ -215,20 +247,35 @@ export class FplbComponent implements DoCheck {
       data.accountCode = this.jyyCode;
       data.productCode = this.list[element].productCode;
       data.stockCode = this.list[element].stockCode;
-      if (this.list[element].ghcp > this.list[element].ableCnt) {
-        this.data.ErrorMsg('归还股票数量不能大于股票数量！');
+      if (this.list[element].ghcp <= 0) {
+        this.data.ErrorMsg('归还股票数量必须大于0！');
+        return temp = 1;
+      } else if (this.list[element].ghcp > this.list[element].ableCnt) {
+        this.data.ErrorMsg('归还股票数量不能大于可分配数量！');
         return temp = 1;
       } else {
         data.stockNum = this.list[element].ghcp;
-        array.push(data);
+        this.ghArray.push(data);
       }
     });
+
     if (temp === 0) {
-      if (confirm('确定归还至产品？')) {
-        this.submitBack(array);
-      }
+      this.confirm = this.data.show;
     }
 
+  }
+
+  submitDelete(type) {
+    if (type) {
+      this.submitBack(this.ghArray);
+    } else {
+      this.closeConfirm();
+    }
+
+  }
+
+  closeConfirm() {
+    this.confirm = this.data.hide;
   }
 
   /**
@@ -243,9 +290,11 @@ export class FplbComponent implements DoCheck {
       this.getList();
       this.checkList = [];
       this.data.Loading(this.data.hide);
+      this.closeConfirm();
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
+      this.closeConfirm();
     });
   }
 

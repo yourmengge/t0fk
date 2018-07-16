@@ -16,13 +16,18 @@ export class ZhxxComponent implements DoCheck {
   code: string;
   list: any;
   proName: any;
+  checkId: any;
   userCode: any;
   alert: boolean;
   textType: string;
+  deleteData: any;
   accountDetail: any;
   resetAlert: any;
   selectDetail: any;
   newPass: any;
+  roleCode = 2;
+  confirm: boolean;
+  confirmText: string;
   constructor(public data: DataService, public http: HttpService) {
     this.accountDetail = {
       accountCode: '',
@@ -33,8 +38,12 @@ export class ZhxxComponent implements DoCheck {
       bpLine: '',
       closingDownLine: '',
       isAutoShutdown: 1,
+      isEveningUp: 1,
       teamCode: this.code
     };
+    this.confirmText = '确定删除交易员？';
+    this.confirm = this.data.hide;
+    this.checkId = '';
     this.newPass = '';
     this.resetAlert = this.data.hide;
     this.selectDetail = this.accountDetail;
@@ -50,6 +59,7 @@ export class ZhxxComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
+      this.checkId = '';
       this.search();
     }
   }
@@ -90,6 +100,16 @@ export class ZhxxComponent implements DoCheck {
     this.getList();
   }
 
+  disabled(temp) {
+    if (this.data.roleCode === '0') {
+      return true;
+    } else if (this.data.roleCode === '1' && temp === '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   close() {
     if (this.textType === '新增') {
       this.accountDetail = {
@@ -101,7 +121,8 @@ export class ZhxxComponent implements DoCheck {
         bpLine: '',
         closingDownLine: '',
         isAutoShutdown: 1,
-        teamCode: this.code
+        teamCode: this.code,
+        isEveningUp: 1
       };
     }
     this.resetAlert = this.data.hide;
@@ -118,7 +139,8 @@ export class ZhxxComponent implements DoCheck {
       bpLine: '',
       closingDownLine: '',
       isAutoShutdown: 1,
-      teamCode: this.code
+      teamCode: this.code,
+      isEveningUp: 1
     };
     this.textType = '新增';
     this.alert = this.data.show;
@@ -130,38 +152,52 @@ export class ZhxxComponent implements DoCheck {
         this.data.ErrorMsg('交易账号不能为空');
       } else if (this.accountDetail.accountName === '') {
         this.data.ErrorMsg('中文名字不能为空');
+      } else if (!this.data.accountValid.test(this.accountDetail.accountCode)) {
+        this.data.ErrorMsg('交易员编号不能为中文和特殊字符，只能是数字字母下划线');
       } else if (this.accountDetail.accountPwd === '') {
         this.data.ErrorMsg('交易员密码不能为空');
       } else if (this.accountDetail.bpLine === '') {
         this.data.ErrorMsg('BP值不能为空');
+      } else if (this.accountDetail.bpLine === null) {
+        this.data.ErrorMsg('BP值只能为数字');
       } else if (this.accountDetail.closingDownLine === '') {
         this.data.ErrorMsg('停机位不能为空');
+      } else if (this.accountDetail.closingDownLine === null) {
+        this.data.ErrorMsg('停机位只能为数字');
       } else if (this.accountDetail.accountCommission === '') {
         this.data.ErrorMsg('交易佣金不能为空');
+      } else if (this.accountDetail.accountCommission === null) {
+        this.data.ErrorMsg('交易佣金只能为数字');
       } else {
         this.accountDetail.teamCode = this.code;
         this.accountDetail.accountPwd = Md5.hashStr(this.accountDetail.accountPwd);
-        this.submit(this.accountDetail, 'ADD');
+        this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {
       if (this.accountDetail.accountName === '') {
         this.data.ErrorMsg('中文名字不能为空');
       } else if (this.accountDetail.bpLine === '') {
         this.data.ErrorMsg('BP值不能为空');
+      } else if (this.accountDetail.bpLine === null) {
+        this.data.ErrorMsg('BP值只能为数字');
       } else if (this.accountDetail.closingDownLine === '') {
         this.data.ErrorMsg('停机位不能为空');
+      } else if (this.accountDetail.closingDownLine === null) {
+        this.data.ErrorMsg('停机位只能为数字');
       } else if (this.accountDetail.accountCommission === '') {
         this.data.ErrorMsg('交易佣金不能为空');
+      } else if (this.accountDetail.accountCommission === null) {
+        this.data.ErrorMsg('交易佣金只能为数字');
       } else {
         this.accountDetail.teamCode = this.code;
-        this.submit(this.accountDetail, 'UPDATE');
+        this.submit(this.accountDetail, 'UPDATE', '修改');
       }
     }
   }
 
-  submit(data, type) {
+  submit(data, type, text) {
     this.http.addJyy(data, type).subscribe((res) => {
-      this.data.ErrorMsg('添加成功');
+      this.data.ErrorMsg(text + '成功');
       this.getList();
       this.close();
     }, (err) => {
@@ -170,7 +206,8 @@ export class ZhxxComponent implements DoCheck {
     });
   }
 
-  select(data) {
+  select(data, index) {
+    this.checkId = index;
     this.temp = data.accountCode;
     this.selectDetail = {
       accountCode: data.accountCode,
@@ -181,7 +218,8 @@ export class ZhxxComponent implements DoCheck {
       bpLine: data.bpLine,
       closingDownLine: data.closingDownLine,
       isAutoShutdown: data.isAutoShutdown,
-      teamCode: this.code
+      teamCode: this.code,
+      isEveningUp: data.isEveningUp
     };
   }
 
@@ -194,19 +232,39 @@ export class ZhxxComponent implements DoCheck {
   }
 
   del() {
-    const data = {
+    this.deleteData = {
       accountCode: this.selectDetail.accountCode,
       teamCode: this.code
     };
-    if (confirm('确定删除交易员？')) {
-      this.http.delJyy(data).subscribe((res) => {
+    this.confirm = this.data.show;
+
+  }
+
+  submitDelete(type) {
+    if (type) {
+      this.http.delJyy(this.deleteData).subscribe((res) => {
         this.data.ErrorMsg('删除成功');
         this.getList();
+        this.closeConfirm();
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();
+        this.closeConfirm();
       });
+    } else {
+      this.closeConfirm();
     }
+
+  }
+
+  dplb() {
+    this.searchCode = this.selectDetail.accountCode;
+    this.data.userCode = this.searchCode;
+    this.data.goto('main/tdgl/dplb');
+  }
+
+  closeConfirm() {
+    this.confirm = this.data.hide;
   }
 
   reset() {

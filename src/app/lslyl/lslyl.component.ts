@@ -21,6 +21,7 @@ export class LslylComponent implements DoCheck, OnInit {
   };
   list: any;
   url: any;
+  showType = '';
   code: any;
   constructor(public http: HttpService, public data: DataService) {
     this.historyKeyWord.selectDate = this.data.getTime('yyyy-MM-dd', new Date());
@@ -31,6 +32,7 @@ export class LslylComponent implements DoCheck, OnInit {
       this.code = this.data.searchCode;
       if (this.code !== '') {
         this.getList();
+        this.data.clearPrice();
       }
     }
   }
@@ -40,27 +42,39 @@ export class LslylComponent implements DoCheck, OnInit {
     if (this.historyKeyWord.selectDate === '') {
       this.historyKeyWord.selectDate = this.data.getTime('yyyy-MM-dd', new Date());
     }
+    this.showType = this.data.historyKeyWord.accountCode;
     this.getList();
     this.url = this.data.getUrl(2);
   }
 
+  search() {
+    this.showType = this.historyKeyWord.accountCode;
+    this.getList();
+  }
+
   getList() {
-    this.data.Loading(this.data.show);
-    this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
-    this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
-    this.data.historyKeyWord = this.historyKeyWord;
-    if (this.url === 'cpgl') {
-      this.historyKeyWord.productCode = this.code;
-      this.historyKeyWord.accountCode = '';
+    if (this.data.isNull(this.historyKeyWord.selectDate)) {
+      this.data.ErrorMsg('请选择交易日期');
     } else {
-      this.historyKeyWord.teamCode = this.code;
+      this.data.Loading(this.data.show);
+      this.historyKeyWord.beginTime = this.data.getTime('yyyyMMss', this.historyKeyWord.selectDate);
+      this.historyKeyWord.endTime = this.historyKeyWord.beginTime;
+      this.data.historyKeyWord = this.historyKeyWord;
+      if (this.url === 'cpgl') {
+        this.historyKeyWord.productCode = this.code;
+        this.historyKeyWord.accountCode = '';
+      } else {
+        this.historyKeyWord.teamCode = this.code;
+      }
+      if (!this.data.isNull(this.code)) {
+        this.http.historyAppoint(this.historyKeyWord, 'coeff').subscribe((res) => {
+          this.list = res;
+          this.data.Loading(this.data.hide);
+        }, (err) => {
+          this.data.error = err.error;
+          this.data.isError();
+        });
+      }
     }
-    this.http.historyAppoint(this.historyKeyWord, 'coeff').subscribe((res) => {
-      this.list = res;
-      this.data.Loading(this.data.hide);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
   }
 }

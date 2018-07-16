@@ -7,6 +7,8 @@ export class HttpService {
 
   public host = 'http://218.85.23.217:8082/t0proxy/t0/';
   public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
+  // public host = 'http://106.15.92.93:10008/tnproxy/t0/';
+  // public ws = 'http://106.15.92.93:10008/tnproxy/webSocket';
   public stockHQ: any;
 
   constructor(public http: HttpClient, public data: DataService) {
@@ -83,6 +85,13 @@ export class HttpService {
    */
   getJyyList(teamCode) {
     return this.POST('team/account', { teamCode: teamCode });
+  }
+
+  /**
+ * 获取交易员列表（用于弹窗中的交易员列表）
+ */
+  getJyyList2(teamCode) {
+    return this.POST('team/' + teamCode + '/account', {});
   }
 
   /**
@@ -179,15 +188,22 @@ export class HttpService {
   /**
    * 平仓
    */
-  appointSELL(data) {
-    return this.POST('appoint/SELL', data);
+  appointSELL(data, type) {
+    return this.POST('appoint/' + type, data);
   }
 
   /**
    * 撤单
    */
-  appointCancel(data) {
-    return this.POST('cancel', data);
+  appointCancel(data, pkOrder) {
+    return this.POST('cancel?pkOrder=' + pkOrder, data);
+  }
+
+  /**
+   * 清除委托
+   */
+  appointClear(pkOrder) {
+    return this.POST('orderCtrl/DELETE?pkOrder=' + pkOrder, {});
   }
 
   /**
@@ -237,5 +253,12 @@ export class HttpService {
    */
   exportProfitProduct(code) {
     return this.export('product/' + code + '/profitDetail/export', {});
+  }
+
+  /**
+   * 产品持仓刷新按钮
+   */
+  refresh(code) {
+    return this.POST('product/' + code + '/hold/refresh', {});
   }
 }

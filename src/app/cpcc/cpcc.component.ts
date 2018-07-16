@@ -18,14 +18,27 @@ export class CpccComponent implements DoCheck {
   checkedAll: boolean;
   checkList = [];
   constructor(public data: DataService, public http: HttpService) {
+  }
 
+  disabled(length) {
+    if (this.data.roleCode === '0') {
+      return true;
+    } else if (this.data.roleCode === '1' && length === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode && !this.data.isNull(this.data.searchCode)) {
-      this.code = this.data.searchCode;
+    if (this.code !== this.data.productCode) {
+      this.code = this.data.productCode;
       this.list = [];
-      this.getList();
+      this.checkList = [];
+      if (!this.data.isNull(this.code)) {
+        this.getList();
+      }
+
     }
   }
 
@@ -35,21 +48,37 @@ export class CpccComponent implements DoCheck {
       // tslint:disable-next-line:forin
       for (const i in this.list) {
         this.checkList.push(i);
+        this.list[i].isChecked = true;
       }
     } else {
       this.checkList = [];
+      // tslint:disable-next-line:forin
+      for (const i in this.list) {
+        this.list[i].isChecked = false;
+      }
     }
+  }
+
+  refresh() {
+    this.http.refresh(this.code).subscribe((res) => {
+      this.getList();
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 
   getList() {
     this.data.clearTimeOut();
     this.http.productHold(this.code).subscribe((res) => {
-      // tslint:disable-next-line:forin
       for (const i in res) {
         if (!this.data.isNullArray(this.list)) {
-          if (res[i].ableCnt !== this.list[i].ableCnt) {
+          res[i].kfp = res[i].ableCnt;
+          if (this.checkList.includes(i)) {
             res[i].ableCnt = this.list[i].ableCnt;
           }
+        } else {
+          res[i].kfp = res[i].ableCnt;
         }
       }
       this.list = res;
@@ -77,25 +106,41 @@ export class CpccComponent implements DoCheck {
  * 选中复选框
  */
   checkbox(index) {
+    index = index + '';
     // tslint:disable-next-line:no-unused-expression
     // 判断是否是选中状态的复选框，如果是，从数组中剔除，否，添加到数组中
-    this.checkList.indexOf(index) >= 0 ? this.checkList.splice(this.checkList.indexOf(index), 1) : this.checkList.push(index);
+    if (this.checkList.indexOf(index) >= 0) {
+      this.checkList.splice(this.checkList.indexOf(index), 1);
+      this.list[index].isChecked = false;
+    } else {
+      this.checkList.push(index);
+      this.list[index].isChecked = true;
+    }
+
+    if (this.checkList.length === this.list.length) {
+      this.checkedAll = true;
+    } else {
+      this.checkedAll = false;
+    }
   }
 
   fptd() {
     let i = 0;
     this.checkList.forEach((element) => {
-      if (this.list[element].ableCnt % 100 !== this.list[element].ghcp % 100) {
-        // if (!this.data.is100Int(this.list[element].ableCnt)) {
-        //   this.data.ErrorMsg('分配数量只能为100的整数倍');
-        //   return i = 1;
-        // }
-
-        if (this.list[element].bcfp < 0) {
-          this.data.ErrorMsg('分配数量必须大于0');
-          return i = 1;
-        }
+      console.log(typeof (this.list[element].ableCnt));
+      if (this.list[element].ableCnt <= 0) {
+        this.data.ErrorMsg('分配数量必须大于0');
+        return i = 1;
+      } else if (this.list[element].ableCnt > this.list[element].kfp) {
+        this.data.ErrorMsg('分配数量不能大于可分配数量');
+        return i = 1;
       }
+      // if (this.list[element].ableCnt % 100 !== this.list[element].ghcp % 100) {
+      //   // if (!this.data.is100Int(this.list[element].ableCnt)) {
+      //   //   this.data.ErrorMsg('分配数量只能为100的整数倍');
+      //   //   return i = 1;
+      //   // }
+      // }
 
     });
     if (i === 0) {

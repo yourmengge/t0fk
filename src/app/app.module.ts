@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DataService } from './data.service';
@@ -38,6 +37,8 @@ import { LsykComponent } from './lsyk/lsyk.component';
 import { DatePipe } from './date.pipe';
 import { RoundPipe } from './round.pipe';
 import { LslylComponent } from './lslyl/lslyl.component';
+import { NumberInputDirective } from './number-input.directive';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 const historyChild: Routes = [
   { path: 'lslyl', component: LslylComponent },
@@ -113,7 +114,9 @@ const appRoutes: Routes = [
     LsykComponent,
     DatePipe,
     RoundPipe,
-    LslylComponent
+    LslylComponent,
+    NumberInputDirective,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

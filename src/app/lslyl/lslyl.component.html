@@ -4,22 +4,25 @@
     <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
     <span>交易日期</span>
     <input type="date" [(ngModel)]='historyKeyWord.selectDate'>
-    <button class="button" (click)='getList()'>查询</button>
+    <button class="button" (click)='search()'>查询</button>
   </div>
   <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
     <table class="my-table">
       <tr>
-        <th>
+        <th *ngIf='showType!==""'>
           交易员账号
         </th>
-        <th>
+        <th *ngIf='showType!==""'>
           交易员姓名
         </th>
         <th>
-          产品编号
+          团队编号
         </th>
         <th>
-          团队编号
+          团队名称
+        </th>
+        <th>
+          产品编号
         </th>
         <th>
           股票代码
@@ -41,17 +44,20 @@
         </th>
       </tr>
       <tr *ngFor='let a of list'>
-        <td>
+        <td *ngIf='showType!==""'>
           {{a.accountCode}}
         </td>
-        <td>
+        <td *ngIf='showType!==""'>
           {{a.accountName}}
         </td>
         <td>
-          {{a.productCode}}
+          {{a.teamCode}}
         </td>
         <td>
-          {{a.teamCode}}
+          {{a.teamName}}
+        </td>
+        <td>
+          {{a.productCode}}
         </td>
         <td>
           {{a.stockCode}}
@@ -63,10 +69,10 @@
           {{a.profitDate | date}}
         </td>
         <td>
-          {{a.profitLoss}}
+          {{a.profitLoss | round}}
         </td>
         <td>
-          {{a.commissPrice}}
+          {{a.commissPrice | round}}
         </td>
         <td>
           {{a.coefficient}}
@@ -101,7 +107,7 @@
       </tr>
       <tr *ngFor='let a of list'>
         <td>
-          {{a.accountCode}}
+          {{a.productCode}}
         </td>
         <td>
           {{a.stockCode}}
@@ -113,10 +119,10 @@
           {{a.profitDate | date}}
         </td>
         <td>
-          {{a.profitLoss}}
+          {{a.profitLoss | round}}
         </td>
         <td>
-          {{a.commissPrice}}
+          {{a.commissPrice | round}}
         </td>
         <td>
           {{a.coefficient}}
