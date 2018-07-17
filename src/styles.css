@@ -96,7 +96,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .my-table th {
     background: #ececec;
-    word-break: keep-all
+    word-break: keep-all;
 }
 
 .my-table th, .my-table td {
@@ -104,6 +104,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     text-align: center;
     font-size: 14px;
     border: solid 1px #ececec;
+    word-break: keep-all;
+    white-space:nowrap;
 }
 
 .my-table tr {

@@ -60,6 +60,8 @@ export class ZhxxComponent implements DoCheck {
     if (this.code !== this.data.searchCode) {
       this.code = this.data.searchCode;
       this.checkId = '';
+      this.searchCode = '';
+      this.data.userCode = this.searchCode;
       this.search();
     }
   }
@@ -244,6 +246,7 @@ export class ZhxxComponent implements DoCheck {
     if (type) {
       this.http.delJyy(this.deleteData).subscribe((res) => {
         this.data.ErrorMsg('删除成功');
+        this.checkId = '';
         this.getList();
         this.closeConfirm();
       }, (err) => {

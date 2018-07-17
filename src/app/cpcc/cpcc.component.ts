@@ -62,6 +62,7 @@ export class CpccComponent implements DoCheck {
   refresh() {
     this.http.refresh(this.code).subscribe((res) => {
       this.getList();
+      this.data.ErrorMsg('列表刷新成功');
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
