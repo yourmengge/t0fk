@@ -13,7 +13,7 @@ export class HistoryComponent implements OnInit, DoCheck {
   ngDoCheck() {
     this.url = this.data.getUrl(2);
     if (this.url === 'cpgl') {
-      this.data.searchCode = this.data.productCode;
+      this.data.teamCode = this.data.productCode;
     }
 
   }

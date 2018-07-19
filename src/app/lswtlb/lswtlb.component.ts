@@ -27,8 +27,8 @@ export class LswtlbComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode) {
-      this.code = this.data.searchCode;
+    if (this.code !== this.data.teamCode) {
+      this.code = this.data.teamCode;
       console.log(this.code);
       if (!this.data.isNull(this.code)) {
         this.getList();

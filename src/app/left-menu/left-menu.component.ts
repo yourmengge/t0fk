@@ -59,7 +59,7 @@ export class LeftMenuComponent implements OnInit {
         this.teamList = res;
         this.productCode = '';
         this.teamCode = res[0].teamCode;
-        this.data.searchCode = this.teamCode;
+        this.data.teamCode = this.teamCode;
         this.data.searchName = res[0].teamName;
       }, (err) => {
         this.data.error = err.error;
@@ -102,7 +102,7 @@ export class LeftMenuComponent implements OnInit {
     this.data.userCode = '';
     this.teamCode = code;
     this.data.searchName = name;
-    this.data.searchCode = this.teamCode;
+    this.data.teamCode = this.teamCode;
   }
 
   /**

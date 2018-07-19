@@ -26,10 +26,11 @@ export class GhlbComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode && !this.data.isNull(this.data.searchCode)) {
-      this.code = this.data.searchCode;
+    if (this.code !== this.data.teamCode && !this.data.isNull(this.data.teamCode)) {
+      this.code = this.data.teamCode;
       this.list = [];
       this.checkList = [];
+      this.userCode = this.data.userCode;
       this.search();
     }
   }

@@ -20,8 +20,8 @@ export class TdglComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode) {
-      this.code = this.data.searchCode;
+    if (this.code !== this.data.teamCode) {
+      this.code = this.data.teamCode;
       this.name = this.data.searchName;
       this.getPrice();
     }

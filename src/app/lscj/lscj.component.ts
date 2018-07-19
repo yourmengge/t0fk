@@ -27,8 +27,8 @@ export class LscjComponent implements DoCheck, OnInit {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.searchCode) {
-      this.code = this.data.searchCode;
+    if (this.code !== this.data.teamCode) {
+      this.code = this.data.teamCode;
       if (this.code !== '') {
         this.getList();
         this.data.clearPrice();
