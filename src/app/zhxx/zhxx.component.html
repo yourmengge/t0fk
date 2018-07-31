@@ -43,7 +43,7 @@
         <th>
           交易佣金
         </th>
-        <th>
+        <th (click)='sortList()'>
           总盈亏
         </th>
         <th>
@@ -87,7 +87,7 @@
         <td>
           {{a.accountCommission}}
         </td>
-        <td>
+        <td [class]='proFit(a.profit)'>
           {{a.profit}}
         </td>
         <td>

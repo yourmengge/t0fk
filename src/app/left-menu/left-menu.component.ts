@@ -60,7 +60,7 @@ export class LeftMenuComponent implements OnInit {
         this.productCode = '';
         this.teamCode = res[0].teamCode;
         this.data.teamCode = this.teamCode;
-        this.data.searchName = res[0].teamName;
+        this.data.teamName = res[0].teamName;
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();
@@ -82,7 +82,7 @@ export class LeftMenuComponent implements OnInit {
         this.teamCode = '';
         this.productCode = res[0].productCode;
         this.data.productCode = this.productCode;
-        this.data.searchName = res[0].productName;
+        this.data.productName = res[0].productName;
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();
@@ -101,7 +101,7 @@ export class LeftMenuComponent implements OnInit {
     }
     this.data.userCode = '';
     this.teamCode = code;
-    this.data.searchName = name;
+    this.data.teamName = name;
     this.data.teamCode = this.teamCode;
   }
 
@@ -113,7 +113,7 @@ export class LeftMenuComponent implements OnInit {
       this.goto('cpgl');
     }
     this.productCode = code;
-    this.data.searchName = name;
+    this.data.productName = name;
     this.data.productCode = this.productCode;
   }
 

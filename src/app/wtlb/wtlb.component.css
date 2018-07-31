@@ -1,0 +1,58 @@
+.alert-div {
+    width: 500px;
+    height: 310;
+    background: #fff;
+    margin-left: 50%;
+    left: -250px;
+    position: relative;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    padding: 5px 10px;
+}
+
+.alert-title {
+    width: 500px;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    margin-left: 50%;
+    left: -250px;
+    text-align: center;
+    margin-top: 150px;
+    background: #ad3333;
+    color: #fff;
+}
+
+.close-btn {
+    float: right;
+    width: 25px;
+    position: absolute;
+    margin-left: 186px;
+    margin-top: 13px;
+    cursor: pointer;
+}
+
+.flex-alert {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 480px;
+}
+
+.flex-name {
+    flex: 2;
+}
+
+.flex-content {
+    flex: 3;
+}
+
+.flex-content input, .flex-content select {
+    width: 90%;
+    height: 30px;
+    border: solid 1px #ccc;
+    border-radius: 3px;
+    padding: 0 3px;
+}

@@ -82,6 +82,9 @@
         <th>
           委托PK
         </th>
+        <th style="min-width: 60px;" *ngIf='roleCode!=="0"'>
+          操作
+        </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
@@ -138,8 +141,135 @@
         <td>
           {{a.pkOrder}}
         </td>
+        <td *ngIf='roleCode!=="0"'>
+          <span (click)='update(a)'>修改</span>
+        </td>
       </tr>
     </table>
   </div>
-
-</div>
+  <div class="fpjyy-alert" *ngIf='alert'>
+    <div class="alert-title">
+      委托
+      <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
+    </div>
+    <div class="alert-div">
+      <div class="flex-alert">
+        <div class="flex-name">
+          委托时间
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.appointTime'>
+        </div>
+        <div class="flex-name">
+          产品编号
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.productCode'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          交易账号
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.accountCode'>
+        </div>
+        <div class="flex-name">
+          委托编号
+        </div>
+        <div class="flex-content">
+          <input type="text" maxlength="32" [(ngModel)]='accountDetail.appointOrderCode'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          股票代码
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.stockCode'>
+        </div>
+        <div class="flex-name">
+          委托数量
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.appointCnt'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          委托价格
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.appointPrice'>
+        </div>
+        <div class="flex-name">
+          成交数量
+        </div>
+        <div class="flex-content">
+          <input type="text" [(ngModel)]='accountDetail.dealCnt'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          成交均价
+        </div>
+        <div class="flex-content">
+          <input type="text" [(ngModel)]='accountDetail.dealAvrPrice'>
+        </div>
+        <div class="flex-name">
+          买卖方向
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.appointTypeDesc'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          团队编码
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.teamCode'>
+        </div>
+        <div class="flex-name">
+          备注信息
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.memo'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          委托日期
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.orderDate'>
+        </div>
+        <div class="flex-name">
+          委托PK
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.pkOrder'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          委托标志
+        </div>
+        <div class="flex-content">
+          <input type="text" readonly [(ngModel)]='accountDetail.isVritualDesc'>
+        </div>
+        <div class="flex-name">
+          委托状态
+        </div>
+        <div class="flex-content">
+          <select name="" id="" [(ngModel)]='accountDetail.appointStatus'>
+            <option [value]="a.id" *ngFor='let a of statusType'>{{a.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-div">
+        <button (click)='addSubmit()'>确定</button>
+        <button (click)='close()'>取消</button>
+      </div>
+    </div>
+  </div>

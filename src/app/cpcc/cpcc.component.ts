@@ -16,8 +16,12 @@ export class CpccComponent implements DoCheck {
   jyyCode: string;
   alert: any;
   checkedAll: boolean;
+  confirm: boolean;
   checkList = [];
+  confirmText: string;
+  lockData: any;
   constructor(public data: DataService, public http: HttpService) {
+    this.confirm = this.data.hide;
   }
 
   disabled(length) {
@@ -28,6 +32,38 @@ export class CpccComponent implements DoCheck {
     } else {
       return false;
     }
+  }
+
+  submitDelete(type) {
+    if (this.lockData.lockFlag === 1 && this.lockData.lockCnt <= 0) {
+      this.data.ErrorMsg('冻结数量必须大于0');
+    } else {
+      this.lockData.lockFlag = this.lockData.lockFlag === 0 ? 1 : 0;
+      if (this.lockData.lockFlag === 0) {
+        this.lockData.lockCnt = 0;
+      }
+      this.http.lock(this.lockData).subscribe((res) => {
+        this.getList();
+        this.data.ErrorMsg((this.lockData.lockFlag ? '冻结' : '解锁') + '成功！');
+        this.closeConfirm();
+      }, (err) => {
+        this.data.error = err.error;
+        this.data.isError();
+        this.closeConfirm();
+      });
+    }
+  }
+
+  closeConfirm() {
+    this.confirm = this.data.hide;
+  }
+
+  lock(data) {
+    this.lockData = data;
+    this.lockData.stockCode = data.stockNo;
+    const type = data.lockFlag;
+    this.confirmText = '确定' + (!type ? '冻结' : '解锁') + '该产品';
+    this.confirm = this.data.show;
   }
 
   ngDoCheck() {

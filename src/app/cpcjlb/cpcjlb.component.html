@@ -9,16 +9,10 @@
           序号
         </th>
         <th>
-          成交编号
-        </th>
-        <th>
-          团队编号
-        </th>
-        <th>
-          交易账号
-        </th>
-        <th>
           成交时间
+        </th>
+        <th>
+          成交编号
         </th>
         <th>
           委托编号
@@ -36,7 +30,19 @@
           成交数量
         </th>
         <th>
-          成交价
+          成交均价
+        </th>
+        <th>
+          团队编号
+        </th>
+        <th>
+          产品编号
+        </th>
+        <th>
+          交易账号
+        </th>
+        <th>
+          交易员姓名
         </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
@@ -44,16 +50,10 @@
           {{i + 1}}
         </td>
         <td>
-          {{a.tradeId}}
-        </td>
-        <td>
-          {{a.teamCode}}
-        </td>
-        <td>
-          {{a.accountCode}}
-        </td>
-        <td>
           {{a.dealTime}}
+        </td>
+        <td>
+          {{a.tradeId}}
         </td>
         <td class="wtbh">
           {{a.appointOrderCode}}
@@ -72,6 +72,18 @@
         </td>
         <td>
           {{a.dealAvrPrice}}
+        </td>
+        <td>
+          {{a.teamCode}}
+        </td>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
         </td>
       </tr>
     </table>

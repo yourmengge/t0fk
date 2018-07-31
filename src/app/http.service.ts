@@ -4,12 +4,10 @@ import { DataService } from './data.service';
 
 @Injectable()
 export class HttpService {
-  public host = 'http://192.168.1.104:8082/t0proxy/t0/';
-  public ws = 'http://192.168.1.104:8082/t0proxy/webSocket';
-  // public host = 'http://218.85.23.217:8082/t0proxy/t0/';
-  // public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
-  // public host = 'http://106.15.92.93:10008/tnproxy/t0/';
-  // public ws = 'http://106.15.92.93:10008/tnproxy/webSocket';
+  public host = 'http://218.85.23.217:8082/t0proxy/t0/';
+  public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
+  // public host = 'http://101.132.65.124:10008/t0proxy/t0/';
+  // public ws = 'http://101.132.65.124:10008/t0proxy/webSocket';
   public stockHQ: any;
 
   constructor(public http: HttpClient, public data: DataService) {
@@ -33,10 +31,24 @@ export class HttpService {
   }
 
   /**
+   * 冻结或解锁产品
+   */
+  lock(data) {
+    return this.POST('product/lock', data);
+  }
+
+  /**
    * 获取团队列表
    */
   getTeamList() {
     return this.POST('team/list', {});
+  }
+
+  /**
+   * 修改委托单
+   */
+  updateAppoint(data) {
+    return this.POST('orderCtrl/UPDATE', data);
   }
 
   /**

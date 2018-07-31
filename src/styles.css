@@ -105,7 +105,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     font-size: 14px;
     border: solid 1px #ececec;
     word-break: keep-all;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 .my-table tr {
@@ -121,7 +121,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     font-size: 14px;
     margin: 0 5px;
     color: #0483b5;
-    font-weight:bold;
+    font-weight: bold;
     word-break: keep-all;
 }
 
@@ -334,11 +334,21 @@ input:read-only {
 
 .confirm-content {
     padding: 40px;
+    padding-bottom: 20px;
+}
+
+.confirm-input {
+    width: 100px;
+    text-align: right;
+    border: none;
+    border-bottom: solid 1px #ccc;
+    padding: 0 10px;
 }
 
 .button-div {
     display: flex;
     width: 100%;
+    margin-top: 20px;
 }
 
 .button-div button {

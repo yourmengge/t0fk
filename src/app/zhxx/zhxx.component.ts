@@ -9,6 +9,8 @@ import { Md5 } from 'ts-md5';
   styleUrls: ['./zhxx.component.css']
 })
 export class ZhxxComponent implements DoCheck {
+  isSort: boolean;
+  sortType: any;
   temp: any;
   searchCode: any;
   accountStatus: any;
@@ -41,6 +43,7 @@ export class ZhxxComponent implements DoCheck {
       isEveningUp: 1,
       teamCode: this.code
     };
+    this.sortType = 0;
     this.confirmText = '确定删除交易员？';
     this.confirm = this.data.hide;
     this.checkId = '';
@@ -54,11 +57,11 @@ export class ZhxxComponent implements DoCheck {
     this.userCode = this.data.userCode;
     this.alert = this.data.hide;
     this.textType = '新增';
+    this.isSort = false;
   }
 
   ngDoCheck() {
     if (this.code !== this.data.teamCode) {
-      console.log(this.code, this.data.teamCode);
       this.code = this.data.teamCode;
       this.userCode = this.data.userCode;
       this.checkId = '';
@@ -76,6 +79,32 @@ export class ZhxxComponent implements DoCheck {
     this.getList();
   }
 
+  proFit(data) {
+    if (data === 0) {
+      return '';
+    } else if (data > 0) {
+      return 'red';
+    } else {
+      return 'green';
+    }
+  }
+
+  sortList() {
+    this.sortType = !this.sortType;
+    this.sort();
+  }
+
+  sort() {
+    this.isSort = true;
+    this.list.sort((a, b) => {
+      if (this.sortType) {
+        return (b.profit - a.profit);
+      } else {
+        return (a.profit - b.profit);
+      }
+    });
+  }
+
   getList() {
     this.data.clearTimeOut();
     const data = {
@@ -84,6 +113,9 @@ export class ZhxxComponent implements DoCheck {
     };
     this.http.getTeamMember(data).subscribe((res) => {
       this.list = res;
+      if (this.isSort) {
+        this.sort();
+      }
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
@@ -211,6 +243,7 @@ export class ZhxxComponent implements DoCheck {
   select(data, index) {
     this.checkId = index;
     this.temp = data.accountCode;
+    this.userCode = data.accountCode;
     this.selectDetail = {
       accountCode: data.accountCode,
       accountCommission: data.accountCommission,

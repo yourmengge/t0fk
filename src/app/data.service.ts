@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
-import { FplbComponent } from './fplb/fplb.component';
 
 @Injectable()
 export class DataService {
@@ -23,8 +22,8 @@ export class DataService {
   roleCode: string; // 0	查询权限  1	操作权限
 
   teamCode: string; // 团队查询或产品查询的code
-  searchName: string; // 团队查询或产品查询的名字
-
+  teamName: string; // 团队查询或产品查询的名字
+  productName: string;
   productCode: string;
 
   accountValid = /^[0-9A-Za-z_]+$/;

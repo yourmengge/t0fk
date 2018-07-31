@@ -21,7 +21,7 @@ export class CpglComponent implements DoCheck {
   ngDoCheck() {
     if (this.code !== this.data.productCode) {
       this.code = this.data.productCode;
-      this.name = this.data.searchName;
+      this.name = this.data.productName;
       this.getPrice();
     }
     this.url = this.data.getUrl(3);
