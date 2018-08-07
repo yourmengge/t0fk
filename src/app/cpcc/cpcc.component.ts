@@ -59,11 +59,13 @@ export class CpccComponent implements DoCheck {
   }
 
   lock(data) {
-    this.lockData = data;
-    this.lockData.stockCode = data.stockNo;
-    const type = data.lockFlag;
-    this.confirmText = '确定' + (!type ? '冻结' : '解锁') + '该产品';
-    this.confirm = this.data.show;
+    if (this.data.roleCode !== '0') {
+      this.lockData = data;
+      this.lockData.stockCode = data.stockNo;
+      const type = data.lockFlag;
+      this.confirmText = '确定' + (!type ? '冻结' : '解锁') + '该产品';
+      this.confirm = this.data.show;
+    }
   }
 
   ngDoCheck() {
