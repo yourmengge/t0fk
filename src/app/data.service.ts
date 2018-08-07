@@ -5,6 +5,15 @@ import { HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class DataService {
 
+  public GET_ACCOUNT_LIST = 'team/account';
+  public GET_TEAM_PROFIT = 'today/profit';
+  public EXPORT_TODAY_PROFIT = 'today/profit/export';
+  public GET_TODAY_CLOSE = 'today/unclose';
+  public GET_TODAY_TRADE = 'today/trade';
+  public EXPORT_TODAY_TRADE = 'today/trade/export';
+  public GET_TODAY_APPOINT = 'today/appoint';
+  public EXPORT_TODAY_APPOINT = 'today/appoint/export';
+  public GET_PRIVATE_HOLD = 'private/hold';
   isPhone = /^0?1[3|4|5|6|7|8|9][0-9]\d{8}$/;
   alert = false;
   loading = false;
@@ -19,7 +28,7 @@ export class DataService {
   timeout = 3000;
   userCode: string; // 交易员账户
 
-  roleCode: string; // 0	查询权限  1	操作权限
+  roleCode: number; // 0	查询权限  1	操作权限
 
   teamCode: string; // 团队查询或产品查询的code
   teamName: string; // 团队查询或产品查询的名字

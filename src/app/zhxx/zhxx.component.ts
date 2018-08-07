@@ -2,35 +2,28 @@ import { Component, DoCheck } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
 import { Md5 } from 'ts-md5';
+import { GetList } from '../get-list';
 
 @Component({
   selector: 'app-zhxx',
   templateUrl: './zhxx.component.html',
   styleUrls: ['./zhxx.component.css']
 })
-export class ZhxxComponent implements DoCheck {
-  isSort: boolean;
-  sortType: any;
-  temp: any;
-  searchCode: any;
-  accountStatus: any;
-  isAutoShutdown: any;
-  code: string;
-  list: any;
-  proName: any;
-  checkId: any;
-  userCode: any;
-  alert: boolean;
-  textType: string;
-  deleteData: any;
-  accountDetail: any;
-  resetAlert: any;
-  selectDetail: any;
-  newPass: any;
-  roleCode = 2;
-  confirm: boolean;
-  confirmText: string;
+export class ZhxxComponent extends GetList {
+
   constructor(public data: DataService, public http: HttpService) {
+    super();
+    this.url = this.data.GET_ACCOUNT_LIST;
+    this.initData();
+  }
+
+  afterGetList() {
+    if (this.isSort) {
+      this.sort();
+    }
+  }
+
+  initData() {
     this.accountDetail = {
       accountCode: '',
       accountCommission: '',
@@ -60,89 +53,7 @@ export class ZhxxComponent implements DoCheck {
     this.isSort = false;
   }
 
-  ngDoCheck() {
-    if (this.code !== this.data.teamCode) {
-      this.code = this.data.teamCode;
-      this.userCode = this.data.userCode;
-      this.checkId = '';
-      this.search();
-    }
-  }
 
-  history() {
-    this.data.goto('main/tdgl/history');
-  }
-
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  proFit(data) {
-    if (data === 0) {
-      return '';
-    } else if (data > 0) {
-      return 'red';
-    } else {
-      return 'green';
-    }
-  }
-
-  sortList() {
-    this.sortType = !this.sortType;
-    this.sort();
-  }
-
-  sort() {
-    this.isSort = true;
-    this.list.sort((a, b) => {
-      if (this.sortType) {
-        return (b.profit - a.profit);
-      } else {
-        return (a.profit - b.profit);
-      }
-    });
-  }
-
-  getList() {
-    this.data.clearTimeOut();
-    const data = {
-      teamCode: this.code,
-      accountCode: this.searchCode
-    };
-    this.http.getTeamMember(data).subscribe((res) => {
-      this.list = res;
-      if (this.isSort) {
-        this.sort();
-      }
-      this.data.settimeout = setTimeout(() => {
-        this.getList();
-      }, this.data.timeout);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
-  }
-
-  goto(url) {
-    this.data.goto('main/tdgl/' + url);
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
-
-  disabled(temp) {
-    if (this.data.roleCode === '0') {
-      return true;
-    } else if (this.data.roleCode === '1' && temp === '') {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   close() {
     if (this.textType === '新增') {

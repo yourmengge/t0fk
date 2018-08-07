@@ -31,6 +31,20 @@ export class HttpService {
   }
 
   /**
+   * 获取列表带参数data
+   */
+  getList(url, data) {
+    return this.POST(url, data);
+  }
+
+  /**
+* 导出团队利润统计列表
+*/
+  exportTEAM(url, data) {
+    return this.export(url, data);
+  }
+
+  /**
    * 冻结或解锁产品
    */
   lock(data) {
@@ -225,7 +239,22 @@ export class HttpService {
   exportHoldTeam(code) {
     return this.export('team/' + code + '/hold/export', {});
   }
+  /**
+* 导出历史列表
+*/
+  exportHistoryList(data, type) {
+    // return this.POST('tn/history/' + type + '/export', data);
+    this.data.getExportHeader();
+    return this.http.post(this.host + 'tn/history/' + type + '/export', data,
+      { headers: this.data.getExportHeader(), responseType: 'arraybuffer' });
 
+  }
+  /**
+ * 查询历史列表
+ */
+  getHistoryList(data, type) {
+    return this.POST('tn/history/' + type, data);
+  }
   /**
    * 导出团队委托列表
    */

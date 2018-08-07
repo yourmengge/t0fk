@@ -1,23 +1,19 @@
 import { Component, DoCheck } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
+import { GetList } from '../get-list';
 @Component({
   selector: 'app-ghlb',
   templateUrl: './ghlb.component.html',
   styleUrls: ['./ghlb.component.css']
 })
-export class GhlbComponent implements DoCheck {
-  checkList = [];
-  code: string;
-  checkedAll: boolean;
-  list: any;
-  userCode: any;
-  autofocusId: any;
-  searchCode: any;
-  confirm: boolean;
-  array = [];
-  confirmText: string;
+export class GhlbComponent extends GetList {
   constructor(public data: DataService, public http: HttpService) {
+    super();
+    this.initData();
+  }
+
+  initData() {
     this.checkedAll = false;
     this.autofocusId = '';
     this.confirm = this.data.hide;
@@ -25,50 +21,9 @@ export class GhlbComponent implements DoCheck {
     this.userCode = this.data.userCode;
   }
 
-  ngDoCheck() {
-    if (this.code !== this.data.teamCode && !this.data.isNull(this.data.teamCode)) {
-      this.code = this.data.teamCode;
-      this.list = [];
-      this.checkList = [];
-      this.userCode = this.data.userCode;
-      this.search();
-    }
-  }
-  disabled(length) {
-    if (this.data.roleCode === '0') {
-      return true;
-    } else if (this.data.roleCode === '1' && length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  clickAll() {
-    this.checkedAll = !this.checkedAll;
-    if (this.checkedAll) {
-      // tslint:disable-next-line:forin
-      for (const i in this.list) {
-        this.checkList.push(i);
-        this.list[i].isChecked = true;
-      }
-    } else {
-      this.checkList = [];
-      // tslint:disable-next-line:forin
-      for (const i in this.list) {
-        this.list[i].isChecked = false;
-      }
-    }
-  }
 
   getList() {
     this.data.clearTimeOut();
-    this.data.Loading(this.data.show);
     const data = {
       teamCode: this.code,
       accountCode: this.searchCode
@@ -99,7 +54,6 @@ export class GhlbComponent implements DoCheck {
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
-      this.data.Loading(this.data.hide);
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -180,11 +134,6 @@ export class GhlbComponent implements DoCheck {
 
   closeConfirm() {
     this.confirm = this.data.hide;
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
   }
 
   trackBy(a) {

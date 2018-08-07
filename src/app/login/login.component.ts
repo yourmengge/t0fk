@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         this.data.username = this.phone;
         this.data.token = res['resultInfo']['token'];
         // this.data.token = res['resultInfo'];
-        this.data.roleCode = res['resultInfo']['roleCode'] + '';
+        this.data.roleCode = res['resultInfo']['roleCode'];
         this.data.setSession('token', this.data.token);
         this.data.setSession('roleCode', this.data.roleCode);
         this.data.Loading(this.data.hide);

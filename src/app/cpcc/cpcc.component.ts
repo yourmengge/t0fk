@@ -25,9 +25,9 @@ export class CpccComponent implements DoCheck {
   }
 
   disabled(length) {
-    if (this.data.roleCode === '0') {
+    if (this.data.roleCode === 0) {
       return true;
-    } else if (this.data.roleCode === '1' && length === 0) {
+    } else if (this.data.roleCode === 1 && length === 0) {
       return true;
     } else {
       return false;
@@ -59,7 +59,7 @@ export class CpccComponent implements DoCheck {
   }
 
   lock(data) {
-    if (this.data.roleCode !== '0') {
+    if (this.data.roleCode !== 0) {
       this.lockData = data;
       this.lockData.stockCode = data.stockNo;
       const type = data.lockFlag;

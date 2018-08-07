@@ -1,26 +1,21 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
+import { GetList } from '../get-list';
 
 @Component({
   selector: 'app-dplb',
   templateUrl: './dplb.component.html',
   styleUrls: ['./dplb.component.css']
 })
-export class DplbComponent implements DoCheck {
-  code: string;
-  list: any;
-  proName: any;
-  userCode: any;
-  confirm: boolean;
-  confirmText: string;
-  searchCode: any;
-  actionType: string;
-  sellType: string;
-  resData: any;
-  roleCode: any;
-  pkOrder: any;
+export class DplbComponent extends GetList {
   constructor(public data: DataService, public http: HttpService) {
+    super();
+    this.url = this.data.GET_TODAY_CLOSE;
+    this.initData();
+  }
+
+  initData() {
     this.code = '';
     this.confirmText = '';
     this.confirm = this.data.hide;
@@ -28,41 +23,6 @@ export class DplbComponent implements DoCheck {
     this.roleCode = this.data.roleCode;
   }
 
-  ngDoCheck() {
-    if (this.code !== this.data.teamCode) {
-      this.code = this.data.teamCode;
-      this.userCode = this.data.userCode;
-      this.search();
-    }
-  }
-
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  getList() {
-    this.data.clearTimeOut();
-    const data = {
-      teamCode: this.code,
-      accountCode: this.searchCode
-    };
-    this.http.getClosed(data).subscribe((res) => {
-      this.list = res;
-      this.data.settimeout = setTimeout(() => {
-        this.getList();
-      }, this.data.timeout);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
 
   sell(a) {
     this.confirmText = '确认平仓？';

@@ -82,7 +82,7 @@
         <th>
           委托PK
         </th>
-        <th style="min-width: 60px;" *ngIf='roleCode!=="0"'>
+        <th style="min-width: 60px;" *ngIf='roleCode!==0'>
           操作
         </th>
       </tr>
@@ -141,7 +141,7 @@
         <td>
           {{a.pkOrder}}
         </td>
-        <td *ngIf='roleCode!=="0"'>
+        <td *ngIf='roleCode!==0'>
           <span (click)='update(a)'>修改</span>
         </td>
       </tr>
