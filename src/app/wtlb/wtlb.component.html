@@ -28,7 +28,7 @@
     <input type="checkbox" name="" id="" (click)='filter("3")'> 延迟委托 
   </div>
 
-  <div class="table-div my-scroll">
+  <div class="table-div my-scroll" (scroll)='onScroll($event)'>
     <table class="my-table">
       <tr>
         <th>

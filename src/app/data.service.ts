@@ -37,6 +37,7 @@ export class DataService {
 
   searchProCode: string; // 分配列表输入框产品编号
   searchStockCode: string; // 分配列表输入框股票编号
+  pageNum: number; // 当前展示的列表条数
 
   accountValid = /^[0-9A-Za-z_]+$/;
 
@@ -53,6 +54,7 @@ export class DataService {
   constructor(public router: Router) {
     this.teamCode = '';
     this.userCode = '';
+    this.pageNum = 50;
     this.productCode = '';
     this.searchProCode = '';
     this.searchStockCode = '';

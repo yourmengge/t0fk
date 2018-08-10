@@ -6,6 +6,11 @@
     <input type="text" [(ngModel)]='stockCode1'>
     <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
+    <!-- <div class="search-div">
+    <span> 交易账户</span>
+    <input type="text" [(ngModel)]='userCode'>
+    <button class="button" (click)='search()'>查询</button>
+    <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
     <button class="button" (click)='fpjyy()' [disabled]='disabled(checkList.length)'>分配给交易员</button>
@@ -44,8 +49,8 @@
         </th>
       </tr>
       <tr *ngFor='let a of list;let i = index;trackBy:trackBy'>
-        <td (click)='checkbox(i)'> 
-          <input type="checkbox" name="" id=""   [(checked)]='a.isChecked'>
+        <td (click)='checkbox(i)'>
+          <input type="checkbox" name="" id="" [(checked)]='a.isChecked'>
         </td>
         <td (click)='checkbox(i)'>
           {{a.stockCode}}

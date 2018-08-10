@@ -11,6 +11,7 @@ import { GetList } from '../get-list';
 })
 export class WtlbComponent extends GetList {
   filterStr: string;
+  pageNum: number;
   constructor(public http: HttpService, public data: DataService) {
     super();
     this.url = this.data.GET_TODAY_APPOINT;
@@ -19,6 +20,15 @@ export class WtlbComponent extends GetList {
     this.filterStr = '';
     this.initData();
     this.initDetail();
+    this.pageNum = this.data.pageNum;
+  }
+
+  onScroll(e) {
+    if (e.srcElement.scrollTop + e.srcElement.clientHeight === e.srcElement.scrollHeight) {
+      console.log('bottom');
+      this.data.pageNum = this.data.pageNum + this.pageNum;
+      this.getList();
+    }
   }
 
   initData() {
@@ -45,7 +55,7 @@ export class WtlbComponent extends GetList {
       teamCode: this.code,
       accountCode: this.searchCode
     };
-    this.http.getList(this.url + '?filter=' + this.filterStr, data).subscribe((res) => {
+    this.http.getListPage(this.url + '?cnt=' + this.data.pageNum + '&filter=' + this.filterStr, data).subscribe((res) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {

@@ -8,7 +8,7 @@
   <div class="action-button">
     <button (click)='export()'>导出列表</button>
   </div>
-  <div class="table-div my-scroll">
+  <div class="table-div my-scroll" (scroll)='onScroll($event)'>
     <table class="my-table">
       <tr>
         <th>
