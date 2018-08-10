@@ -10,7 +10,7 @@ import { GetList } from '../get-list';
   styleUrls: ['./wtlb.component.css']
 })
 export class WtlbComponent extends GetList {
-
+  pageNum: number;
   constructor(public http: HttpService, public data: DataService) {
     super();
     this.url = this.data.GET_TODAY_APPOINT;
@@ -18,6 +18,15 @@ export class WtlbComponent extends GetList {
     this.exportName = '委托列表';
     this.initData();
     this.initDetail();
+    this.pageNum = this.data.pageNum;
+  }
+
+  onScroll(e) {
+    if (e.srcElement.scrollTop + e.srcElement.clientHeight === e.srcElement.scrollHeight) {
+      console.log('bottom');
+      this.data.pageNum = this.data.pageNum + this.pageNum;
+      this.getList();
+    }
   }
 
   initData() {
@@ -36,6 +45,24 @@ export class WtlbComponent extends GetList {
       appointStatus: 8,
       memo: ''
     };
+  }
+
+  getList() {
+    this.data.clearTimeOut();
+    const data = {
+      teamCode: this.code,
+      accountCode: this.searchCode
+    };
+    this.http.getListPage(this.url + '?cnt=' + this.data.pageNum, data).subscribe((res) => {
+      this.list = res;
+      this.afterGetList();
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 
   close() {

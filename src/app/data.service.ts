@@ -35,6 +35,8 @@ export class DataService {
   productName: string;
   productCode: string;
 
+  pageNum: number; // 当前展示的列表条数
+
   accountValid = /^[0-9A-Za-z_]+$/;
 
   historyKeyWord = {
@@ -50,6 +52,7 @@ export class DataService {
   constructor(public router: Router) {
     this.teamCode = '';
     this.userCode = '';
+    this.pageNum = 50;
     this.productCode = '';
     this.roleCode = this.getSession('roleCode') === undefined ? 0 : this.getSession('roleCode');
     // this.roleCode = 2;

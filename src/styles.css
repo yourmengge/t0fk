@@ -151,7 +151,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     overflow-x: auto;
     padding-bottom: 20px;
     margin-top: 10px;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 260px);
 }
 
 .my-scroll::-webkit-scrollbar-thumb {

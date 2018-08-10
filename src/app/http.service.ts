@@ -38,6 +38,13 @@ export class HttpService {
   }
 
   /**
+ * 获取列表带参数data
+ */
+  getListPage(url, data) {
+    return this.POST(url, data);
+  }
+
+  /**
 * 导出团队利润统计列表
 */
   exportTEAM(url, data) {
