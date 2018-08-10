@@ -35,6 +35,9 @@ export class DataService {
   productName: string;
   productCode: string;
 
+  searchProCode: string; // 分配列表输入框产品编号
+  searchStockCode: string; // 分配列表输入框股票编号
+
   accountValid = /^[0-9A-Za-z_]+$/;
 
   historyKeyWord = {
@@ -51,6 +54,8 @@ export class DataService {
     this.teamCode = '';
     this.userCode = '';
     this.productCode = '';
+    this.searchProCode = '';
+    this.searchStockCode = '';
     this.roleCode = this.getSession('roleCode') === undefined ? 0 : this.getSession('roleCode');
     // this.roleCode = 2;
   }

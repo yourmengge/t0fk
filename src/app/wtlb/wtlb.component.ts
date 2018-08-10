@@ -10,12 +10,13 @@ import { GetList } from '../get-list';
   styleUrls: ['./wtlb.component.css']
 })
 export class WtlbComponent extends GetList {
-
+  filterStr: string;
   constructor(public http: HttpService, public data: DataService) {
     super();
     this.url = this.data.GET_TODAY_APPOINT;
     this.exportUrl = this.data.EXPORT_TODAY_APPOINT;
     this.exportName = '委托列表';
+    this.filterStr = '';
     this.initData();
     this.initDetail();
   }
@@ -38,9 +39,36 @@ export class WtlbComponent extends GetList {
     };
   }
 
+  getList() {
+    this.data.clearTimeOut();
+    const data = {
+      teamCode: this.code,
+      accountCode: this.searchCode
+    };
+    this.http.getList(this.url + '?filter=' + this.filterStr, data).subscribe((res) => {
+      this.list = res;
+      this.afterGetList();
+      this.data.settimeout = setTimeout(() => {
+        this.getList();
+      }, this.data.timeout);
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
+
   close() {
     this.initDetail();
     this.alert = this.data.hide;
+  }
+
+  filter(string: string) {
+    if (this.filterStr.indexOf(string) === -1) {
+      this.filterStr = this.filterStr + string;
+    } else {
+      this.filterStr = this.filterStr.replace(string, '');
+    }
+    console.log(this.filterStr);
   }
 
 
@@ -74,5 +102,18 @@ export class WtlbComponent extends GetList {
       });
     }
 
+  }
+  /**
+     * 导出列表
+     */
+  export() {
+    const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
+    this.http.exportTEAM(this.exportUrl + '?filter=' + this.filterStr, data).subscribe((res) => {
+      console.log(res);
+      this.data.downloadFile(res, this.exportName);
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 }

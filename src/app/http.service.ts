@@ -96,8 +96,8 @@ export class HttpService {
   /**
    * 获取分配列表
    */
-  getHold(code) {
-    return this.POST('team/' + code + '/hold', {});
+  getHold(code, proCode, stockCode) {
+    return this.POST('team/' + code + '/hold?productCode=' + proCode + '&stockCode=' + stockCode, {});
   }
 
   /**
@@ -124,8 +124,8 @@ export class HttpService {
   /**
    * 获取私券列表
    */
-  getPrivateHold(data) {
-    return this.POST('private/hold', data);
+  getPrivateHold(data, proCode, stockCode) {
+    return this.POST('private/hold?productCode=' + proCode + '&stockCode=' + stockCode, data);
   }
 
   /**

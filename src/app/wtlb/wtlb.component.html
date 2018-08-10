@@ -16,13 +16,16 @@
     <button class="button" (click)='search()'>查询</button>
   </div> -->
   <div class="search-div">
-    <span> 交易员账户</span>
+    <span> 交易账户</span>
     <input type="text" [(ngModel)]='userCode'>
     <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
     <button (click)='export()'>导出列表</button>
+    <input type="checkbox" name="" id="" (click)='filter("1")'> 可扯委托 
+    <input type="checkbox" name="" id="" (click)='filter("2")'> 失败委托 
+    <input type="checkbox" name="" id="" (click)='filter("3")'> 延迟委托 
   </div>
 
   <div class="table-div my-scroll">

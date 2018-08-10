@@ -20,6 +20,13 @@ export class FplbComponent implements DoCheck {
   ghArray: any;
   confirm: boolean;
   confirmText: string;
+
+  productCode: string; // 产品编号
+  stockCode: string; // 股票代码
+
+  productCode1: string; // 产品编号
+  stockCode1: string; // 股票代码
+
   constructor(public data: DataService, public http: HttpService) {
     this.alert = this.data.hide;
     this.checkedAll = false;
@@ -38,6 +45,10 @@ export class FplbComponent implements DoCheck {
       ghcp: '',
       isChecked: false
     };
+    this.productCode1 = this.data.searchProCode;
+    this.stockCode1 = this.data.searchStockCode;
+    this.productCode = this.data.searchProCode;
+    this.stockCode = this.data.searchStockCode;
   }
 
   ngDoCheck() {
@@ -48,6 +59,15 @@ export class FplbComponent implements DoCheck {
       this.getList();
     }
   }
+
+  search() {
+    this.productCode = this.productCode1;
+    this.stockCode = this.stockCode1;
+    this.data.searchProCode = this.productCode1;
+    this.data.searchStockCode = this.stockCode1;
+    this.getList();
+  }
+
 
   clickAll() {
     this.checkedAll = !this.checkedAll;
@@ -68,7 +88,7 @@ export class FplbComponent implements DoCheck {
 
   getList() {
     this.data.clearTimeOut();
-    this.http.getHold(this.code).subscribe((res) => {
+    this.http.getHold(this.code, this.productCode, this.stockCode).subscribe((res) => {
       for (const i in res) {
         if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
           res[i].ghcp = res[i].ableCnt;

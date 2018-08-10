@@ -8,6 +8,12 @@ import { GetList } from '../get-list';
   styleUrls: ['./ghlb.component.css']
 })
 export class GhlbComponent extends GetList {
+
+  productCode: string; // 产品编号
+  stockCode: string; // 股票代码
+
+  productCode1: string; // 产品编号
+  stockCode1: string; // 股票代码
   constructor(public data: DataService, public http: HttpService) {
     super();
     this.initData();
@@ -19,8 +25,20 @@ export class GhlbComponent extends GetList {
     this.confirm = this.data.hide;
     this.confirmText = '确认归还数量给团队？';
     this.userCode = this.data.userCode;
+    this.productCode1 = this.data.searchProCode;
+    this.stockCode1 = this.data.searchStockCode;
+    this.productCode = this.data.searchProCode;
+    this.stockCode = this.data.searchStockCode;
   }
-
+  search() {
+    this.searchCode = this.userCode;
+    this.data.userCode = this.searchCode;
+    this.productCode = this.productCode1;
+    this.stockCode = this.stockCode1;
+    this.data.searchProCode = this.productCode1;
+    this.data.searchStockCode = this.stockCode1;
+    this.getList();
+  }
 
   getList() {
     this.data.clearTimeOut();
@@ -28,7 +46,7 @@ export class GhlbComponent extends GetList {
       teamCode: this.code,
       accountCode: this.searchCode
     };
-    this.http.getPrivateHold(data).subscribe((res) => {
+    this.http.getPrivateHold(data, this.productCode, this.stockCode).subscribe((res) => {
       // tslint:disable-next-line:forin
       for (const i in res) {
         if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据

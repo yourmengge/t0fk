@@ -37,16 +37,17 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .search-div span {
     margin-right: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .search-div input {
     border: solid 1px #ccc;
     border-radius: 5px;
-    margin-right: 30px;
+    margin-right: 10px;
     padding-left: 5px;
     font-size: 14px;
     height: 28px;
+    width: 110px;
 }
 
 .search-div button {
@@ -151,7 +152,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     overflow-x: auto;
     padding-bottom: 20px;
     margin-top: 10px;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 260px);
 }
 
 .my-scroll::-webkit-scrollbar-thumb {
