@@ -11,6 +11,8 @@ export class GetList implements DoCheck {
     public data: DataService;
     isSort: boolean;
     sortType: any;
+    sortName: any;
+    sortData: any;
     temp: any;
     searchCode: any;
     accountStatus: any;
@@ -136,20 +138,33 @@ export class GetList implements DoCheck {
 
     }
 
-    sortList() {
+    sortList(data, type) {
         this.sortType = !this.sortType;
-        this.sort();
+        this.sortData = data;
+        this.sortName = type;
+        this.sort(this.sortData, this.sortName);
     }
 
-    sort() {
+    sort(data, type) {
         this.isSort = true;
         this.list.sort((a, b) => {
-            if (this.sortType) {
-                return (b.profit - a.profit);
+            if (type === 'num') {
+                if (this.sortType) {
+                    return (b[data] - a[data]);
+                } else {
+                    return (a[data] - b[data]);
+                }
             } else {
-                return (a.profit - b.profit);
+                if (this.sortType) {
+                    return a[data].localeCompare(b[data]);
+                } else {
+                    return b[data].localeCompare(a[data]);
+                }
             }
+
+
         });
+
     }
 
     /**
@@ -172,7 +187,7 @@ export class GetList implements DoCheck {
     disabled(temp) {
         if (this.data.roleCode === 0) {
             return true;
-        } else if (this.data.roleCode === 1 && temp === '') {
+        } else if (this.data.roleCode === 1 && temp === 0) {
             return true;
         } else {
             return false;
@@ -185,7 +200,7 @@ export class GetList implements DoCheck {
     export() {
         const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
         this.http.exportTEAM(this.exportUrl, data).subscribe((res) => {
-            console.log(res);
+
             this.data.downloadFile(res, this.exportName);
         }, (err) => {
             this.data.error = err.error;

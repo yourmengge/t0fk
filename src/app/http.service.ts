@@ -243,8 +243,8 @@ export class HttpService {
   /**
    * 导出团队分配列表
    */
-  exportHoldTeam(code) {
-    return this.export('team/' + code + '/hold/export', {});
+  exportHoldTeam(code, data) {
+    return this.export('team/' + code + '/hold/export', data);
   }
   /**
 * 导出历史列表

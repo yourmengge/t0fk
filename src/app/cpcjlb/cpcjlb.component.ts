@@ -43,7 +43,6 @@ export class CpcjlbComponent implements DoCheck {
 
   export() {
     this.http.exportTradeProduct(this.code).subscribe((res) => {
-      console.log(res);
       this.data.downloadFile(res, '产品成交列表');
     }, (err) => {
       this.data.error = err.error;

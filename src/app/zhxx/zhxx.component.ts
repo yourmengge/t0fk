@@ -19,7 +19,7 @@ export class ZhxxComponent extends GetList {
 
   afterGetList() {
     if (this.isSort) {
-      this.sort();
+      super.sort(this.sortData, this.sortName);
     }
   }
 
@@ -155,18 +155,20 @@ export class ZhxxComponent extends GetList {
     this.checkId = index;
     this.temp = data.accountCode;
     this.userCode = data.accountCode;
-    this.selectDetail = {
-      accountCode: data.accountCode,
-      accountCommission: data.accountCommission,
-      accountName: data.accountName,
-      accountPwd: data.accountPwd,
-      accountStatus: data.accountStatus,
-      bpLine: data.bpLine,
-      closingDownLine: data.closingDownLine,
-      isAutoShutdown: data.isAutoShutdown,
-      teamCode: this.code,
-      isEveningUp: data.isEveningUp
-    };
+    this.selectDetail = Object.assign(this.selectDetail, data);
+    this.selectDetail.teamCode = this.code;
+    // this.selectDetail = {
+    //   accountCode: data.accountCode,
+    //   accountCommission: data.accountCommission,
+    //   accountName: data.accountName,
+    //   accountPwd: data.accountPwd,
+    //   accountStatus: data.accountStatus,
+    //   bpLine: data.bpLine,
+    //   closingDownLine: data.closingDownLine,
+    //   isAutoShutdown: data.isAutoShutdown,
+    //   teamCode: this.code,
+    //   isEveningUp: data.isEveningUp
+    // };
   }
 
   update() {

@@ -45,6 +45,9 @@
           <th>
             卖出成交金额
           </th>
+          <th>
+            交易笔数
+          </th>
         </tr>
         <tr *ngFor='let a of list' [class]='fontColor(a.appointTypeDesc)'>
           <td>
@@ -79,6 +82,9 @@
           </td>
           <td>
             {{a.sellDealAmount}}
+          </td>
+          <td>
+            {{a.appointCnt}}
           </td>
         </tr>
       </table>

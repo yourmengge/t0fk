@@ -166,7 +166,6 @@ export class CpccComponent implements DoCheck {
   fptd() {
     let i = 0;
     this.checkList.forEach((element) => {
-      console.log(typeof (this.list[element].ableCnt));
       if (this.list[element].ableCnt <= 0) {
         this.data.ErrorMsg('分配数量必须大于0');
         return i = 1;
@@ -241,7 +240,6 @@ export class CpccComponent implements DoCheck {
   submit(data) {
     this.data.Loading(this.data.show);
     this.http.coupon({ list: data }).subscribe((res) => {
-      console.log(res);
       this.data.ErrorMsg('提交成功');
       this.close();
       this.list = [];

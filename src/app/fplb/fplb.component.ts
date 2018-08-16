@@ -68,6 +68,12 @@ export class FplbComponent implements DoCheck {
     this.getList();
   }
 
+  searchAll() {
+    this.productCode = '';
+    this.stockCode = '';
+    this.getList();
+  }
+
 
   clickAll() {
     this.checkedAll = !this.checkedAll;
@@ -182,8 +188,6 @@ export class FplbComponent implements DoCheck {
     } else {
       this.checkedAll = false;
     }
-
-    console.log(this.checkList);
   }
 
   /**
@@ -304,7 +308,7 @@ export class FplbComponent implements DoCheck {
   submitBack(data) {
     this.data.Loading(this.data.show);
     this.http.coupon({ list: data }).subscribe((res) => {
-      console.log(res);
+
       this.data.ErrorMsg('提交成功');
       this.list = [];
       this.getList();
@@ -324,7 +328,7 @@ export class FplbComponent implements DoCheck {
   submit(data) {
     this.data.Loading(this.data.show);
     this.http.coupon({ list: data }).subscribe((res) => {
-      console.log(res);
+
       this.data.ErrorMsg('提交成功');
       this.close();
       this.list = [];
@@ -338,8 +342,9 @@ export class FplbComponent implements DoCheck {
   }
 
   export() {
-    this.http.exportHoldTeam(this.code).subscribe((res) => {
-      console.log(res);
+    const data = 'productCode=' + this.productCode + '&stockCode=' + this.stockCode + '&teamCode=' + this.code;
+    this.http.exportHoldTeam(this.code, data).subscribe((res) => {
+
       this.data.downloadFile(res, '分配列表');
     }, (err) => {
       this.data.error = err.error;

@@ -6,7 +6,7 @@
     <button (click)='searchAll()'>查询全部</button>
   </div>
   <div class="action-button">
-    <button (click)='add()'[disabled]='disabled("1")'>新增</button>
+    <button (click)='add()' [disabled]='disabled("1")'>新增</button>
     <button [disabled]='disabled(temp)' (click)='update()'>修改</button>
     <button [disabled]='disabled(temp)' (click)='del()'>删除</button>
     <button [disabled]='disabled(temp)' (click)='reset()'>重置密码</button>
@@ -19,8 +19,8 @@
         <th>
           选择
         </th>
-        <th>
-          交易员账号
+        <th (click)='sortList("accountCode","string")'>
+          交易员账号 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
         </th>
         <th>
           交易员姓名
@@ -43,17 +43,17 @@
         <th>
           交易佣金
         </th>
-        <th (click)='sortList()'>
+        <th (click)='sortList("profit","num")'>
           总盈亏 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
         </th>
-        <th>
-          总成交额
+        <th (click)='sortList("dealAmount","num")'>
+          总成交额 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
         </th>
-        <th>
-          盈亏率
+        <th (click)='sortList("profitRate","string")'>
+          盈亏率 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
         </th>
-        <th>
-          在线状态
+        <th (click)='sortList("onlineStatus","string")'>
+          在线状态 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
         </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' (click)='select(a,i)'>

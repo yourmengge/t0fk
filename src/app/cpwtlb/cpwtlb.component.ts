@@ -44,7 +44,6 @@ export class CpwtlbComponent implements DoCheck {
 
   export() {
     this.http.exportAppointProduct(this.code).subscribe((res) => {
-      console.log(res);
       this.data.downloadFile(res, '产品委托列表');
     }, (err) => {
       this.data.error = err.error;

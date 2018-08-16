@@ -7,14 +7,14 @@ export class History implements DoCheck, OnInit {
     code: any;
     url: any;
     historyKeyWord = {
-      beginTime: '',
-      endTime: '',
-      teamCode: '',
-      productCode: '',
-      accountCode: '',
-      appointOrderCode: '',
-      selectDate: '',
-      selectMonth: ''
+        beginTime: '',
+        endTime: '',
+        teamCode: '',
+        productCode: '',
+        accountCode: '',
+        appointOrderCode: '',
+        selectDate: '',
+        selectMonth: ''
     };
     exportData: any;
     historyType: string;
@@ -96,7 +96,7 @@ export class History implements DoCheck, OnInit {
             '&endTime=' + this.historyKeyWord.endTime + '&productCode=' + this.historyKeyWord.productCode +
             '&teamCode=' + this.historyKeyWord.teamCode;
         this.http.exportHistoryList(this.exportData, this.historyType).subscribe((res) => {
-            console.log(res);
+
             this.data.downloadFile(res, this.exportName);
         }, (err) => {
             this.data.error = err.error;

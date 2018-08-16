@@ -21,7 +21,6 @@ export class HistoryComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.data.clearTimeOut();
     this.data.clearPrice();
-    console.log('history');
   }
 
 }

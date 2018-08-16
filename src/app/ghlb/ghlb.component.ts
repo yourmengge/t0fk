@@ -40,6 +40,13 @@ export class GhlbComponent extends GetList {
     this.getList();
   }
 
+  searchAll() {
+    this.productCode = '';
+    this.stockCode = '';
+    this.searchCode = '';
+    this.getList();
+  }
+
   getList() {
     this.data.clearTimeOut();
     const data = {
@@ -97,7 +104,6 @@ export class GhlbComponent extends GetList {
     } else {
       this.checkedAll = false;
     }
-    console.log(this.checkList);
   }
 
   fpjyy() {

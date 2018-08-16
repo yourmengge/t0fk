@@ -44,7 +44,6 @@ export class CplrtjComponent implements DoCheck {
 
   export() {
     this.http.exportProfitProduct(this.code).subscribe((res) => {
-      console.log(res);
       this.data.downloadFile(res, '产品利润统计列表');
     }, (err) => {
       this.data.error = err.error;

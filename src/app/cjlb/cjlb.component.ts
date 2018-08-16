@@ -26,8 +26,7 @@ export class CjlbComponent extends GetList {
 
   onScroll(e) {
     if (e.srcElement.scrollTop + e.srcElement.clientHeight === e.srcElement.scrollHeight) {
-      console.log('bottom');
-      this.data.pageNum = this.data.pageNum + this.pageNum;
+      this.pageNum = this.data.pageNum + this.pageNum;
       this.getList();
     }
   }
@@ -38,7 +37,7 @@ export class CjlbComponent extends GetList {
       teamCode: this.code,
       accountCode: this.searchCode
     };
-    this.http.getListPage(this.url + '?cnt=' + this.data.pageNum, data).subscribe((res) => {
+    this.http.getListPage(this.url + '?cnt=' + this.pageNum, data).subscribe((res) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {
