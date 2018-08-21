@@ -28,7 +28,7 @@ export class DataService {
   timeout = 3000;
   userCode: string; // 交易员账户
 
-  roleCode: number; // 0	查询权限  1	操作权限
+  roleCode: string; // 0	查询权限  1	操作权限
 
   teamCode: string; // 团队查询或产品查询的code
   teamName: string; // 团队查询或产品查询的名字

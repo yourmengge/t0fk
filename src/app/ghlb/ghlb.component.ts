@@ -37,10 +37,16 @@ export class GhlbComponent extends GetList {
     this.stockCode = this.stockCode1;
     this.data.searchProCode = this.productCode1;
     this.data.searchStockCode = this.stockCode1;
+    this.checkList = [];
+    this.checkId = '';
+    this.checkedAll = false;
     this.getList();
   }
 
   searchAll() {
+    this.checkList = [];
+    this.checkId = '';
+    this.checkedAll = false;
     this.productCode = '';
     this.stockCode = '';
     this.searchCode = '';
@@ -123,6 +129,7 @@ export class GhlbComponent extends GetList {
       data.stockCode = this.list[element].stockCode;
       if (this.list[element].bcgh <= 0) {
         this.data.ErrorMsg('归还股票数量必须大于0！');
+        // console.log(element);
         return temp = 1;
       } else if (this.list[element].bcgh > this.list[element].ableCnt) {
         this.data.ErrorMsg('归还股票数量不能大于可归还数量！');

@@ -65,10 +65,14 @@ export class FplbComponent implements DoCheck {
     this.stockCode = this.stockCode1;
     this.data.searchProCode = this.productCode1;
     this.data.searchStockCode = this.stockCode1;
+    this.checkList = [];
+    this.checkedAll = false;
     this.getList();
   }
 
   searchAll() {
+    this.checkList = [];
+    this.checkedAll = false;
     this.productCode = '';
     this.stockCode = '';
     this.getList();
@@ -210,9 +214,9 @@ export class FplbComponent implements DoCheck {
   }
 
   disabled(length) {
-    if (this.data.roleCode === 0) {
+    if (this.data.roleCode === '0') {
       return true;
-    } else if (this.data.roleCode === 1 && length === 0) {
+    } else if (this.data.roleCode === '1' && length === 0) {
       return true;
     } else {
       return false;

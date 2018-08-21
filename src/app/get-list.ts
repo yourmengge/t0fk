@@ -29,7 +29,7 @@ export class GetList implements DoCheck {
     resetAlert: any;
     selectDetail: any;
     newPass: any;
-    roleCode = 1;
+    roleCode = '1';
     confirm: boolean;
     confirmText: string;
     actionType: string;
@@ -72,6 +72,8 @@ export class GetList implements DoCheck {
     search() {
         this.searchCode = this.userCode;
         this.data.userCode = this.searchCode;
+        this.checkList = [];
+        this.checkId = '';
         this.getList();
     }
     clickAll() {
@@ -185,9 +187,9 @@ export class GetList implements DoCheck {
      * @param temp
      */
     disabled(temp) {
-        if (this.data.roleCode === 0) {
+        if (this.data.roleCode === '0') {
             return true;
-        } else if (this.data.roleCode === 1 && temp === 0) {
+        } else if (this.data.roleCode === '1' && (temp === '' || temp === 0)) {
             return true;
         } else {
             return false;
