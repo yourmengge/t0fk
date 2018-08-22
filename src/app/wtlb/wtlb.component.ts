@@ -35,6 +35,7 @@ export class WtlbComponent extends GetList {
     this.code = '';
     this.roleCode = this.data.roleCode;
     this.alert = this.data.hide;
+    this.selectType = this.data.selectType;
   }
 
   initDetail() {
@@ -50,11 +51,8 @@ export class WtlbComponent extends GetList {
 
   getList() {
     this.data.clearTimeOut();
-    const data = {
-      teamCode: this.code,
-      accountCode: this.searchCode
-    };
-    this.http.getListPage(this.url + '?cnt=' + this.pageNum + '&filter=' + this.filterStr, data).subscribe((res) => {
+    super.getListData();
+    this.http.getListPage(this.url + '?cnt=' + this.pageNum + '&filter=' + this.filterStr, this.listData).subscribe((res) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {

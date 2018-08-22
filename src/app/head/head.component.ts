@@ -16,6 +16,7 @@ export class HeadComponent implements OnInit {
 
   logout() {
     this.data.ErrorMsg('注销成功');
+    this.data.userCode = '';
     this.data.removeSession('token');
     this.data.goto('/');
   }

@@ -55,6 +55,20 @@ export class GetList implements DoCheck {
         id: 9,
         name: '废单'
     }];
+    selectType: any;
+    selectList = [{
+        id: '1',
+        name: '交易账户'
+    }, {
+        id: '2',
+        name: '产品编号'
+    }, {
+        id: '3',
+        name: '股票代码'
+    }];
+
+    listData: any; // 列表查询条件
+
     constructor() {
     }
 
@@ -62,6 +76,15 @@ export class GetList implements DoCheck {
         if (this.code !== this.data.teamCode && !this.data.isNull(this.data.teamCode)) {
             this.code = this.data.teamCode;
             this.userCode = this.data.userCode;
+            this.selectType = this.data.selectType;
+            if (this.data.getUrl(3) === 'zhxx') {
+                if (this.data.selectType === '1') {
+                    this.userCode = this.data.userCode;
+                } else {
+                    this.userCode = '';
+                }
+                this.selectType = '1';
+            }
             this.checkId = '';
             this.list = [];
             this.checkList = [];
@@ -71,9 +94,11 @@ export class GetList implements DoCheck {
 
     search() {
         this.searchCode = this.userCode;
-        this.data.userCode = this.searchCode;
+        this.data.userCode = this.userCode;
+        this.data.selectType = this.selectType;
         this.checkList = [];
         this.checkId = '';
+        this.checkedAll = false;
         this.getList();
     }
     clickAll() {
@@ -120,11 +145,8 @@ export class GetList implements DoCheck {
 
     getList() {
         this.data.clearTimeOut();
-        const data = {
-            teamCode: this.code,
-            accountCode: this.searchCode
-        };
-        this.http.getList(this.url, data).subscribe((res) => {
+        this.getListData();
+        this.http.getList(this.url, this.listData).subscribe((res) => {
             this.list = res;
             this.afterGetList();
             this.data.settimeout = setTimeout(() => {
@@ -134,6 +156,29 @@ export class GetList implements DoCheck {
             this.data.error = err.error;
             this.data.isError();
         });
+    }
+
+    getListData() {
+        switch (this.selectType) {
+            case '1':
+                this.listData = {
+                    teamCode: this.code,
+                    accountCode: this.searchCode
+                };
+                break;
+            case '2':
+                this.listData = {
+                    teamCode: this.code,
+                    productCode: this.searchCode
+                };
+                break;
+            case '3':
+                this.listData = {
+                    teamCode: this.code,
+                    stockCode: this.searchCode
+                };
+                break;
+        }
     }
 
     afterGetList() {
@@ -200,9 +245,20 @@ export class GetList implements DoCheck {
      * 导出列表
      */
     export() {
-        const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
-        this.http.exportTEAM(this.exportUrl, data).subscribe((res) => {
+        let data;
+        switch (this.selectType) {
+            case '1':
+                data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
+                break;
+            case '2':
+                data = 'teamCode=' + this.code + '&productCode=' + this.searchCode;
+                break;
+            case '3':
+                data = 'teamCode=' + this.code + '&stockCode=' + this.searchCode;
+                break;
+        }
 
+        this.http.exportTEAM(this.exportUrl, data).subscribe((res) => {
             this.data.downloadFile(res, this.exportName);
         }, (err) => {
             this.data.error = err.error;

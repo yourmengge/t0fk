@@ -1,9 +1,9 @@
 <div class="">
   <div class="search-div">
-    <span> 交易账户</span>
+    <select name="" id="" [(ngModel)]='selectType'>
+      <option value="{{a.id}}" *ngFor='let a of selectList'>{{a.name}}</option>
+    </select>
     <input type="text" [(ngModel)]='userCode'>
-    <span> 产品编号</span>
-    <input type="text" [(ngModel)]='productCode1'>
     <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
   </div>

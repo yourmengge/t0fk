@@ -12,10 +12,12 @@ export class CpglComponent implements DoCheck {
   code: any;
   name: any;
   url: string;
+  availableBnc: any;
   historyFooter: boolean;
   constructor(public data: DataService, public http: HttpService) {
     this.code = '';
     this.name = '';
+
   }
 
   ngDoCheck() {
@@ -38,7 +40,8 @@ export class CpglComponent implements DoCheck {
   getPrice() {
     this.data.clearPrice();
     this.http.productProfit(this.code).subscribe((res) => {
-      this.price = res;
+      this.price = res['profit'];
+      this.availableBnc = res['availableBnc'];
       this.data.settimeoutprice = setTimeout(() => {
         this.getPrice();
       }, this.data.timeout);

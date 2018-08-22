@@ -9,24 +9,12 @@ import { GetList } from '../get-list';
   styleUrls: ['./dplb.component.css']
 })
 export class DplbComponent extends GetList {
-  productCode: string; // 产品编号
-  productCode1: string; // 产品编号
   constructor(public data: DataService, public http: HttpService) {
     super();
     this.url = this.data.GET_TODAY_CLOSE;
     this.initData();
   }
 
-  search() {
-    this.productCode = this.productCode1;
-    this.data.searchProCode = this.productCode1;
-    super.search();
-  }
-
-  searchAll() {
-    this.productCode = '';
-    super.searchAll();
-  }
 
   initData() {
     this.code = '';
@@ -34,29 +22,8 @@ export class DplbComponent extends GetList {
     this.confirm = this.data.hide;
     this.userCode = this.data.userCode;
     this.roleCode = this.data.roleCode;
-    this.productCode1 = this.data.searchProCode;
-    this.productCode = this.data.searchProCode;
+    this.selectType = this.data.selectType;
   }
-
-  getList() {
-    this.data.clearTimeOut();
-    const data = {
-      teamCode: this.code,
-      accountCode: this.searchCode,
-      productCode: this.productCode
-    };
-    this.http.getList(this.url, data).subscribe((res) => {
-      this.list = res;
-      this.afterGetList();
-      this.data.settimeout = setTimeout(() => {
-        this.getList();
-      }, this.data.timeout);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
-  }
-
 
   sell(a) {
     this.confirmText = '确认平仓？';

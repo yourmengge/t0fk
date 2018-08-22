@@ -49,7 +49,12 @@ export class ZhxxComponent extends GetList {
     this.code = '';
     this.isAutoShutdown = 1;
     this.accountStatus = 0;
-    this.userCode = this.data.userCode;
+    if (this.data.selectType === '1') {
+      this.userCode = this.data.userCode;
+    } else {
+      this.userCode = '';
+    }
+
     this.alert = this.data.hide;
     this.textType = '新增';
     this.isSort = false;
@@ -159,18 +164,6 @@ export class ZhxxComponent extends GetList {
     this.userCode = data.accountCode;
     this.selectDetail = Object.assign(this.selectDetail, data);
     this.selectDetail.teamCode = this.code;
-    // this.selectDetail = {
-    //   accountCode: data.accountCode,
-    //   accountCommission: data.accountCommission,
-    //   accountName: data.accountName,
-    //   accountPwd: data.accountPwd,
-    //   accountStatus: data.accountStatus,
-    //   bpLine: data.bpLine,
-    //   closingDownLine: data.closingDownLine,
-    //   isAutoShutdown: data.isAutoShutdown,
-    //   teamCode: this.code,
-    //   isEveningUp: data.isEveningUp
-    // };
   }
 
   update() {

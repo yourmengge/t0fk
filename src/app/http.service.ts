@@ -4,10 +4,12 @@ import { DataService } from './data.service';
 import { Md5 } from 'ts-md5';
 @Injectable()
 export class HttpService {
-  public host = 'http://218.85.23.217:8082/t0proxy/t0/';
-  public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
-  // public host = 'http://101.132.65.124:10008/t0proxy/t0/';
-  // public ws = 'http://101.132.65.124:10008/t0proxy/webSocket';
+  // 测试环境
+  // public host = 'http://218.85.23.217:8082/t0proxy/t0/';
+  // public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
+  // 演示/开发环境
+  public host = 'http://101.132.65.124:10008/t0proxy/t0/';
+  public ws = 'http://101.132.65.124:10008/t0proxy/webSocket';
   public stockHQ: any;
 
   constructor(public http: HttpClient, public data: DataService) {
@@ -179,7 +181,7 @@ export class HttpService {
    * 产品发生金额
    */
   productProfit(code) {
-    return this.POST('product/' + code + '/profit', {});
+    return this.POST('product/' + code + '/info', {});
   }
 
   /**

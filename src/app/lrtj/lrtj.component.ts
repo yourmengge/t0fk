@@ -21,5 +21,6 @@ export class LrtjComponent extends GetList {
   initData() {
     this.userCode = this.data.userCode;
     this.code = '';
+    this.selectType = this.data.selectType;
   }
 }

@@ -20,13 +20,9 @@ export class FplbComponent implements DoCheck {
   ghArray: any;
   confirm: boolean;
   confirmText: string;
-
-  productCode: string; // 产品编号
-  stockCode: string; // 股票代码
-
-  productCode1: string; // 产品编号
-  stockCode1: string; // 股票代码
-
+  selectType: any;
+  productCode: any;
+  stockCode: any;
   constructor(public data: DataService, public http: HttpService) {
     this.alert = this.data.hide;
     this.checkedAll = false;
@@ -45,10 +41,16 @@ export class FplbComponent implements DoCheck {
       ghcp: '',
       isChecked: false
     };
-    this.productCode1 = this.data.searchProCode;
-    this.stockCode1 = this.data.searchStockCode;
-    this.productCode = this.data.searchProCode;
-    this.stockCode = this.data.searchStockCode;
+    this.userCode = this.data.userCode;
+    this.productCode = '';
+    this.stockCode = '';
+    if (this.data.selectType === '1') {
+      this.selectType = '2';
+      this.userCode = '';
+    } else {
+      this.selectType = this.data.selectType;
+    }
+
   }
 
   ngDoCheck() {
@@ -56,25 +58,42 @@ export class FplbComponent implements DoCheck {
       this.code = this.data.teamCode;
       this.list = [];
       this.checkList = [];
+      if (this.data.selectType === '1') {
+        this.selectType = '2';
+      } else {
+        this.selectType = this.data.selectType;
+      }
+      if (this.selectType === '2') {
+        this.productCode = this.userCode;
+        this.stockCode = '';
+      } else {
+        this.productCode = '';
+        this.stockCode = this.userCode;
+      }
       this.getList();
     }
   }
 
   search() {
-    this.productCode = this.productCode1;
-    this.stockCode = this.stockCode1;
-    this.data.searchProCode = this.productCode1;
-    this.data.searchStockCode = this.stockCode1;
+    this.data.selectType = this.selectType;
+    this.data.userCode = this.userCode;
     this.checkList = [];
     this.checkedAll = false;
+    if (this.selectType === '2') {
+      this.productCode = this.userCode;
+      this.stockCode = '';
+    } else {
+      this.productCode = '';
+      this.stockCode = this.userCode;
+    }
     this.getList();
   }
 
   searchAll() {
-    this.checkList = [];
-    this.checkedAll = false;
     this.productCode = '';
     this.stockCode = '';
+    this.checkList = [];
+    this.checkedAll = false;
     this.getList();
   }
 

@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
 import { GetList } from '../get-list';
@@ -22,6 +22,7 @@ export class CjlbComponent extends GetList {
   initData() {
     this.code = '';
     this.userCode = this.data.userCode;
+    this.selectType = this.data.selectType;
   }
 
   onScroll(e) {
@@ -33,11 +34,8 @@ export class CjlbComponent extends GetList {
 
   getList() {
     this.data.clearTimeOut();
-    const data = {
-      teamCode: this.code,
-      accountCode: this.searchCode
-    };
-    this.http.getListPage(this.url + '?cnt=' + this.pageNum, data).subscribe((res) => {
+    super.getListData();
+    this.http.getListPage(this.url + '?cnt=' + this.pageNum, this.listData).subscribe((res) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {

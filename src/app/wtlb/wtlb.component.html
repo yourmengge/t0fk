@@ -1,22 +1,8 @@
 <div class="">
-  <!-- <div class="search-div">
-    <span>产品编号</span>
-    <input type="text" [(ngModel)]='proName'>
-    <span>团队编号</span>
-    <input type="text" [(ngModel)]='proCode'>
-    <span>交易账户</span>
-    <input type="text" [(ngModel)]='proCode'>
-    <br><br>
-    <span>委托编号</span>
-    <input type="text" [(ngModel)]='proCode'>
-    <span>交易日期</span>
-    <input type="date" [(ngModel)]='proCode'>
-    <span>~</span>
-    <input type="date" [(ngModel)]='proCode'>
-    <button class="button" (click)='search()'>查询</button>
-  </div> -->
   <div class="search-div">
-    <span> 交易账户</span>
+    <select name="" id="" [(ngModel)]='selectType'>
+      <option value="{{a.id}}" *ngFor='let a of selectList'>{{a.name}}</option>
+    </select>
     <input type="text" [(ngModel)]='userCode'>
     <button class="button" (click)='search()'>查询</button>
     <button (click)='searchAll()'>查询全部</button>
