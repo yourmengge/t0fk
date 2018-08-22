@@ -23,9 +23,9 @@
   </div>
   <div class="action-button">
     <button (click)='export()'>导出列表</button>
-    <input type="checkbox" name="" id="" (click)='filter("1")'> 可撤委托 
-    <input type="checkbox" name="" id="" (click)='filter("2")'> 失败委托 
-    <input type="checkbox" name="" id="" (click)='filter("3")'> 延迟委托 
+    <input type="checkbox" name="" id="" (click)='filter("1")'> 可撤委托
+    <input type="checkbox" name="" id="" (click)='filter("2")'> 失败委托
+    <input type="checkbox" name="" id="" (click)='filter("3")'> 延迟委托
   </div>
 
   <div class="table-div my-scroll" (scroll)='onScroll($event)'>
@@ -85,9 +85,9 @@
         <th>
           委托PK
         </th>
-        <!-- <th style="min-width: 60px;" *ngIf='roleCode!="0"'>
+        <th style="min-width: 60px;" *ngIf='roleCode!="0"'>
           操作
-        </th> -->
+        </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
@@ -144,9 +144,9 @@
         <td>
           {{a.pkOrder}}
         </td>
-        <!-- <td *ngIf='roleCode!==0'>
+        <td *ngIf='roleCode!==0'>
           <span (click)='update(a)'>修改</span>
-        </td> -->
+        </td>
       </tr>
     </table>
   </div>

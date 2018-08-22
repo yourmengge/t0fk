@@ -14,6 +14,8 @@ export class ZhxxComponent extends GetList {
   constructor(public data: DataService, public http: HttpService) {
     super();
     this.url = this.data.GET_ACCOUNT_LIST;
+    this.exportUrl = 'team/account/export';
+    this.exportName = '账户信息';
     this.initData();
   }
 
@@ -115,7 +117,7 @@ export class ZhxxComponent extends GetList {
         this.data.ErrorMsg('交易佣金只能为数字');
       } else {
         this.accountDetail.teamCode = this.code;
-        this.accountDetail.accountPwd = Md5.hashStr(this.accountDetail.accountPwd);
+        // this.accountDetail.accountPwd = Md5.hashStr(this.accountDetail.accountPwd);
         this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {

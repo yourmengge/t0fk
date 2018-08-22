@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
-
+import { Md5 } from 'ts-md5';
 @Injectable()
 export class HttpService {
   public host = 'http://218.85.23.217:8082/t0proxy/t0/';
@@ -153,7 +153,12 @@ export class HttpService {
    * 修改（UPDATE）新增（ADD）交易员
    */
   addJyy(data, type) {
-    return this.POST('account/' + type, data);
+    const detail = Object.assign({}, data);
+    if (type === 'ADD') {
+      detail['accountPwd'] = Md5.hashStr(detail['accountPwd']);
+    }
+    console.log(detail);
+    return this.POST('account/' + type, detail);
   }
 
   /**
