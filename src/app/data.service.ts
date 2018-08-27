@@ -60,6 +60,7 @@ export class DataService {
     this.productCode = '';
     this.searchProCode = '';
     this.searchStockCode = '';
+    console.log(this.getSession('roleCode'));
     this.roleCode = this.getSession('roleCode') === undefined ? 0 : this.getSession('roleCode');
     // this.roleCode = 2;
   }

@@ -70,6 +70,7 @@ export class GetList implements DoCheck {
     listData: any; // 列表查询条件
 
     constructor() {
+
     }
 
     ngDoCheck() {

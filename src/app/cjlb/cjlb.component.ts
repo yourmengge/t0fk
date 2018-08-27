@@ -26,7 +26,7 @@ export class CjlbComponent extends GetList {
   }
 
   onScroll(e) {
-    if (e.srcElement.scrollTop + e.srcElement.clientHeight === e.srcElement.scrollHeight) {
+    if (Math.round(e.srcElement.scrollTop + e.srcElement.clientHeight) >= e.srcElement.scrollHeight) {
       this.pageNum = this.data.pageNum + this.pageNum;
       this.getList();
     }

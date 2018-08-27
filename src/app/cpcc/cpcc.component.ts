@@ -24,10 +24,10 @@ export class CpccComponent implements DoCheck {
     this.confirm = this.data.hide;
   }
 
-  disabled(length) {
+  disabled(temp) {
     if (this.data.roleCode === '0') {
       return true;
-    } else if (this.data.roleCode === '1' && length === 0) {
+    } else if (this.data.roleCode === '1' && (temp === '' || temp === 0)) {
       return true;
     } else {
       return false;
