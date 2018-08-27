@@ -1,62 +1,62 @@
 .header {
-    width: 100vw;
-    height: 40px;
-    background: #c31f20;
-    line-height: 40px;
-    color: #fff;
-    text-align: right;
-    position: fixed;
-    box-shadow: 0 0 3px 1px #bbbbbb;
-    z-index: 10;
-    top: 0;
+  width: 100vw;
+  height: 40px;
+  background: #c31f20;
+  line-height: 40px;
+  color: #fff;
+  text-align: right;
+  position: fixed;
+  box-shadow: 0 0 3px 1px #bbbbbb;
+  z-index: 11;
+  top: 0;
 }
 
-.left-menu{
-    width: 200px;
-    height: calc(100vh - 41px);
-    border-right: solid 1px rgb(247, 247, 247);
-    position: relative;
-    top: 41px;
-    z-index: 10;
-    padding-top: 10px;
-    float: left;
-    background: #fff;
-    overflow-y: auto;
+.left-menu {
+  width: 200px;
+  height: calc(100vh - 41px);
+  border-right: solid 1px rgb(247, 247, 247);
+  position: relative;
+  top: 41px;
+  z-index: 10;
+  padding-top: 10px;
+  float: left;
+  background: #fff;
+  overflow-y: auto;
 }
 
-.right-content{
-    width: calc(100vw - 228px);
-    position: relative;
-    top: 40px;
-    float: right;
-    background: #fff;
-    height: calc(100vh - 40px);
-    /* padding: 0 30px; */
-    padding-right: 20px;
+.right-content {
+  width: calc(100vw - 228px);
+  position: relative;
+  top: 40px;
+  float: right;
+  background: #fff;
+  height: calc(100vh - 40px);
+  /* padding: 0 30px; */
+  padding-right: 20px;
 }
 
 .first-menu {
-    line-height: 40px;
-    padding-left: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    margin-top: 10px;
+  line-height: 40px;
+  padding-left: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
 }
 
-.first-menu:hover{
-    background: rgb(240, 240, 240);
+.first-menu:hover {
+  background: rgb(240, 240, 240);
 }
 
 .second-menu {
-    height: 35px;
-    line-height: 35px;
-    font-size: 13px;
-    margin-left: 30px;
-    padding-left: 10px;
-    cursor: pointer;
+  height: 35px;
+  line-height: 35px;
+  font-size: 13px;
+  margin-left: 30px;
+  padding-left: 10px;
+  cursor: pointer;
 }
 
-.second-menu:hover{
-    color: #d32c2c;
+.second-menu:hover {
+  color: #d32c2c;
 }

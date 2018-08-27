@@ -1,6 +1,30 @@
 <span class="title">日内风控系统</span>
 <span>账号： {{username}}</span>
-<span (click)='logout()'>注销</span>
-<!-- <span>交易正常</span>
-<span>行情正常</span>
-<span>延迟：300ms</span> -->
+<span (click)='reset()'>修改密码</span>
+<span (click)='logout("注销成功")'>注销</span>
+<div class="fpjyy-alert" *ngIf='resetAlert'>
+  <div class="alert-title">
+    重置密码
+    <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
+  </div>
+  <div class="alert-div" style="height: 150px;">
+    <div class="flex-alert">
+      <div class="flex-name">
+        旧密码
+      </div>
+      <div class="flex-content">
+        <input type="password" [(ngModel)]='oldPass'>
+      </div>
+      <div class="flex-name">
+        新密码
+      </div>
+      <div class="flex-content">
+        <input type="password" [(ngModel)]='newPass'>
+      </div>
+    </div>
+    <div class="button-div">
+      <button (click)='resetSubmit()'>确定</button>
+      <button (click)='close()'>取消</button>
+    </div>
+  </div>
+</div>

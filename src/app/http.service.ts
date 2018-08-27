@@ -5,11 +5,11 @@ import { Md5 } from 'ts-md5';
 @Injectable()
 export class HttpService {
   // 测试环境
-  public host = 'http://218.85.23.217:8082/t0proxy/t0/';
-  public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
+  // public host = 'http://218.85.23.217:8082/t0proxy/t0/';
+  // public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
   // 演示/开发环境
-  // public host = 'http://101.132.65.124:10008/t0proxy/t0/';
-  // public ws = 'http://101.132.65.124:10008/t0proxy/webSocket';
+  public host = 'http://101.132.65.124:10008/t0proxy/t0/';
+  public ws = 'http://101.132.65.124:10008/t0proxy/webSocket';
   public stockHQ: any;
 
   constructor(public http: HttpClient, public data: DataService) {
@@ -175,6 +175,13 @@ export class HttpService {
    */
   reset(data) {
     return this.POST('account/pwdReset', data);
+  }
+
+  /**
+   * 重置登陆用户密码
+   */
+  resetUserPass(data) {
+    return this.POST('modifyPwd', data);
   }
 
   /**
