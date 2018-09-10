@@ -41,9 +41,9 @@
         <th>
           交易账号
         </th>
-        <th>
+        <!-- <th>
           交易员姓名
-        </th>
+        </th> -->
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
@@ -82,9 +82,9 @@
         <td>
           {{a.accountCode}}
         </td>
-        <td>
+        <!-- <td>
           {{a.accountName}}
-        </td>
+        </td> -->
       </tr>
     </table>
   </div>

@@ -13,8 +13,7 @@ export class WtlbComponent extends GetList {
   filterStr: string;
   pageNum: number;
   constructor(public http: HttpService, public data: DataService) {
-    super();
-    this.url = this.data.GET_TODAY_APPOINT;
+    super(data.GET_TODAY_APPOINT);
     this.exportUrl = this.data.EXPORT_TODAY_APPOINT;
     this.exportName = '委托列表';
     this.filterStr = '';

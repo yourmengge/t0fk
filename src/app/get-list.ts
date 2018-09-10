@@ -69,8 +69,8 @@ export class GetList implements DoCheck {
 
     listData: any; // 列表查询条件
 
-    constructor() {
-
+    constructor(url: string) {
+        this.url = url;
     }
 
     ngDoCheck() {
@@ -79,6 +79,7 @@ export class GetList implements DoCheck {
             this.userCode = this.data.userCode;
             this.selectType = this.data.selectType;
             if (this.data.getUrl(3) === 'zhxx') {
+                this.temp = '';
                 if (this.data.selectType === '1') {
                     this.userCode = this.data.userCode;
                 } else {

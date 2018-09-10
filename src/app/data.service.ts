@@ -162,7 +162,7 @@ export class DataService {
   */
   isNull(string) {
     // tslint:disable-next-line:max-line-length
-    return (string === 'undefined' || string === '' || string === null || string === 'null' || string === undefined || string === 'NaN') ? true : false;
+    return (string === 0 || string === 'undefined' || string === '' || string === null || string === 'null' || string === undefined || string === 'NaN') ? true : false;
   }
 
   getHeader() {

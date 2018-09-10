@@ -16,7 +16,7 @@ export class CpcjlbComponent implements DoCheck {
   listData: any;
   constructor(public data: DataService, public http: HttpService) {
     this.code = '';
-    this.listData = new GetList();
+    this.listData = new GetList('');
   }
 
   ngDoCheck() {

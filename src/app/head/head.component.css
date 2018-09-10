@@ -1,5 +1,4 @@
 span {
-  margin-left: 40px;
   font-size: 14px;
   cursor: pointer;
   margin-right: 40px;
@@ -65,8 +64,7 @@ span {
   flex: 3;
 }
 
-.flex-content input,
-.flex-content select {
+.flex-content input, .flex-content select {
   width: 90%;
   height: 30px;
   border: solid 1px #ccc;

@@ -56,11 +56,15 @@ export class LeftMenuComponent implements OnInit {
     if (!this.teamShow) {
       this.http.getTeamList().subscribe((res) => {
         this.teamShow = this.data.show;
-        this.teamList = res;
-        this.productCode = '';
-        this.teamCode = res[0].teamCode;
-        this.data.teamCode = this.teamCode;
-        this.data.teamName = res[0].teamName;
+        if (!this.data.isNull(res)) {
+          this.teamList = res;
+          this.productCode = '';
+          this.teamCode = res[0].teamCode;
+          this.data.teamCode = this.teamCode;
+          this.data.teamName = res[0].teamName;
+        } else {
+          this.getTeamList();
+        }
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();
@@ -76,13 +80,17 @@ export class LeftMenuComponent implements OnInit {
    */
   getProList() {
     if (!this.proShow) {
-      this.http.getProList().subscribe((res) => {
+      this.http.getProList().subscribe((res: Array<any>) => {
         this.proShow = this.data.show;
-        this.proList = res;
-        this.teamCode = '';
-        this.productCode = res[0].productCode;
-        this.data.productCode = this.productCode;
-        this.data.productName = res[0].productName;
+        if (!this.data.isNull(res.length)) {
+          this.proList = res;
+          this.teamCode = '';
+          this.productCode = res[0].productCode;
+          this.data.productCode = this.productCode;
+          this.data.productName = res[0].productName;
+        } else {
+          this.getProList();
+        }
       }, (err) => {
         this.data.error = err.error;
         this.data.isError();

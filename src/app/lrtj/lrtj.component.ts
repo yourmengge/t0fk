@@ -11,8 +11,7 @@ import { GetList } from '../get-list';
 export class LrtjComponent extends GetList {
 
   constructor(public http: HttpService, public data: DataService) {
-    super();
-    this.url = this.data.GET_TEAM_PROFIT;
+    super(data.GET_TEAM_PROFIT);
     this.exportName = '利润统计列表';
     this.exportUrl = this.data.EXPORT_TODAY_PROFIT;
     this.initData();

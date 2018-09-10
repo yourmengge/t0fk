@@ -11,8 +11,7 @@ import { GetList } from '../get-list';
 export class CjlbComponent extends GetList {
   pageNum: number;
   constructor(public data: DataService, public http: HttpService) {
-    super();
-    this.url = this.data.GET_TODAY_TRADE;
+    super(data.GET_TODAY_TRADE);
     this.exportName = '成交列表';
     this.exportUrl = this.data.EXPORT_TODAY_TRADE;
     this.initData();

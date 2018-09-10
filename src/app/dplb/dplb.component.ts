@@ -10,8 +10,7 @@ import { GetList } from '../get-list';
 })
 export class DplbComponent extends GetList {
   constructor(public data: DataService, public http: HttpService) {
-    super();
-    this.url = this.data.GET_TODAY_CLOSE;
+    super(data.GET_TODAY_CLOSE);
     this.initData();
   }
 

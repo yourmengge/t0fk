@@ -12,8 +12,7 @@ import { GetList } from '../get-list';
 export class ZhxxComponent extends GetList {
 
   constructor(public data: DataService, public http: HttpService) {
-    super();
-    this.url = this.data.GET_ACCOUNT_LIST;
+    super(data.GET_ACCOUNT_LIST);
     this.exportUrl = 'team/account/export';
     this.exportName = '账户信息';
     this.initData();
@@ -150,6 +149,8 @@ export class ZhxxComponent extends GetList {
   submit(data, type, text) {
     this.http.addJyy(data, type).subscribe((res) => {
       this.data.ErrorMsg(text + '成功');
+      this.checkId = '';
+      this.temp = '';
       this.getList();
       this.close();
     }, (err) => {
@@ -170,7 +171,7 @@ export class ZhxxComponent extends GetList {
     if (this.temp !== '') {
       this.add();
       this.textType = '修改';
-      this.accountDetail = this.selectDetail;
+      this.accountDetail = Object.assign({}, this.selectDetail);
     }
   }
 

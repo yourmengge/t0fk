@@ -9,8 +9,7 @@ import { GetList } from '../get-list';
 })
 export class GhlbComponent extends GetList {
   constructor(public data: DataService, public http: HttpService) {
-    super();
-    this.url = 'private/hold';
+    super('private/hold');
     this.initData();
   }
 
