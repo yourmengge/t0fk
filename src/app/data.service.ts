@@ -199,15 +199,24 @@ export class DataService {
   }
 
   downloadFile(res, text) {
-    const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const objectUrl = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.setAttribute('style', 'display: none');
-    a.setAttribute('href', objectUrl);
-    a.setAttribute('download', text + '.xls');
-    a.click();
-    URL.revokeObjectURL(objectUrl);
+    if (window.URL.createObjectURL(new Blob()).indexOf(location.host) < 0) {// 判断是否为IE
+      if (window.navigator.msSaveOrOpenBlob) {// IE10+方法
+        const name = text + '.xls';
+        const blobObject = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const result = window.navigator.msSaveOrOpenBlob(blobObject, name);
+      }
+    } else {
+      const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', text + '.xls');
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    }
+
   }
 
   getSession(name): any {
@@ -366,12 +375,12 @@ export class DataService {
     const millseconds = time.getMilliseconds();
     switch (type) {
       case 'yyyyMMddhhmmss':
-        return year + this.add0(month) + this.add0(day) +
+        return year + this.add0(month).toString() + this.add0(day) +
           this.add0(hour) + this.add0(minutes) + this.add0(seconds) + this.add0(millseconds);
       case 'yyyy-MM-dd':
         return year + '-' + this.add0(month) + '-' + this.add0(day);
       case 'yyyyMMss':
-        return year + this.add0(month) + this.add0(day);
+        return year + this.add0(month).toString() + this.add0(day);
       case 'yyyy-MM':
         return year + '-' + this.add0(month);
     }

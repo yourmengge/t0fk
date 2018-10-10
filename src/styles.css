@@ -155,7 +155,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     overflow-x: auto;
     padding-bottom: 20px;
     margin-top: 10px;
-    height: calc(100vh - 260px);
+    height: 72vh;
 }
 
 .my-scroll::-webkit-scrollbar-thumb {
@@ -390,5 +390,12 @@ input:read-only {
     }
     .search-div span {
         margin-left: -20px;
+    }
+    .table-div{
+        height: 60vh;
+    }
+
+    .dplb{
+        height: 70vh;
     }
 }
