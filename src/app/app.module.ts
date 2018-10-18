@@ -39,6 +39,8 @@ import { RoundPipe } from './round.pipe';
 import { LslylComponent } from './lslyl/lslyl.component';
 import { NumberInputDirective } from './number-input.directive';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { TofixedPipe } from './tofixed.pipe';
+import { NumIntPipe } from './num-int.pipe';
 
 const historyChild: Routes = [
   { path: 'lslyl', component: LslylComponent },
@@ -116,7 +118,9 @@ const appRoutes: Routes = [
     RoundPipe,
     LslylComponent,
     NumberInputDirective,
-    ConfirmComponent
+    ConfirmComponent,
+    TofixedPipe,
+    NumIntPipe
   ],
   imports: [
     BrowserModule,

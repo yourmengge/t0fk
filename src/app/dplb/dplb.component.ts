@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
-import { GetList } from '../get-list';
+import { Websocket } from '../websocket';
+
 
 @Component({
   selector: 'app-dplb',
   templateUrl: './dplb.component.html',
   styleUrls: ['./dplb.component.css']
 })
-export class DplbComponent extends GetList {
+export class DplbComponent extends Websocket {
   constructor(public data: DataService, public http: HttpService) {
-    super(data.GET_TODAY_CLOSE);
+    super(data, http);
     this.initData();
   }
 
+  close() {
+    this.resetAlert = this.data.hide;
+    this.cancelSubscribe();
+    this.disconnect();
+  }
 
   initData() {
     this.code = '';
@@ -27,6 +33,11 @@ export class DplbComponent extends GetList {
   sell(a) {
     this.confirmText = '确认平仓？';
     this.sellType = 'SELL';
+    if (a.uncloseCnt % 100 !== 0) { // 不是整百的
+      if (a.uncloseCnt > 100) {
+        a.uncloseCnt = this.data.roundDown(a.uncloseCnt);
+      }
+    }
     this.resData = {
       productCode: a.productCode,
       teamCode: this.code,
@@ -41,6 +52,18 @@ export class DplbComponent extends GetList {
     this.actionType = 'sell';
     this.confirm = this.data.show;
   }
+
+  // sell2(a) {
+  //   this.appointCnt = '';
+  //   const data = {
+  //     stockCode: a.stockCode,
+  //     accountCode: a.accountCode
+  //   };
+  //   this.stockName = a.stockName;
+  //   this.resetAlert = this.data.show;
+  //   this.getHanQing(data);
+  // }
+
 
   cancle(a) {
     this.confirmText = '确认撤单？';

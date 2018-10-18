@@ -52,6 +52,62 @@ export class DataService {
     selectDate: '',
     selectMonth: ''
   };
+
+  stockHQ = {
+    'closePrice': '',
+    'highPrice': '',
+    'lowPrice': '',
+    'lastPrice': '',
+    'openPrice': '',
+    'orderTime': '',
+    'preClosePrice': '',
+    'stockCode': '',
+    'buyLevel': {
+      'buyPrice01': '--',
+      'buyPrice02': '--',
+      'buyPrice03': '--',
+      'buyPrice04': '--',
+      'buyPrice05': '--',
+      'buyPrice06': '--',
+      'buyPrice07': '--',
+      'buyPrice08': '--',
+      'buyPrice09': '--',
+      'buyPrice10': '--',
+      'buyVolume01': '--',
+      'buyVolume02': '--',
+      'buyVolume03': '--',
+      'buyVolume04': '--',
+      'buyVolume05': '--',
+      'buyVolume06': '--',
+      'buyVolume07': '--',
+      'buyVolume08': '--',
+      'buyVolume09': '--',
+      'buyVolume10': '--'
+    },
+    'sellLevel': {
+      'sellPrice01': '--',
+      'sellPrice02': '--',
+      'sellPrice03': '--',
+      'sellPrice04': '--',
+      'sellPrice05': '--',
+      'sellPrice06': '--',
+      'sellPrice07': '--',
+      'sellPrice08': '--',
+      'sellPrice09': '--',
+      'sellPrice10': '--',
+      'sellVolume01': '--',
+      'sellVolume02': '--',
+      'sellVolume03': '--',
+      'sellVolume04': '--',
+      'sellVolume05': '--',
+      'sellVolume06': '--',
+      'sellVolume07': '--',
+      'sellVolume08': '--',
+      'sellVolume09': '--',
+      'sellVolume10': '--'
+    }
+
+  };
   constructor(public router: Router) {
     this.teamCode = '';
     this.userCode = '';
@@ -84,7 +140,13 @@ export class DataService {
   clearPrice() {
     window.clearTimeout(this.settimeoutprice);
   }
-
+  getToken() {
+    if (this.isNull(this.token)) {
+      return this.getSession('token');
+    } else {
+      return this.token;
+    }
+  }
   /**
    * 页面跳转
    */
@@ -400,6 +462,13 @@ export class DataService {
     const year = date.getFullYear();
     const month = date.getMonth();
     return new Date(new Date(year, month + 1, 1).getTime() - 1000 * 60 * 60 * 24);
+  }
+
+  /**
+ * 买入卖出数量向上取整
+ */
+  roundDown(num) {
+    return parseInt((num / 100).toString(), 0) * 100;
   }
 }
 

@@ -24,7 +24,12 @@ export class HttpService {
     this.data.getExportHeader();
     return this.http.post(this.host + url, data, { headers: this.data.getExportHeader(), responseType: 'arraybuffer' });
   }
-
+  /**
+   * 获取行情
+   */
+  getHanQing(data) {
+    return this.POST('push/subsMarket/SELL/' + data.stockCode, {});
+  }
   /**
    * 登录接口
    */
@@ -59,7 +64,12 @@ export class HttpService {
   lock(data) {
     return this.POST('product/lock', data);
   }
-
+  /**
+ * 取消订阅
+ */
+  cancelSubscribe() {
+    return this.POST('push/unsubsMarket', {});
+  }
   /**
    * 获取团队列表
    */
