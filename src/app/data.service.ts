@@ -147,6 +147,19 @@ export class DataService {
       return this.token;
     }
   }
+
+
+  /**
+   * 判断有几位小数
+   */
+  Decimal(num) {
+    num = num + '';
+    if (num.indexOf('.') !== -1) {
+      return num.split('.')[1].length;
+    } else {
+      return 0;
+    }
+  }
   /**
    * 页面跳转
    */

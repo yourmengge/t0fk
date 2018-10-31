@@ -120,7 +120,7 @@
         <td *ngIf='roleCode != 0'>
           <span *ngIf='a.cancelable' (click)='cancle(a)'>撤单</span>
           <span *ngIf='a.uncloseCnt > 0' (click)='sell(a)'>平仓</span>
-          <!-- <span *ngIf='a.uncloseCnt > 0' (click)='sell2(a)'>限价平仓</span> -->
+          <span *ngIf='a.uncloseCnt > 0' (click)='sell2(a)'>限价平仓</span>
           <span *ngIf='a.removable' (click)='clear(a)'>删除</span>
         </td>
       </tr>

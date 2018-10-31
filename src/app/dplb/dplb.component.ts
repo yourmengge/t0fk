@@ -10,6 +10,7 @@ import { Websocket } from '../websocket';
   styleUrls: ['./dplb.component.css']
 })
 export class DplbComponent extends Websocket {
+  sellData: any;
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
     this.initData();
@@ -53,16 +54,21 @@ export class DplbComponent extends Websocket {
     this.confirm = this.data.show;
   }
 
-  // sell2(a) {
-  //   this.appointCnt = '';
-  //   const data = {
-  //     stockCode: a.stockCode,
-  //     accountCode: a.accountCode
-  //   };
-  //   this.stockName = a.stockName;
-  //   this.resetAlert = this.data.show;
-  //   this.getHanQing(data);
-  // }
+  sell2(a) {
+    this.appointCnt = '';
+    this.sellData = {
+      stockCode: a.stockCode,
+      accountCode: a.accountCode,
+      uncloseCnt: a.uncloseCnt,
+      productCode: a.productCode,
+      teamCode: a.teamCode
+    };
+    this.accountCode = a.accountCode;
+    this.stockHQ.stockCode = a.stockCode;
+    this.stockName = a.stockName;
+    this.resetAlert = this.data.show;
+    this.getHanQing(this.sellData);
+  }
 
 
   cancle(a) {
@@ -129,5 +135,42 @@ export class DplbComponent extends Websocket {
   closeConfirm() {
     this.confirm = this.data.hide;
   }
+  /**
+       * 返回行情加个颜色
+       */
+  HQColor(price) {
+    if (price !== '--') {
+      if (price > this.stockHQ.preClosePrice) {
+        return 'red';
+      } else if (price < this.stockHQ.preClosePrice) {
+        return 'green';
+      } else {
+        return '';
+      }
+    }
+
+  }
+
+  submintBuy() {
+    const content = {
+      'stockCode': this.stockHQ.stockCode,
+      'appointCnt': this.appointCnt,
+      'appointPrice': this.appointPrice,
+      'accountCode': this.accountCode,
+      productCode: this.sellData.productCode,
+      teamCode: this.sellData.teamCode
+    };
+    this.http.order(content).subscribe((res: Response) => {
+      if (res['success']) {
+        this.data.ErrorMsg('委托已提交');
+        this.getList();
+        this.close();
+      }
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
+  }
+
 
 }

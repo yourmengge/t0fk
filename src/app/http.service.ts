@@ -6,6 +6,7 @@ import { Md5 } from 'ts-md5';
 export class HttpService {
   // 测试环境
   public host = 'http://218.85.23.217:8082/t0proxy/t0/';
+  public host2 = 'http://218.85.23.217:8082/t0proxy/';
   public ws = 'http://218.85.23.217:8082/t0proxy/webSocket';
   // 演示/开发环境
   // public host = 'http://101.132.65.124:10008/t0proxy/t0/';
@@ -13,6 +14,11 @@ export class HttpService {
   public stockHQ: any;
 
   constructor(public http: HttpClient, public data: DataService) {
+  }
+
+  POST2(url, data) {
+    this.data.getHeader();
+    return this.http.post(this.host2 + url, data, this.data.getHeader());
   }
 
   POST(url, data) {
@@ -28,7 +34,7 @@ export class HttpService {
    * 获取行情
    */
   getHanQing(data) {
-    return this.POST('push/subsMarket/SELL/' + data.stockCode, {});
+    return this.POST2(`push/subsMarket/${data.stockCode}`, {});
   }
   /**
    * 登录接口
@@ -36,7 +42,12 @@ export class HttpService {
   login(data) {
     return this.http.post(this.host + 'login', data);
   }
-
+  /**
+ * 下单 参数 买入：BUY 卖出：SELL
+ */
+  order(data) {
+    return this.POST('appoint/SELL?limit=true', data);
+  }
   /**
    * 获取列表带参数data
    */
