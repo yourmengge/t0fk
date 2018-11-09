@@ -7,7 +7,12 @@ export class NumIntPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     if (value !== '--') {
-      return parseInt((value / 100).toFixed(0), 0);
+      if (args.toString().length === 6) {
+        return parseInt((value / 100).toFixed(0), 0);
+      } else {
+        return parseInt((value / 10000).toFixed(0), 0);
+      }
+
     } else {
       return value;
     }

@@ -51,14 +51,7 @@ export class Websocket extends GetList {
 
         this.http.getHanQing(data).subscribe((res) => {
             if (!this.data.isNull(res['resultInfo']['quotation'])) {
-                this.stockHQ = res['resultInfo']['quotation'];
-                if (this.stockName.includes('ST')) {
-                    this.stockHQ.lowPrice = Math.round(this.stockHQ.preClosePrice * 95) / 100;
-                    this.stockHQ.highPrice = Math.round(this.stockHQ.preClosePrice * 105) / 100;
-                } else {
-                    this.stockHQ.lowPrice = Math.round(this.stockHQ.preClosePrice * 90) / 100;
-                    this.stockHQ.highPrice = Math.round(this.stockHQ.preClosePrice * 110) / 100;
-                }
+                this.stockHQ = Object.assign(res['resultInfo']['quotation']);
                 this.fullcount = data.uncloseCnt;
                 this.appointPrice = Math.round(parseFloat(this.stockHQ.lastPrice) * 100) / 100;
             } else {
@@ -110,14 +103,7 @@ export class Websocket extends GetList {
         this.stompClient.connect(headers, () => {
             // console.log('Connected: ' + frame);
             that.stompClient.subscribe('/user/' + that.data.getToken() + '/topic/market', res => {
-                that.stockHQ = JSON.parse(res.body);
-                if (that.stockName.includes('ST')) {
-                    that.stockHQ.lowPrice = Math.round(that.stockHQ.preClosePrice * 95) / 100;
-                    that.stockHQ.highPrice = Math.round(that.stockHQ.preClosePrice * 105) / 100;
-                } else {
-                    that.stockHQ.lowPrice = Math.round(that.stockHQ.preClosePrice * 90) / 100;
-                    that.stockHQ.highPrice = Math.round(that.stockHQ.preClosePrice * 110) / 100;
-                }
+                that.stockHQ = Object.assign(JSON.parse(res.body));
             });
             this.socketInterval = setInterval(() => {
                 that.stompClient.send(' ');
@@ -161,12 +147,12 @@ export class Websocket extends GetList {
        */
     count(type) {
         if (!this.data.isNull(this.appointPrice)) {
-            if (type === -1 && this.appointPrice > 0 && this.appointPrice > this.stockHQ.lowPrice) {
+            if (type === -1 && this.appointPrice > 0 && this.appointPrice > this.stockHQ.priceDownlimit) {
                 this.appointPrice = this.appointPrice - 0.01;
-            } else if (type === 1 && this.appointPrice < this.stockHQ.highPrice) {
+            } else if (type === 1 && this.appointPrice < this.stockHQ.priceUplimit) {
                 this.appointPrice = this.appointPrice + 0.01;
             }
-            this.appointPrice = parseFloat(this.appointPrice.toFixed(2));
+            this.appointPrice = parseFloat(this.appointPrice.toFixed(4));
         }
     }
 
@@ -175,10 +161,6 @@ export class Websocket extends GetList {
     * 选取价格
     */
     selectPrice(price) {
-        if (typeof (price) === 'string') {
-            this.appointPrice = parseFloat(parseFloat(price).toFixed(2));
-        } else {
-            this.appointPrice = price;
-        }
+        this.appointPrice = parseFloat(price);
     }
 }

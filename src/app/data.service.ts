@@ -54,6 +54,8 @@ export class DataService {
   };
 
   stockHQ = {
+    priceDownlimit: '',
+    priceUplimit: '',
     'closePrice': '',
     'highPrice': '',
     'lowPrice': '',
