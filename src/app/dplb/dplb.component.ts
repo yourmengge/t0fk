@@ -11,6 +11,7 @@ import { Websocket } from '../websocket';
 })
 export class DplbComponent extends Websocket {
   sellData: any;
+  type = 'BUY';
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
     this.initData();
@@ -63,6 +64,7 @@ export class DplbComponent extends Websocket {
       productCode: a.productCode,
       teamCode: a.teamCode
     };
+    this.type = a.appointType === 1 ? 'SELL' : 'BUY';
     this.accountCode = a.accountCode;
     this.stockHQ.stockCode = a.stockCode;
     this.stockName = a.stockName;
@@ -160,7 +162,7 @@ export class DplbComponent extends Websocket {
       productCode: this.sellData.productCode,
       teamCode: this.sellData.teamCode
     };
-    this.http.order(content).subscribe((res: Response) => {
+    this.http.order(this.type, content).subscribe((res: Response) => {
       if (res['success']) {
         this.data.ErrorMsg('委托已提交');
         this.getList();

@@ -45,8 +45,8 @@ export class HttpService {
   /**
  * 下单 参数 买入：BUY 卖出：SELL
  */
-  order(data) {
-    return this.POST('appoint/SELL?limit=true', data);
+  order(type, data) {
+    return this.POST(`appoint/${type}?limit=true`, data);
   }
   /**
    * 获取列表带参数data

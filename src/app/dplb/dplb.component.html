@@ -150,8 +150,8 @@
           <span class="red-right" (click)='selectPrice(stockHQ.highPrice)'>涨停 {{stockHQ.highPrice | toFixed}}</span>
         </div>
         <div>
-          <input class="input" type="number" placeholder="卖出量" [(ngModel)]='appointCnt' (keyup)='inputCnt()'>
-          <span class="gpmc">可卖{{fullcount}}股</span>
+          <input class="input" type="number" placeholder="平仓量" [(ngModel)]='appointCnt'>
+          <span class="gpmc">{{fullcount}}股</span>
         </div>
         <div class="four-btn">
           <div class="{{ccount === 'full'?'four-btn-active':''}}" (click)='selectCount("full")'>全仓</div>
