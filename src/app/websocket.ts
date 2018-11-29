@@ -22,6 +22,7 @@ export class Websocket extends GetList {
     constructor(public data: DataService, public http: HttpService) {
         super(data.GET_TODAY_CLOSE);
         this.stockHQ = this.data.stockHQ;
+        this.connect();
     }
     /**
 * 取消订阅
@@ -57,7 +58,6 @@ export class Websocket extends GetList {
             } else {
                 this.stockHQ = this.data.stockHQ;
             }
-            this.connect();
         }, (err) => {
             this.data.error = err.error;
             this.data.isError();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
 import { Websocket } from '../websocket';
@@ -9,7 +9,7 @@ import { Websocket } from '../websocket';
   templateUrl: './dplb.component.html',
   styleUrls: ['./dplb.component.css']
 })
-export class DplbComponent extends Websocket {
+export class DplbComponent extends Websocket implements OnDestroy {
   sellData: any;
   type = 'BUY';
   constructor(public data: DataService, public http: HttpService) {
@@ -20,6 +20,9 @@ export class DplbComponent extends Websocket {
   close() {
     this.resetAlert = this.data.hide;
     this.cancelSubscribe();
+  }
+
+  ngOnDestroy() {
     this.disconnect();
   }
 

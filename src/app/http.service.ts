@@ -79,7 +79,7 @@ export class HttpService {
  * 取消订阅
  */
   cancelSubscribe() {
-    return this.POST('push/unsubsMarket', {});
+    return this.POST2('push/unsubsMarket', {});
   }
   /**
    * 获取团队列表
