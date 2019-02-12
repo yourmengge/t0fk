@@ -37,6 +37,12 @@ export class WtlbComponent extends GetList {
     this.selectType = this.data.selectType;
   }
 
+  afterGetList() {
+    if (this.isSort) {
+      super.sort(this.sortData, this.sortName);
+    }
+  }
+
   initDetail() {
     this.accountDetail = {
       pkOrder: '',

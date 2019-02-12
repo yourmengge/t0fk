@@ -485,6 +485,13 @@ export class DataService {
   roundDown(num) {
     return parseInt((num / 100).toString(), 0) * 100;
   }
+
+  /**
+   * 保留2位小数
+   */
+  round2(num) {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  }
 }
 
 

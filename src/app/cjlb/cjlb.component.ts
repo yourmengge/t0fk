@@ -24,6 +24,12 @@ export class CjlbComponent extends GetList {
     this.selectType = this.data.selectType;
   }
 
+  afterGetList() {
+    if (this.isSort) {
+      super.sort(this.sortData, this.sortName);
+    }
+  }
+
   onScroll(e) {
     if (Math.round(e.srcElement.scrollTop + e.srcElement.clientHeight) >= e.srcElement.scrollHeight) {
       this.pageNum = this.data.pageNum + this.pageNum;

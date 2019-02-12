@@ -23,7 +23,7 @@
           选择
         </th>
         <th (click)='sortList("accountCode","string")'>
-          交易员账号 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
+          交易员账号 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
         </th>
         <th>
           交易员姓名
@@ -47,16 +47,19 @@
           交易佣金
         </th>
         <th (click)='sortList("profit","num")'>
-          总盈亏 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
+          总盈亏 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
         </th>
+        <th (click)='sortList("blastFlag","string")'>
+          是否爆仓 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
+        </th> 
         <th (click)='sortList("dealAmount","num")'>
-          总成交额 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
+          总成交额 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
         </th>
         <th (click)='sortList("profitRate","string")'>
-          盈亏率 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
+          盈亏率 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
         </th>
         <th (click)='sortList("onlineStatus","string")'>
-          在线状态 <img src="./assets/images/sort.png" alt="" style="width: 12px;">
+          在线状态 <img src="./assets/images/sort.png" alt=""class='sortIcon'>
         </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' (click)='select(a,i)'>
@@ -92,6 +95,9 @@
         </td>
         <td [class]='proFit(a.profit)'>
           {{a.profit}}
+        </td>
+        <td>
+          {{a.blastFlag}}
         </td>
         <td>
           {{a.dealAmount}}

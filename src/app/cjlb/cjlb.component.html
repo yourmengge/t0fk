@@ -16,8 +16,9 @@
         <th>
           序号
         </th>
-        <th>
+        <th (click)='sortList("dealTime","string")'>
           成交时间
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
         <th>
           成交编号
@@ -25,17 +26,20 @@
         <th>
           委托编号
         </th>
-        <th>
+        <th (click)='sortList("stockCode","num")'>
           股票代码
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
-        <th>
+        <th (click)='sortList("stockName","string")'> 
           股票名称
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
         <th>
           买卖方向
         </th>
-        <th>
+        <th (click)='sortList("dealCnt","num")'>
           成交数量
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
         <th>
           成交均价
@@ -49,8 +53,9 @@
         <th>
           交易账号
         </th>
-        <th>
+        <th (click)='sortList("accountName","string")'>
           交易员姓名
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">

@@ -1,238 +1,247 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    font-family: '微软雅黑';
+  font-family: '微软雅黑';
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:disabled {
-    cursor: not-allowed;
-    /* background: rgb(209, 209, 209) !important; */
+  cursor: not-allowed;
+  /* background: rgb(209, 209, 209) !important; */
 }
 
 input[type=number] {
-    appearance: none;
+  appearance: none;
 }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .red {
-    color: #c31f20 !important;
+  color: #c31f20 !important;
 }
 
 .green {
-    color: green !important;
+  color: green !important;
 }
 
 .search-div {
-    padding: 10px 0;
-    padding-top: 20px;
-    padding-left: 20px;
-    font-size: 14px;
-    margin-left: 40px;
+  padding: 10px 0;
+  padding-top: 20px;
+  padding-left: 20px;
+  font-size: 14px;
+  margin-left: 40px;
 }
 
 .search-div span {
-    margin-right: 5px;
-    margin-left: 10px;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 
-.search-div input, .search-div select {
-    border: solid 1px #ccc;
-    margin-left: 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    padding-left: 5px;
-    font-size: 14px;
-    height: 28px;
-    width: 130px;
+.search-div input,
+.search-div select {
+  border: solid 1px #ccc;
+  margin-left: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  padding-left: 5px;
+  font-size: 14px;
+  height: 28px;
+  width: 130px;
 }
 
 .search-div button {
-    padding: 0px 20px;
-    background: #c31f20;
-    color: #fff;
-    border: solid 1px #c31f20;
-    border-radius: 5px;
-    font-size: 14px;
-    height: 30px;
+  padding: 0px 20px;
+  background: #c31f20;
+  color: #fff;
+  border: solid 1px #c31f20;
+  border-radius: 5px;
+  font-size: 14px;
+  height: 30px;
+  margin-right: 20px;
 }
 
 .search-div button:hover {
-    background: #aa1227;
+  background: #aa1227;
 }
 
 .search2 {
-    padding: 5px 0;
+  padding: 5px 0;
 }
 
 .action-button {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .margin-top {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 .action-button button {
-    margin-right: 10px;
-    background: #cc4545;
-    border: none;
-    height: 35px;
-    padding: 0 20px;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 2px;
+  margin-right: 10px;
+  background: #cc4545;
+  border: none;
+  height: 35px;
+  padding: 0 20px;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 2px;
 }
 
 .action-button button:hover {
-    background: #990f0f;
+  background: #990f0f;
 }
 
 .my-table {
-    color: #333;
+  color: #333;
 }
 
 .my-table th {
-    background: #ececec;
-    word-break: keep-all;
+  background: #ececec;
+  word-break: keep-all;
 }
 
-.my-table th, .my-table td {
-    padding: 0 30px;
-    text-align: center;
-    font-size: 14px;
-    border: solid 1px #ececec;
-    word-break: keep-all;
-    white-space: nowrap;
+.my-table th,
+.my-table td {
+  padding: 0 10px;
+  text-align: center;
+  font-size: 13px;
+  border: solid 1px #ececec;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+.sortIcon {
+  width: 12px;
+  margin-top: -4px;
 }
 
 .my-table tr {
-    height: 40px;
-    cursor: pointer;
+  height: 40px;
+  cursor: pointer;
 }
 
 .my-table tr:hover {
-    background: #f5f5f5;
+  background: #f5f5f5;
 }
 
 .my-table td span {
-    font-size: 14px;
-    margin: 0 5px;
-    color: #0483b5;
-    font-weight: bold;
-    word-break: keep-all;
+  font-size: 14px;
+  margin: 0 5px;
+  color: #0483b5;
+  font-weight: bold;
+  word-break: keep-all;
 }
 
 .my-table td span:hover {
-    color: #075574;
-    text-decoration: underline #075574;
+  color: #075574;
+  text-decoration: underline #075574;
 }
 
 .list-content {
-    width: 180px;
-    height: calc(100vh - 40px);
-    float: left;
-    border-right: solid 1px #ececec;
-    padding-left: 20px;
-    background: rgb(247, 247, 247);
-    padding-top: 30px;
-    margin-left: -30px;
+  width: 180px;
+  height: calc(100vh - 40px);
+  float: left;
+  border-right: solid 1px #ececec;
+  padding-left: 20px;
+  background: rgb(247, 247, 247);
+  padding-top: 30px;
+  margin-left: -30px;
 }
 
 .content-table {
-    float: right;
-    height: 100%;
-    width: calc(100% - 190px);
+  float: right;
+  height: 100%;
+  width: calc(100% - 190px);
 }
 
 .table-div {
-    overflow-x: auto;
-    padding-bottom: 20px;
-    margin-top: 10px;
-    height: 72vh;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  height: 72vh;
 }
 
 .my-scroll::-webkit-scrollbar-thumb {
-    background: #c5c5c5;
-    border-radius: 4px;
+  background: #c5c5c5;
+  border-radius: 4px;
 }
 
 .my-scroll::-webkit-scrollbar {
-    width: 4px;
-    height: 8px;
+  width: 4px;
+  height: 8px;
 }
 
 .my-scroll::-webkit-scrollbar-corner {
-    border-radius: 4px;
+  border-radius: 4px;
 }
 
 .my-scroll::-webkit-scrollbar-track-piece {
-    background: rgba(214, 214, 214, 0.36);
-    border-radius: 4px;
+  background: rgba(214, 214, 214, 0.36);
+  border-radius: 4px;
 }
 
 .dryk {
-    border: dashed 2px #0483b5;
-    height: 40px;
-    line-height: 35px;
-    padding-left: 20px;
-    float: left;
-    margin-top: 20px;
+  border: dashed 2px #0483b5;
+  height: 40px;
+  line-height: 35px;
+  padding-left: 20px;
+  float: left;
+  margin-top: 20px;
 }
 
 .active {
-    background: rgb(245, 245, 245);
-    color: #c31f20 !important;
+  background: rgb(245, 245, 245);
+  color: #c31f20 !important;
 }
 
 .select-acitve {
-    background: rgb(202, 54, 54) !important;
-    color: #fff !important;
+  background: rgb(202, 54, 54) !important;
+  color: #fff !important;
 }
 
 .alert {
-    position: fixed;
-    z-index: 0618;
-    width: 50%;
-    left: 25%;
-    top: 30px;
-    height: 52px;
-    border-radius: 7px;
-    line-height: 52px;
-    text-align: center;
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-    padding: 0;
+  position: fixed;
+  z-index: 0618;
+  width: 50%;
+  left: 25%;
+  top: 30px;
+  height: 52px;
+  border-radius: 7px;
+  line-height: 52px;
+  text-align: center;
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  padding: 0;
 }
 
 .loading {
-    position: fixed;
-    z-index: 0618;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    text-align: center;
+  position: fixed;
+  z-index: 0618;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  text-align: center;
 }
 
 .tabs-div {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin-left: -30px;
-    background: #ececec;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-left: -30px;
+  background: #ececec;
 }
 
 .tabs-div div {
-    float: left;
-    padding: 7px 20px;
-    cursor: pointer;
+  float: left;
+  padding: 7px 20px;
+  cursor: pointer;
 }
 
 /* 
@@ -241,161 +250,163 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 } */
 
 .tab-div-active {
-    background: #fff;
+  background: #fff;
 }
 
 .tdgl-content {
-    padding-top: 5px;
+  padding-top: 5px;
 }
 
 .my-table input {
-    border: none;
-    text-align: center;
-    background: none;
+  border: none;
+  text-align: center;
+  background: none;
 }
 
 .table-input {
-    box-shadow: inset 0 0 1px 1px #d8d8d8;
-    height: 30px;
+  box-shadow: inset 0 0 1px 1px #d8d8d8;
+  height: 30px;
 }
 
 .button-history {
-    margin-right: 10px;
-    background: #cc4545;
-    border: none;
-    height: 35px;
-    padding: 0 20px;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 2px;
-    margin-top: 20px;
-    margin-left: 20px;
-    float: left;
+  margin-right: 10px;
+  background: #cc4545;
+  border: none;
+  height: 35px;
+  padding: 0 20px;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-left: 20px;
+  float: left;
 }
 
 input:read-only {
-    background: rgb(240, 240, 240);
-    cursor: not-allowed;
+  background: rgb(240, 240, 240);
+  cursor: not-allowed;
 }
 
 .alert-div {
-    width: 400px;
-    max-height: 500px;
-    display: flex;
-    background: #fff;
-    margin-left: 50%;
-    left: -200px;
-    position: relative;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    padding: 5px 0;
+  width: 400px;
+  max-height: 500px;
+  display: flex;
+  background: #fff;
+  margin-left: 50%;
+  left: -200px;
+  position: relative;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  padding: 5px 0;
 }
 
 .back-btn {
-    float: right;
-    margin-top: 15px;
-    margin-right: 10px;
-    border: none;
-    padding: 5px 20px;
-    font-size: 14px;
+  float: right;
+  margin-top: 15px;
+  margin-right: 10px;
+  border: none;
+  padding: 5px 20px;
+  font-size: 14px;
 }
 
 .wtbh {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .history-search {
-    padding-left: 0;
-    margin-left: -20px;
+  padding-left: 0;
+  margin-left: -20px;
 }
 
 .fpjyy-alert {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    z-index: 0617;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.36);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 0617;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.36);
 }
 
 .my-confirm {
-    width: 360px;
-    background: #fff;
-    text-align: center;
-    top: 154px;
-    position: fixed;
-    left: 50vw;
-    margin-left: -180px;
+  width: 360px;
+  background: #fff;
+  text-align: center;
+  top: 154px;
+  position: fixed;
+  left: 50vw;
+  margin-left: -180px;
 }
 
 .my-confirm .title-div {
-    height: 40px;
-    line-height: 40px;
-    background: #ad3333;
-    color: #fff;
+  height: 40px;
+  line-height: 40px;
+  background: #ad3333;
+  color: #fff;
 }
 
 .confirm-content {
-    padding: 40px;
-    padding-bottom: 20px;
+  padding: 40px;
+  padding-bottom: 20px;
 }
 
 .confirm-input {
-    width: 100px;
-    text-align: right;
-    border: none;
-    border-bottom: solid 1px #ccc;
-    padding: 0 10px;
+  width: 100px;
+  text-align: right;
+  border: none;
+  border-bottom: solid 1px #ccc;
+  padding: 0 10px;
 }
 
 .button-div {
-    display: flex;
-    width: 100%;
-    margin-top: 20px;
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .button-div button {
-    flex: 1;
-    height: 40px;
-    border: none;
-    background: #f1f1f1;
+  flex: 1;
+  height: 40px;
+  border: none;
+  background: #f1f1f1;
 }
 
 .button-div button:nth-child(1) {
-    background: #ad3333;
-    color: #fff;
+  background: #ad3333;
+  color: #fff;
 }
 
 .alert-button-div {
-    width: 400px;
-    margin-left: calc(50% - 200px);
+  width: 400px;
+  margin-left: calc(50% - 200px);
 }
 
 .alert-button-div button {
-    width: 100%;
-    height: 45px;
-    border: none;
-    background: #1560b1;
-    color: #fff;
+  width: 100%;
+  height: 45px;
+  border: none;
+  background: #1560b1;
+  color: #fff;
 }
 
 .alert-button-div button:hover {
-    background: #0f447c;
+  background: #0f447c;
 }
 
 @media screen and (max-width: 1440px) {
-    .search-div {
-        padding-top: 75px;
-    }
-    .search-div span {
-        margin-left: -20px;
-    }
-    .table-div{
-        height: 60vh;
-    }
+  .search-div {
+    padding-top: 75px;
+  }
 
-    .dplb{
-        height: 70vh;
-    }
+  .search-div span {
+    margin-left: -20px;
+  }
+
+  .table-div {
+    height: 60vh;
+  }
+
+  .dplb {
+    height: 70vh;
+  }
 }

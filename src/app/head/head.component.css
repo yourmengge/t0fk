@@ -4,6 +4,15 @@ span {
   margin-right: 40px;
 }
 
+.youcantseeme{
+  float: left;
+  margin-left: -40px;
+  height: 40px;
+  opacity: 0;
+  outline: none;
+  cursor: default;
+}
+
 .title {
   float: left;
   font-size: 18px;

@@ -30,6 +30,13 @@ export class HttpService {
     this.data.getExportHeader();
     return this.http.post(this.host + url, data, { headers: this.data.getExportHeader(), responseType: 'arraybuffer' });
   }
+
+  /**
+   * 重启itg
+   */
+  restart() {
+    return this.POST2(`dev/reconnect/TRADE_T0`, {});
+  }
   /**
    * 获取行情
    */
@@ -344,5 +351,12 @@ export class HttpService {
    */
   refresh(code) {
     return this.POST('product/' + code + '/hold/refresh', {});
+  }
+
+  /**
+ * 一键归还产品持仓按钮
+ */
+  goback(code) {
+    return this.POST('product/' + code + '/hold/reset', {});
   }
 }

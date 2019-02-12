@@ -12,6 +12,7 @@ export class HeadComponent implements OnInit {
   resetAlert: boolean;
   newPass = '';
   oldPass = '';
+  clickCnt = 0;
   constructor(public data: DataService, public http: HttpService) {
     this.resetAlert = this.data.hide;
   }
@@ -27,6 +28,22 @@ export class HeadComponent implements OnInit {
     this.data.productCode = '';
     this.data.removeSession('token');
     this.data.goto('/');
+  }
+
+  restart() {
+    const t = setTimeout(() => {
+      this.clickCnt = 0;
+    }, 10000);
+    this.clickCnt++;
+    if (this.clickCnt === 10) {
+      this.http.restart().subscribe(res => {
+        this.clickCnt = 0;
+        this.data.ErrorMsg('重连成功');
+        clearTimeout(t);
+      });
+    }
+
+
   }
 
   reset() {

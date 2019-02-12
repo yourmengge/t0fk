@@ -3,6 +3,7 @@
     <button [disabled]='disabled(checkList.length)' (click)='fptd()'>分配给团队</button>
     <button (click)='history()'>历史数据列表</button>
     <button (click)='refresh()'>列表刷新</button>
+    <button (click)='goback()'>一键归还产品持仓</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
@@ -88,5 +89,8 @@
         <button (click)='closeConfirm()'>取消</button>
       </div>
     </div>
+  </div>
+  <div class="fpjyy-alert" *ngIf='confirm2'>
+    <app-confirm [text]='confirmText2' (active)='submitGoback($event)'></app-confirm>
   </div>
 </div>

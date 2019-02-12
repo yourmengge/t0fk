@@ -19,9 +19,39 @@ export class CpccComponent implements DoCheck {
   confirm: boolean;
   checkList = [];
   confirmText: string;
+  confirm2 = false;
   lockData: any;
+  confirmText2 = '确定一键归还产品持仓？';
   constructor(public data: DataService, public http: HttpService) {
     this.confirm = this.data.hide;
+  }
+
+  submitGoback(type) {
+    if (type) {
+      this.http.goback(this.code).subscribe((res) => {
+        this.getList();
+        this.closeConfirm();
+        this.data.ErrorMsg('归还成功');
+      }, (err) => {
+        this.data.error = err.error;
+        this.closeConfirm();
+        this.data.isError();
+      });
+    } else {
+      this.closeConfirm();
+    }
+
+  }
+
+  goback() {
+    this.confirm2 = true;
+    // this.http.goback(this.code).subscribe((res) => {
+    //   this.getList();
+    //   this.data.ErrorMsg('归还成功');
+    // }, (err) => {
+    //   this.data.error = err.error;
+    //   this.data.isError();
+    // });
   }
 
   disabled(temp) {
@@ -56,6 +86,7 @@ export class CpccComponent implements DoCheck {
 
   closeConfirm() {
     this.confirm = this.data.hide;
+    this.confirm2 = this.data.hide;
   }
 
   lock(data) {

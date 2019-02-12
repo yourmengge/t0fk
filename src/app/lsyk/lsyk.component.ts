@@ -20,6 +20,7 @@ export class LsykComponent implements DoCheck, OnInit {
   list: any;
   code: any;
   url: any;
+  text = '';
   constructor(public http: HttpService, public data: DataService) {
   }
 
@@ -64,6 +65,13 @@ export class LsykComponent implements DoCheck, OnInit {
       if (!this.data.isNull(this.code)) {
         this.http.historyAppoint(this.historyKeyWord, 'profit').subscribe((res) => {
           this.list = res;
+          let yikui = 0;
+          let shouxufei = 0;
+          this.list.forEach(element => {
+            yikui = yikui + element['totalPrice'];
+            shouxufei = shouxufei + element['commissPrice'];
+          });
+          this.text = `总计：盈亏值：${this.data.round2(yikui)} 手续费：${this.data.round2(shouxufei)}`;
           this.data.Loading(this.data.hide);
         }, (err) => {
           this.data.error = err.error;

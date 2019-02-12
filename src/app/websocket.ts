@@ -68,8 +68,10 @@ export class Websocket extends GetList {
      * 买入
      */
     buy() {
-        if (this.data.Decimal(this.appointPrice) > 2) {
-            this.data.ErrorMsg('委托价格不能超过两位位小数');
+        if (this.data.Decimal(this.appointPrice) > 2 && this.stockHQ.stockCode.length === 6) {
+            this.data.ErrorMsg('委托价格不能超过两位小数');
+        } else if (this.data.Decimal(this.appointPrice) > 4 && this.stockHQ.stockCode.length === 8) {
+            this.data.ErrorMsg('委托价格不能超过四位小数');
         } else if (this.data.isNull(this.appointPrice)) {
             this.data.ErrorMsg('委托价格不能为空');
         } else if (parseInt(this.appointCnt, 0) !== this.appointCnt) {
