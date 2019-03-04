@@ -40,7 +40,7 @@ export class CjlbComponent extends GetList {
   getList() {
     this.data.clearTimeOut();
     super.getListData();
-    this.http.getListPage(this.url + '?cnt=' + this.pageNum, this.listData).subscribe((res) => {
+    this.http.getListPage(this.url + '?cnt=' + this.pageNum, this.listData).subscribe((res: Array<any>) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {

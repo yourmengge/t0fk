@@ -5,7 +5,7 @@
   </div>
 </div> -->
 <div>
-  <div class="first-menu {{url === 'tdgl'?'active':''}}" (click)='goto("tdgl")'>
+  <div class="first-menu {{url === 'tdgl' || url === 'teamdplb'?'active':''}}" (click)='openTeam("tdgl")'>
     团队管理
   </div>
   <div *ngIf='teamShow'>
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="first-menu {{url === 'cpgl'?'active':''}}" (click)='goto("cpgl")'>
+  <div class="first-menu {{url === 'cpgl'?'active':''}}" (click)='openTeam("cpgl")'>
     产品管理
   </div>
   <div *ngIf='proShow'>

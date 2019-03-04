@@ -41,6 +41,7 @@ import { NumberInputDirective } from './number-input.directive';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { TofixedPipe } from './tofixed.pipe';
 import { NumIntPipe } from './num-int.pipe';
+import { TeamdplbComponent } from './teamdplb/teamdplb.component';
 
 const historyChild: Routes = [
   { path: 'lslyl', component: LslylComponent },
@@ -72,6 +73,7 @@ const tdglChild: Routes = [
 ];
 
 const appChildRoutes: Routes = [
+  { path: 'teamdplb', component: TeamdplbComponent },
   { path: 'tdgl', component: TdglComponent, children: tdglChild },
   { path: 'cpgl', component: CpglComponent, children: cpglChild },
   { path: '', redirectTo: 'tdgl', pathMatch: 'full' }
@@ -120,7 +122,8 @@ const appRoutes: Routes = [
     NumberInputDirective,
     ConfirmComponent,
     TofixedPipe,
-    NumIntPipe
+    NumIntPipe,
+    TeamdplbComponent
   ],
   imports: [
     BrowserModule,

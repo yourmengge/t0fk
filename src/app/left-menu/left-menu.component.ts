@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
 
@@ -7,7 +7,7 @@ import { HttpService } from '../http.service';
   templateUrl: './left-menu.component.html',
   styleUrls: ['./left-menu.component.css']
 })
-export class LeftMenuComponent implements OnInit {
+export class LeftMenuComponent implements DoCheck {
   list: any;
   url: string;
   teamList: any;
@@ -20,7 +20,7 @@ export class LeftMenuComponent implements OnInit {
     this.teamList = '';
     this.proList = '';
     this.url = this.data.getUrl(2);
-    if (this.url === 'tdgl') {
+    if (this.url === 'tdgl' || this.url === 'teamdplb') {
       this.getTeamList();
     } else {
       this.getProList();
@@ -28,7 +28,7 @@ export class LeftMenuComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngDoCheck() {
     this.url = this.data.getUrl(2);
   }
 
@@ -40,38 +40,26 @@ export class LeftMenuComponent implements OnInit {
     this.data.userCode = '';
     this.url = url;
     this.data.goto('main/' + url);
-    if (url === 'tdgl') {
-      this.getTeamList();
-      this.proShow = this.data.hide;
-    } else {
-      this.getProList();
-      this.teamShow = this.data.hide;
-    }
   }
 
   /**
    * 获取团队列表
    */
   getTeamList() {
-    if (!this.teamShow) {
-      this.http.getTeamList().subscribe((res) => {
-        this.teamShow = this.data.show;
-        if (!this.data.isNull(res)) {
-          this.teamList = res;
-          this.productCode = '';
-          this.teamCode = res[0].teamCode;
-          this.data.teamCode = this.teamCode;
-          this.data.teamName = res[0].teamName;
-        } else {
-          this.getTeamList();
-        }
-      }, (err) => {
-        this.data.error = err.error;
-        this.data.isError();
-      });
-    } else {
-      this.teamShow = this.data.hide;
-    }
+    this.http.getTeamList().subscribe((res) => {
+      if (!this.data.isNull(res)) {
+        this.teamList = res;
+        this.productCode = '';
+        this.teamCode = res[0].teamCode;
+        this.data.teamCode = this.teamCode;
+        this.data.teamName = res[0].teamName;
+      } else {
+        this.getTeamList();
+      }
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
 
   }
 
@@ -79,25 +67,20 @@ export class LeftMenuComponent implements OnInit {
    * 获取产品列表
    */
   getProList() {
-    if (!this.proShow) {
-      this.http.getProList().subscribe((res: Array<any>) => {
-        this.proShow = this.data.show;
-        if (!this.data.isNull(res.length)) {
-          this.proList = res;
-          this.teamCode = '';
-          this.productCode = res[0].productCode;
-          this.data.productCode = this.productCode;
-          this.data.productName = res[0].productName;
-        } else {
-          this.getProList();
-        }
-      }, (err) => {
-        this.data.error = err.error;
-        this.data.isError();
-      });
-    } else {
-      this.proShow = this.data.hide;
-    }
+    this.http.getProList().subscribe((res: Array<any>) => {
+      if (!this.data.isNull(res.length)) {
+        this.proList = res;
+        this.teamCode = '';
+        this.productCode = res[0].productCode;
+        this.data.productCode = this.productCode;
+        this.data.productName = res[0].productName;
+      } else {
+        this.getProList();
+      }
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 
   /**
@@ -111,6 +94,7 @@ export class LeftMenuComponent implements OnInit {
     this.teamCode = code;
     this.data.teamName = name;
     this.data.teamCode = this.teamCode;
+    this.proShow = this.data.hide;
   }
 
   /**
@@ -123,6 +107,23 @@ export class LeftMenuComponent implements OnInit {
     this.productCode = code;
     this.data.productName = name;
     this.data.productCode = this.productCode;
+    this.teamShow = this.data.hide;
+  }
+
+  openTeam(url) {
+    this.data.clearPrice();
+    this.data.clearTimeOut();
+    this.data.initHistoryWord();
+    this.data.userCode = '';
+    this.url = url;
+    this.data.goto('main/' + url);
+    if (url === 'tdgl') {
+      this.teamShow = !this.teamShow;
+      this.getTeamList();
+    } else {
+      this.proShow = !this.proShow;
+      this.getProList();
+    }
   }
 
 }

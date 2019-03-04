@@ -34,7 +34,7 @@ export class GhlbComponent extends GetList {
   getList() {
     this.data.clearTimeOut();
     this.getListData();
-    this.http.getList(this.url, this.listData).subscribe((res) => {
+    this.http.getList(this.url, this.listData).subscribe((res: Array<any>) => {
       // tslint:disable-next-line:forin
       for (const i in res) {
         if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
@@ -44,6 +44,7 @@ export class GhlbComponent extends GetList {
         } else {
           res[i].bcgh = res[i].ableCnt;
         }
+        this.list['isChecked'] = false;
       }
       this.list = res;
       if (this.checkList.length === 0) {

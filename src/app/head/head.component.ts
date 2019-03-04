@@ -21,6 +21,10 @@ export class HeadComponent implements OnInit {
     this.username = this.data.getSession('username');
   }
 
+  teamdplb() {
+    this.data.goto('main/teamdplb');
+  }
+
   logout(text) {
     this.data.ErrorMsg(text);
     this.data.userCode = '';

@@ -57,7 +57,7 @@ export class WtlbComponent extends GetList {
   getList() {
     this.data.clearTimeOut();
     super.getListData();
-    this.http.getListPage(this.url + '?cnt=' + this.pageNum + '&filter=' + this.filterStr, this.listData).subscribe((res) => {
+    this.http.getListPage(this.url + '?cnt=' + this.pageNum + '&filter=' + this.filterStr, this.listData).subscribe((res: Array<any>) => {
       this.list = res;
       this.afterGetList();
       this.data.settimeout = setTimeout(() => {
@@ -119,13 +119,16 @@ export class WtlbComponent extends GetList {
      * 导出列表
      */
   export() {
-    const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
-    this.http.exportTEAM(this.exportUrl + '?filter=' + this.filterStr, data).subscribe((res) => {
+    this.exportUrl = `${this.exportUrl}?filter=${this.filterStr}`;
+    super.export();
+    this.exportUrl = this.data.EXPORT_TODAY_APPOINT;
+    // const data = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
+    // this.http.exportTEAM(, data).subscribe((res) => {
 
-      this.data.downloadFile(res, this.exportName);
-    }, (err) => {
-      this.data.error = err.error;
-      this.data.isError();
-    });
+    //   this.data.downloadFile(res, this.exportName);
+    // }, (err) => {
+    //   this.data.error = err.error;
+    //   this.data.isError();
+    // });
   }
 }

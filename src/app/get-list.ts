@@ -18,7 +18,7 @@ export class GetList implements DoCheck {
     accountStatus: any;
     isAutoShutdown: any;
     code: string;
-    list: any;
+    list: Array<any>;
     proName: any;
     checkId: any;
     userCode: any;
@@ -148,7 +148,7 @@ export class GetList implements DoCheck {
     getList() {
         this.data.clearTimeOut();
         this.getListData();
-        this.http.getList(this.url, this.listData).subscribe((res) => {
+        this.http.getList(this.url, this.listData).subscribe((res: Array<any>) => {
             this.list = res;
             this.afterGetList();
             this.data.settimeout = setTimeout(() => {
