@@ -43,6 +43,12 @@ export class TeamdplbComponent extends Websocket implements OnDestroy {
     });
   }
 
+  afterGetList() {
+    if (this.isSort) {
+      super.sort(this.sortData, this.sortName);
+    }
+  }
+
   initData() {
     this.code = '';
     this.confirmText = '';
